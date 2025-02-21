@@ -1,54 +1,116 @@
 import { NextResponse } from 'next/server';
+import { config } from '@/config/env';
+import { SYSTEM_PROMPT, CHAT_SETTINGS } from '@/config/chat';
+import { ChatCompletionRequest, ChatRequestMessage, ChatCompletionResponse } from '@/types/api';
+import { rateLimiter } from '@/utils/rateLimiter';
 
-const TOGETHER_API_ENDPOINT = 'https://api.together.xyz/v1/chat/completions';
+// Custom error class for API errors
+class ApiError extends Error {
+  constructor(public statusCode: number, message: string) {
+    super(message);
+    this.name = 'ApiError';
+  }
+}
+
+// Validate request payload
+function validateRequest(messages: any[]): messages is ChatRequestMessage[] {
+  return Array.isArray(messages) && 
+    messages.every(msg => 
+      typeof msg === 'object' && 
+      ('role' in msg) && 
+      ('content' in msg) &&
+      ['user', 'assistant', 'system'].includes(msg.role)
+    );
+}
 
 export async function POST(req: Request) {
   try {
-    const { messages, image } = await req.json();
-    
-    // Format messages for Together AI's chat completion API
-    const formattedMessages = messages.map((msg: any) => ({
-      role: msg.role,
-      content: msg.content
-    }));
+    // Check rate limit
+    if (rateLimiter.isRateLimited()) {
+      const timeUntilNext = rateLimiter.getTimeUntilNextAllowed();
+      throw new ApiError(429, `Rate limit exceeded. Please try again in ${Math.ceil(timeUntilNext / 1000)} seconds`);
+    }
 
-    // If there's an image, add it to the last message using Together AI's format
+    // Parse and validate request
+    const body = await req.json();
+    const { messages, image } = body;
+
+    if (!validateRequest(messages)) {
+      throw new ApiError(400, 'Invalid message format');
+    }
+
+    // Ensure messages don't exceed the maximum
+    const recentMessages = messages.slice(-CHAT_SETTINGS.maxMessages);
+
+    // Format messages for Together AI's chat completion API
+    const formattedMessages: ChatRequestMessage[] = [
+      { role: 'system', content: SYSTEM_PROMPT },
+      ...recentMessages.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }))
+    ];
+
+    // If there's an image, add it to the last message
     if (image) {
       formattedMessages[formattedMessages.length - 1].content = [
-        { type: 'text', text: formattedMessages[formattedMessages.length - 1].content },
+        { type: 'text', text: formattedMessages[formattedMessages.length - 1].content as string },
         { type: 'image_url', image_url: image }
       ];
     }
 
-    const response = await fetch(TOGETHER_API_ENDPOINT, {
+    // Prepare API request
+    const chatRequest: ChatCompletionRequest = {
+      model: config.together.model,
+      messages: formattedMessages,
+      max_tokens: CHAT_SETTINGS.maxTokens,
+      temperature: CHAT_SETTINGS.temperature,
+      top_p: CHAT_SETTINGS.topP,
+      frequency_penalty: CHAT_SETTINGS.frequencyPenalty,
+      presence_penalty: CHAT_SETTINGS.presencePenalty
+    };
+
+    // Make API call
+    const response = await fetch(config.together.endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.TOGETHER_API_KEY}`
+        'Authorization': `Bearer ${config.together.apiKey}`
       },
-      body: JSON.stringify({
-        model: 'meta-llama/Llama-3.3-70b-instruct-turbo-free',
-        messages: formattedMessages,
-        max_tokens: 500,
-        temperature: 0.7,
-        top_p: 0.7,
-        frequency_penalty: 0,
-        presence_penalty: 0
-      })
+      body: JSON.stringify(chatRequest)
     });
 
     if (!response.ok) {
-      throw new Error(`Together AI API error: ${response.statusText}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new ApiError(
+        response.status,
+        errorData.error?.message || `API error: ${response.statusText}`
+      );
     }
 
-    const data = await response.json();
+    const data = (await response.json()) as ChatCompletionResponse;
+    
+    if (!data.choices?.[0]?.message?.content) {
+      throw new ApiError(500, 'Invalid response format from API');
+    }
+
     return NextResponse.json({ 
-      response: data.choices[0].message.content 
+      response: data.choices[0].message.content,
+      usage: data.usage
     });
+
   } catch (error) {
     console.error('Chat API Error:', error);
+
+    if (error instanceof ApiError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.statusCode }
+      );
+    }
+
     return NextResponse.json(
-      { error: 'Failed to process chat request' },
+      { error: 'An unexpected error occurred' },
       { status: 500 }
     );
   }
