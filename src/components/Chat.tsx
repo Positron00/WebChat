@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef, FormEvent, useEffect } from 'react';
 import { ChatMessage, ChatState } from '@/types/chat';
 import Image from 'next/image';

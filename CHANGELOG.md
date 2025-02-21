@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2024-02-21
+
+### Fixed
+- Added 'use client' directives to components using React hooks and browser APIs
+  - Chat component
+  - AppContext provider
+  - ErrorBoundary component
+- Resolved Next.js App Router client/server component issues
+- Fixed configuration by replacing next.config.ts with next.config.js
+
+### Changed
+- Updated Next.js configuration for better image optimization and strict mode
+- Added proper TypeScript type annotations in next.config.js
+
 ## [1.2.0] - 2024-02-21
 
 ### Added
