@@ -5,6 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2024-02-21
+
+### Added
+- Local storage for messages and user preferences
+- PWA support with web manifest and offline capabilities
+- Theme support (light/dark/system)
+- Accessibility settings (font size, reduced motion, high contrast)
+- Offline mode detection and handling
+- API retry mechanism with exponential backoff
+- Singleton API client with retry logic
+- Storage manager for persistent data
+- App context for global state management
+
+### Changed
+- Enhanced Chat component with accessibility features
+- Improved message persistence and retrieval
+- Better error handling with custom ApiError class
+- Optimized API calls with retry mechanism
+- Updated UI for better accessibility
+- Enhanced theme handling with system preference support
+
+### Performance
+- Added local storage caching
+- Implemented singleton pattern for API client
+- Added message pruning
+- Optimized re-renders with context
+- Added offline-first capabilities
+
+### Accessibility
+- Added font size controls
+- Added reduced motion support
+- Added high contrast mode
+- Enhanced ARIA attributes
+- Added keyboard navigation improvements
+- Added screen reader optimizations
+
+### Developer Experience
+- Added storage utilities
+- Added API client abstraction
+- Added context providers
+- Added type safety improvements
+- Added better error handling
+- Added configuration management
+
+### Security
+- Added storage availability checks
+- Added API retry limits
+- Added error boundary improvements
+- Added input sanitization
+- Added offline mode handling
+
 ## [1.1.0] - 2024-02-21
 
 ### Added

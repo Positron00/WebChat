@@ -1,24 +1,39 @@
-import { useState, useRef, FormEvent } from 'react';
+import { useState, useRef, FormEvent, useEffect } from 'react';
 import { ChatMessage, ChatState } from '@/types/chat';
 import Image from 'next/image';
 import { CHAT_SETTINGS } from '@/config/chat';
+import { storage } from '@/utils/storage';
+import { apiClient } from '@/utils/apiClient';
+import { useApp } from '@/contexts/AppContext';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
 export default function Chat() {
-  const [state, setState] = useState<ChatState>({
-    messages: [],
+  const { isOffline, accessibility } = useApp();
+  const [state, setState] = useState<ChatState>(() => ({
+    messages: storage.getMessages(),
     isLoading: false,
-  });
+  }));
   const [input, setInput] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom of messages
+  // Save messages to storage when they change
+  useEffect(() => {
+    storage.saveMessages(state.messages);
+  }, [state.messages]);
+
+  // Scroll to bottom of messages with respect to reduced motion preference
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (!messagesEndRef.current) return;
+    
+    if (accessibility.reducedMotion) {
+      messagesEndRef.current.scrollIntoView();
+    } else {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   // Handle file validation and setting
@@ -57,7 +72,7 @@ export default function Chat() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if ((!input.trim() && !imageFile) || state.isLoading) return;
+    if ((!input.trim() && !imageFile) || state.isLoading || isOffline) return;
 
     const newMessage: ChatMessage = {
       role: 'user',
@@ -82,24 +97,22 @@ export default function Chat() {
         });
       }
 
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: [...state.messages, newMessage],
-          image: imageUrl,
-        }),
+      const response = await apiClient.sendChatRequest({
+        messages: [...state.messages, newMessage],
+        image: imageUrl,
+        model: 'meta-llama/Llama-3.3-70b-instruct-turbo-free',
+        max_tokens: CHAT_SETTINGS.maxTokens,
+        temperature: CHAT_SETTINGS.temperature,
+        top_p: CHAT_SETTINGS.topP,
+        frequency_penalty: CHAT_SETTINGS.frequencyPenalty,
+        presence_penalty: CHAT_SETTINGS.presencePenalty
       });
-
-      const data = await response.json();
-      
-      if (!response.ok) throw new Error(data.error || 'Failed to send message');
 
       setState(prev => ({
         messages: [
           ...prev.messages,
           newMessage,
-          { role: 'assistant', content: data.response }
+          { role: 'assistant', content: response.choices[0].message.content }
         ].slice(-CHAT_SETTINGS.maxMessages),
         isLoading: false,
         error: undefined,
@@ -116,6 +129,21 @@ export default function Chat() {
     }
   }
 
+  // Apply high contrast theme if enabled
+  const getMessageClassName = (role: string) => {
+    const baseClass = 'p-4 rounded-lg max-w-[80%] break-words';
+    const roleClass = role === 'user' ? 'ml-auto' : '';
+    const colorClass = accessibility.highContrast
+      ? role === 'user'
+        ? 'bg-blue-700 text-white'
+        : 'bg-gray-700 text-white'
+      : role === 'user'
+        ? 'bg-blue-100'
+        : 'bg-gray-100';
+    
+    return `${baseClass} ${roleClass} ${colorClass}`;
+  };
+
   return (
     <div 
       className="flex flex-col h-screen max-w-3xl mx-auto p-4"
@@ -131,11 +159,7 @@ export default function Chat() {
         {state.messages.map((message, i) => (
           <div
             key={i}
-            className={`p-4 rounded-lg ${
-              message.role === 'user'
-                ? 'bg-blue-100 ml-auto'
-                : 'bg-gray-100'
-            } max-w-[80%] break-words`}
+            className={getMessageClassName(message.role)}
             role={message.role === 'assistant' ? 'article' : 'note'}
             aria-label={`${message.role}'s message`}
           >
@@ -149,7 +173,9 @@ export default function Chat() {
             aria-label="Loading response"
           >
             <div 
-              className="animate-spin rounded-full h-4 w-4 border-2 border-gray-500 border-t-transparent"
+              className={`${
+                accessibility.reducedMotion ? '' : 'animate-spin'
+              } rounded-full h-4 w-4 border-2 border-gray-500 border-t-transparent`}
               aria-hidden="true"
             />
             <span>Thinking...</span>
@@ -180,12 +206,14 @@ export default function Chat() {
             onChange={handleFileChange}
             className="hidden"
             aria-label="Upload Image"
+            disabled={isOffline}
           />
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition-colors disabled:opacity-50"
             aria-label="Upload Image Button"
+            disabled={isOffline}
           >
             Upload Image
           </button>
@@ -225,17 +253,17 @@ export default function Chat() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
             className="flex-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            disabled={state.isLoading}
+            disabled={state.isLoading || isOffline}
             aria-label="Message Input"
-            aria-disabled={state.isLoading}
+            aria-disabled={state.isLoading || isOffline}
           />
           <button
             type="submit"
-            disabled={state.isLoading || (!input.trim() && !imageFile)}
+            disabled={state.isLoading || (!input.trim() && !imageFile) || isOffline}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 
                      disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             aria-label="Send Message"
-            aria-disabled={state.isLoading || (!input.trim() && !imageFile)}
+            aria-disabled={state.isLoading || (!input.trim() && !imageFile) || isOffline}
           >
             Send
           </button>
