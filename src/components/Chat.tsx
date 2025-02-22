@@ -200,66 +200,8 @@ export default function Chat() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      {/* Response Field */}
-      <div className="w-full mb-4 text-center">
-        <div className="text-sm text-gray-400">
-          {state.messages.length === 0 ? (
-            <div className="flex flex-col gap-1 items-center">
-              <span>Start a conversation...</span>
-              <span>Responses will appear here</span>
-            </div>
-          ) : (
-            "Responses"
-          )}
-        </div>
-      </div>
-
-      {/* Messages Area */}
-      <div 
-        className="w-full flex-1 min-h-[200px] max-h-[400px] overflow-y-auto space-y-4 mb-4 px-4"
-        role="log"
-        aria-live="polite"
-        aria-label="Chat Messages"
-      >
-        {state.messages.map((message, i) => (
-          <div
-            key={i}
-            className={getMessageClassName(message.role)}
-            role={message.role === 'assistant' ? 'article' : 'note'}
-            aria-label={`${message.role}'s message`}
-          >
-            {message.content}
-          </div>
-        ))}
-        {state.isLoading && (
-          <div 
-            className="flex items-center justify-center text-gray-400 space-x-2"
-            role="status"
-            aria-label="Loading response"
-          >
-            <div 
-              className={`${
-                accessibility.reducedMotion ? '' : 'animate-spin'
-              } rounded-full h-4 w-4 border-2 border-gray-400 border-t-transparent`}
-              aria-hidden="true"
-            />
-            <span>Thinking...</span>
-          </div>
-        )}
-        {state.error && (
-          <div 
-            className="text-center text-red-400 p-2 bg-red-900/50 rounded w-full"
-            role="alert"
-            aria-live="assertive"
-          >
-            {state.error}
-          </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
-
       {/* Input Area */}
-      <div className="w-full px-4">
+      <div className="w-full px-4 mb-4">
         <form 
           onSubmit={handleSubmit} 
           className="flex flex-col items-center gap-2"
@@ -277,8 +219,8 @@ export default function Chat() {
                 }
               }}
               placeholder="Ask anything..."
-              rows={1}
-              className="w-full p-2 bg-white/5 text-white text-center rounded border border-white/10 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-500 resize-none overflow-hidden"
+              rows={3}
+              className="w-full p-4 bg-white/5 text-white text-center rounded border border-white/10 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-500 resize-none"
               disabled={state.isLoading || isOffline}
               aria-label="Message Input"
               aria-disabled={state.isLoading || isOffline}
@@ -381,6 +323,65 @@ export default function Chat() {
             </div>
           )}
         </form>
+      </div>
+
+      {/* Response Field */}
+      <div className="w-full text-center">
+        <div className="text-sm text-gray-400 mb-2">
+          Responses
+        </div>
+        {/* Messages Area */}
+        <div 
+          className="w-full flex-1 min-h-[300px] bg-white/5 rounded-lg border border-white/10 overflow-y-auto space-y-4 p-4"
+          role="log"
+          aria-live="polite"
+          aria-label="Chat Messages"
+        >
+          {state.messages.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center text-gray-400">
+              <span>Start a conversation...</span>
+              <span>Responses will appear here</span>
+            </div>
+          ) : (
+            <>
+              {state.messages.map((message, i) => (
+                <div
+                  key={i}
+                  className={getMessageClassName(message.role)}
+                  role={message.role === 'assistant' ? 'article' : 'note'}
+                  aria-label={`${message.role}'s message`}
+                >
+                  {message.content}
+                </div>
+              ))}
+            </>
+          )}
+          {state.isLoading && (
+            <div 
+              className="flex items-center justify-center text-gray-400 space-x-2"
+              role="status"
+              aria-label="Loading response"
+            >
+              <div 
+                className={`${
+                  accessibility.reducedMotion ? '' : 'animate-spin'
+                } rounded-full h-4 w-4 border-2 border-gray-400 border-t-transparent`}
+                aria-hidden="true"
+              />
+              <span>Thinking...</span>
+            </div>
+          )}
+          {state.error && (
+            <div 
+              className="text-center text-red-400 p-2 bg-red-900/50 rounded w-full"
+              role="alert"
+              aria-live="assertive"
+            >
+              {state.error}
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
       </div>
     </div>
   );

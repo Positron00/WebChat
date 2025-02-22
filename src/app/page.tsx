@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#1C1C1C] text-white">
-      <div className="w-[30%] mx-auto py-8 flex flex-col items-center gap-6">
+    <main className="min-h-screen bg-[#1C1C1C] text-white flex items-center justify-center">
+      <div className="w-[50%] flex flex-col items-center gap-6">
         {/* Logo and Tagline */}
         <div className="flex flex-col items-center gap-4">
           <Image

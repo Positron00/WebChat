@@ -342,4 +342,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added proper padding for message container
   - Centered form elements and toolbar
   - Improved overall visual balance
-  - Enhanced spacing and alignment 
+  - Enhanced spacing and alignment
+
+## [1.3.15] - 2024-02-21
+
+### Changed
+- Enhanced response field visibility and appearance
+  - Made response field always visible with consistent styling
+  - Added background and border to response area
+  - Increased minimum height to 300px
+  - Improved empty state appearance
+  - Better spacing and padding for messages
+
+## [1.3.16] - 2024-02-21
+
+### Changed
+- Reordered chat interface layout
+  - Moved input field above response field
+  - Adjusted spacing between components
+  - Improved visual flow from input to responses
+  - Enhanced overall user experience
+  - Maintained consistent styling 
+
+## [1.3.17] - 2024-02-21
+
+### Changed
+- Increased input field height
+  - Changed textarea from 1 row to 3 rows
+  - Adjusted padding for better text visibility
+  - Improved overall input field appearance
+  - Removed overflow restriction
+  - Enhanced text input experience 
+
+## [1.3.18] - 2024-02-21
+
+### Changed
+- Increased input field width
+  - Expanded container width from 30% to 50%
+  - Improved overall layout proportions
+  - Enhanced readability with wider text area
+  - Better use of screen space
+  - Maintained centered alignment 
