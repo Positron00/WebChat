@@ -15,13 +15,21 @@ const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'
 export default function Chat() {
   const { isOffline, accessibility } = useApp();
   const [state, setState] = useState<ChatState>(() => ({
-    messages: storage.getMessages(),
+    messages: [],  // Initialize empty on server
     isLoading: false,
   }));
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState<string>('');  // Initialize empty on server
   const [imageFile, setImageFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Load messages from storage only on client side
+  useEffect(() => {
+    setState(prev => ({
+      ...prev,
+      messages: storage.getMessages(),
+    }));
+  }, []);
 
   // Save messages to storage when they change
   useEffect(() => {
