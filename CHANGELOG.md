@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.6] - 2024-02-21
+
+### Fixed
+- Resolved React hydration errors
+  - Fixed server/client state mismatch in Chat component
+  - Added proper client-side initialization for storage
+  - Improved SSR compatibility for theme and accessibility settings
+- Enhanced storage utility
+  - Added proper TypeScript types for theme and accessibility
+  - Added SSR safety checks for localStorage access
+  - Improved error handling and default values
+  - Added type safety for theme preferences
+
+### Changed
+- Improved state management in AppContext
+  - Moved storage initialization to useEffect
+  - Added default values matching SSR output
+  - Enhanced type safety with proper interfaces
+  - Better organization of side effects
+
 ## [1.3.5] - 2024-02-21
 
 ### Fixed

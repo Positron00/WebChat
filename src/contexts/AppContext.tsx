@@ -1,11 +1,11 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { storage, AccessibilitySettings, StorageData } from '@/utils/storage';
+import { storage, AccessibilitySettings, ThemePreference } from '@/utils/storage';
 
 interface AppContextType {
-  theme: StorageData['theme'];
-  setTheme: (theme: StorageData['theme']) => void;
+  theme: ThemePreference;
+  setTheme: (theme: ThemePreference) => void;
   accessibility: AccessibilitySettings;
   setAccessibility: (settings: AccessibilitySettings) => void;
   isOffline: boolean;
@@ -14,14 +14,24 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<StorageData['theme']>(storage.getTheme());
-  const [accessibility, setAccessibility] = useState<AccessibilitySettings>(
-    storage.getAccessibilitySettings()
-  );
-  const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  // Initialize with default values that match server-side rendering
+  const [theme, setTheme] = useState<ThemePreference>('system');
+  const [accessibility, setAccessibility] = useState<AccessibilitySettings>({
+    reducedMotion: false,
+    highContrast: false,
+    fontSize: 'normal'
+  });
+  const [isOffline, setIsOffline] = useState(false);
 
+  // Load settings from storage on client-side only
   useEffect(() => {
-    // Save theme preference
+    setTheme(storage.getTheme());
+    setAccessibility(storage.getAccessibilitySettings());
+    setIsOffline(!navigator.onLine);
+  }, []);
+
+  // Save theme changes to storage and apply them
+  useEffect(() => {
     storage.saveTheme(theme);
     
     // Apply theme
@@ -34,11 +44,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     }
   }, [theme]);
 
+  // Save and apply accessibility settings
   useEffect(() => {
-    // Save accessibility settings
     storage.saveAccessibilitySettings(accessibility);
     
-    // Apply accessibility settings
     document.documentElement.style.fontSize = 
       accessibility.fontSize === 'larger' ? '120%' : 
       accessibility.fontSize === 'large' ? '110%' : 
@@ -55,6 +64,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     );
   }, [accessibility]);
 
+  // Handle online/offline status
   useEffect(() => {
     function handleOnline() {
       setIsOffline(false);
