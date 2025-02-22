@@ -1,4 +1,6 @@
 import { ChatCompletionRequest, ChatCompletionResponse } from '@/types/api';
+import { ChatMessage, ChatRequestMessage } from '@/types/chat';
+import { CHAT_SETTINGS } from '@/config/chat';
 
 interface RetryOptions {
   maxRetries: number;
@@ -28,6 +30,7 @@ class ApiError extends Error {
 export class ApiClient {
   private static instance: ApiClient;
   private retryOptions: RetryOptions;
+  private readonly baseUrl = '/api';
 
   private constructor(options: Partial<RetryOptions> = {}) {
     this.retryOptions = { ...DEFAULT_RETRY_OPTIONS, ...options };
@@ -132,6 +135,32 @@ export class ApiClient {
         body: JSON.stringify(request),
       }
     );
+  }
+
+  async sendChatMessage(messages: ChatMessage[], image?: string | null) {
+    const response = await fetch(`${this.baseUrl}/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        messages,
+        image,
+        model: 'meta-llama/Llama-3.3-70b-instruct-turbo-free',
+        max_tokens: CHAT_SETTINGS.maxTokens,
+        temperature: CHAT_SETTINGS.temperature,
+        top_p: CHAT_SETTINGS.topP,
+        frequency_penalty: CHAT_SETTINGS.frequencyPenalty,
+        presence_penalty: CHAT_SETTINGS.presencePenalty
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `API error: ${response.statusText}`);
+    }
+
+    return response.json();
   }
 }
 

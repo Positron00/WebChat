@@ -1,9 +1,46 @@
 ---
-description:
-globs:
+description: 
+globs: 
 ---
 
 # Your rule content
 
 - You can @ files here
 - You can use markdown but dont have to
+
+# File patterns: *.tsx, *.ts
+
+## General Rules
+- Use TypeScript for all new code.
+- Follow clean code principles (e.g., meaningful variable names, single responsibility functions).
+- Prefer async/await over callbacks for asynchronous operations.
+- Write comprehensive error handling for all critical functions.
+
+## React Guidelines
+- Use functional components instead of class components.
+- Implement proper prop types using TypeScript interfaces.
+- Avoid inline styles; use Tailwind CSS or styled-components instead.
+- Write reusable components and avoid duplication.
+
+## API Integration
+- Use Axios for HTTP requests and handle errors with try/catch blocks.
+- Centralize API calls in a dedicated service layer (e.g., `api/` folder).
+
+## State Management
+- Use React Context or Zustand for global state management where applicable.
+- Avoid unnecessary nested states; keep the state structure flat.
+
+## Styling
+- Use Tailwind CSS for styling HTML elements.
+- Adhere to the project's design system and naming conventions.
+
+## Testing
+- Write unit tests for all utility functions and critical components.
+- Use Jest and React Testing Library for testing React components.
+- Ensure 80%+ test coverage before merging code.
+
+@file ../tsconfig.json
+@file ../tailwind.config.js
+
+## Additional Notes
+- Always include comments for complex logic or non-intuitive code sections.

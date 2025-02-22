@@ -443,3 +443,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced readability with wider text area
   - Better use of screen space
   - Maintained centered alignment 
+
+## [1.4.0] - 2024-02-22
+
+### Added
+- Environment configuration with Together AI API key
+- Comprehensive component testing
+  - Added MessageInput component tests
+  - Added MessageList component tests
+  - Added test coverage for accessibility features
+- New ChatContext for centralized state management
+- Dedicated API client with retry mechanism
+
+### Changed
+- Refactored Chat component into smaller, focused components
+  - Extracted MessageInput component
+  - Extracted MessageList component
+  - Improved component organization
+- Enhanced state management with ChatContext
+- Improved error handling in API client
+- Better separation of concerns in components
+- Enhanced accessibility implementation
+
+### Developer Experience
+- Added detailed component documentation
+- Improved test coverage
+- Better type safety with TypeScript
+- Enhanced code organization
+- Cleaner component structure
+
+## [1.4.1] - 2024-02-22
+
+### Fixed
+- Resolved ChatContext provider error
+  - Added ChatProvider to root layout
+  - Implemented sendMessage functionality in ChatContext
+  - Fixed context initialization and state management
+  - Added proper error handling for chat operations
+  - Integrated rate limiting in chat context
+
+### Changed
+- Development server now uses port 3001 when 3000 is occupied
+- Enhanced error handling in chat operations
+- Improved message state management
+- Better integration with rate limiter
