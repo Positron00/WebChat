@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.13] - 2024-02-21
+
+### Changed
+- Reverted tagline back to "Intelligence at your fingertips"
+- Maintained centered layout and styling
+
+## [1.3.12] - 2024-02-21
+
+### Changed
+- Updated layout to match Perplexity design
+  - Centered all content including logo and tagline
+  - Changed tagline to "Where knowledge begins"
+  - Centered input field text and placeholder
+  - Centered toolbar items with proper spacing
+  - Improved overall visual alignment
+  - Maintained 30% width with auto margins
+
+## [1.3.11] - 2024-02-21
+
+### Changed
+- Improved overall layout spacing and proportions
+- Reduced logo size to 32x32 for better balance
+- Adjusted vertical spacing between sections
+- Left-aligned logo and tagline for cleaner look
+- Simplified container structure for better organization
+- Removed unnecessary padding and margins
+
 ## [1.3.10] - 2024-02-21
 
 ### Changed
@@ -305,4 +332,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TypeScript
 - Tailwind CSS
 - React 18
-- Together AI API integration 
+- Together AI API integration
+
+## [1.3.14] - 2024-02-21
+
+### Changed
+- Improved text alignment consistency
+  - Centered all messages in the chat
+  - Added proper padding for message container
+  - Centered form elements and toolbar
+  - Improved overall visual balance
+  - Enhanced spacing and alignment 

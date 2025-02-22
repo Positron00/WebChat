@@ -186,8 +186,7 @@ export default function Chat() {
 
   // Apply high contrast theme if enabled
   const getMessageClassName = (role: string) => {
-    const baseClass = 'p-4 rounded-lg break-words max-w-[80%]';
-    const alignmentClass = role === 'assistant' ? 'ml-auto' : '';
+    const baseClass = 'p-4 rounded-lg break-words max-w-[80%] text-center mx-auto';
     const colorClass = accessibility.highContrast
       ? role === 'user'
         ? 'bg-blue-700 text-white'
@@ -196,14 +195,28 @@ export default function Chat() {
         ? 'bg-blue-100'
         : 'bg-gray-100';
     
-    return `${baseClass} ${alignmentClass} ${colorClass}`;
+    return `${baseClass} ${colorClass}`;
   };
 
   return (
-    <div className="w-full flex flex-col gap-8">
+    <div className="w-full flex flex-col items-center">
+      {/* Response Field */}
+      <div className="w-full mb-4 text-center">
+        <div className="text-sm text-gray-400">
+          {state.messages.length === 0 ? (
+            <div className="flex flex-col gap-1 items-center">
+              <span>Start a conversation...</span>
+              <span>Responses will appear here</span>
+            </div>
+          ) : (
+            "Responses"
+          )}
+        </div>
+      </div>
+
       {/* Messages Area */}
       <div 
-        className="flex-1 space-y-4 min-h-[200px] max-h-[60vh] overflow-y-auto w-full"
+        className="w-full flex-1 min-h-[200px] max-h-[400px] overflow-y-auto space-y-4 mb-4 px-4"
         role="log"
         aria-live="polite"
         aria-label="Chat Messages"
@@ -220,7 +233,7 @@ export default function Chat() {
         ))}
         {state.isLoading && (
           <div 
-            className="flex items-center justify-end text-gray-400 space-x-2"
+            className="flex items-center justify-center text-gray-400 space-x-2"
             role="status"
             aria-label="Loading response"
           >
@@ -235,7 +248,7 @@ export default function Chat() {
         )}
         {state.error && (
           <div 
-            className="text-right text-red-400 p-2 bg-red-900/50 rounded w-full"
+            className="text-center text-red-400 p-2 bg-red-900/50 rounded w-full"
             role="alert"
             aria-live="assertive"
           >
@@ -246,10 +259,10 @@ export default function Chat() {
       </div>
 
       {/* Input Area */}
-      <div className="relative w-full">
+      <div className="w-full px-4">
         <form 
           onSubmit={handleSubmit} 
-          className="w-full flex flex-col items-center"
+          className="flex flex-col items-center gap-2"
           aria-label="Message Form"
         >
           {/* Main Input Field */}
@@ -265,7 +278,7 @@ export default function Chat() {
               }}
               placeholder="Ask anything..."
               rows={1}
-              className="w-full p-4 pr-12 bg-[#2C2C2C] text-white rounded-lg border border-gray-700 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-500 resize-none overflow-hidden"
+              className="w-full p-2 bg-white/5 text-white text-center rounded border border-white/10 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-500 resize-none overflow-hidden"
               disabled={state.isLoading || isOffline}
               aria-label="Message Input"
               aria-disabled={state.isLoading || isOffline}
@@ -274,56 +287,54 @@ export default function Chat() {
             <button
               type="submit"
               disabled={!input.trim() && !imageFile}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00FFE0] transition-colors disabled:opacity-50 disabled:hover:text-gray-400"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00FFE0] transition-colors disabled:opacity-50 disabled:hover:text-gray-400"
               aria-label="Send Message"
             >
-              <MicrophoneIcon className="w-6 h-6" />
+              <MicrophoneIcon className="w-5 h-5" />
             </button>
           </div>
 
           {/* Toolbar */}
-          <div className="flex items-center justify-between mt-2 px-1 w-full">
-            <div className="flex items-center gap-4">
-              <button
-                type="button"
-                className="text-gray-400 hover:text-[#00FFE0] transition-colors flex items-center gap-2"
-              >
-                <SparklesIcon className="w-5 h-5" />
-                <span className="text-sm">Focus</span>
-              </button>
+          <div className="flex justify-center items-center gap-4">
+            <button
+              type="button"
+              className="p-2 hover:bg-white/5 rounded transition-colors flex items-center gap-1"
+            >
+              <SparklesIcon className="w-4 h-4 text-gray-400" />
+              <span className="text-xs text-gray-400">Focus</span>
+            </button>
 
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="text-gray-400 hover:text-[#00FFE0] transition-colors flex items-center gap-2"
-                disabled={isOffline}
-              >
-                <PaperClipIcon className="w-5 h-5" />
-                <span className="text-sm">Attach</span>
-              </button>
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="p-2 hover:bg-white/5 rounded transition-colors flex items-center gap-1"
+              disabled={isOffline}
+            >
+              <PaperClipIcon className="w-4 h-4 text-gray-400" />
+              <span className="text-xs text-gray-400">Attach</span>
+            </button>
 
-              <button
-                type="button"
-                className="text-gray-400 hover:text-[#00FFE0] transition-colors flex items-center gap-2"
-              >
-                <MicrophoneIcon className="w-5 h-5" />
-                <span className="text-sm">Voice</span>
-              </button>
+            <button
+              type="button"
+              className="p-2 hover:bg-white/5 rounded transition-colors flex items-center gap-1"
+            >
+              <MicrophoneIcon className="w-4 h-4 text-gray-400" />
+              <span className="text-xs text-gray-400">Voice</span>
+            </button>
 
-              <button
-                type="button"
-                className="text-gray-400 hover:text-[#00FFE0] transition-colors flex items-center gap-2"
-              >
-                <ComputerDesktopIcon className="w-5 h-5" />
-                <span className="text-sm">Screen</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              className="p-2 hover:bg-white/5 rounded transition-colors flex items-center gap-1"
+            >
+              <ComputerDesktopIcon className="w-4 h-4 text-gray-400" />
+              <span className="text-xs text-gray-400">Screen</span>
+            </button>
 
             <div className="flex items-center gap-2">
-              <div className="text-gray-400 text-sm">GPT</div>
+              <span className="text-xs text-gray-400">GPT</span>
               <button
                 type="button"
-                className="bg-gray-700 text-white text-sm px-3 py-1 rounded hover:bg-gray-600 transition-colors"
+                className="px-2 py-1 bg-white/5 text-xs text-gray-400 rounded hover:bg-white/10 transition-colors"
               >
                 Pro
               </button>
@@ -344,7 +355,7 @@ export default function Chat() {
           {/* Image Preview */}
           {imageFile && (
             <div 
-              className="mt-2 relative w-20 h-20 group"
+              className="relative w-16 h-16 group mx-auto"
               role="figure"
               aria-label="Uploaded Image Preview"
             >
@@ -352,7 +363,7 @@ export default function Chat() {
                 src={URL.createObjectURL(imageFile)}
                 alt={`Preview of ${imageFile.name}`}
                 fill
-                className="object-cover rounded-lg"
+                className="object-cover rounded"
               />
               <button
                 type="button"
@@ -360,9 +371,9 @@ export default function Chat() {
                   setImageFile(null);
                   if (fileInputRef.current) fileInputRef.current.value = '';
                 }}
-                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 
+                className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 
                          flex items-center justify-center opacity-0 group-hover:opacity-100 
-                         transition-opacity"
+                         transition-opacity text-xs"
                 aria-label="Remove Image"
               >
                 ×
