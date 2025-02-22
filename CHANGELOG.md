@@ -487,3 +487,79 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced error handling in chat operations
 - Improved message state management
 - Better integration with rate limiter
+
+## [1.5.0] - 2024-02-22
+
+### Added
+- Comprehensive logging system
+  - Added structured logging with levels (debug, info, warn, error)
+  - Added request ID tracking for better traceability
+  - Added log rotation to prevent memory issues
+  - Added colored console output for better readability
+  - Added error rate monitoring
+- API metrics tracking
+  - Added request count tracking
+  - Added error rate monitoring
+  - Added response time tracking
+  - Added retry count monitoring
+  - Added performance threshold warnings
+
+### Enhanced
+- Improved error handling
+  - Added centralized error handling in ChatContext
+  - Enhanced error messages with request IDs
+  - Added error recovery mechanisms
+  - Better error state management
+  - Improved error reporting
+
+### Changed
+- Optimized API client
+  - Added request ID tracking
+  - Enhanced retry mechanism
+  - Added metrics collection
+  - Improved error handling
+  - Better request/response logging
+- Enhanced ChatContext implementation
+  - Added message history management
+  - Improved state updates
+  - Better error recovery
+  - Enhanced storage handling
+  - Added performance monitoring
+
+### Developer Experience
+- Added comprehensive logging utilities
+- Improved debugging capabilities
+- Enhanced error traceability
+- Better performance monitoring
+- Added development tools for debugging
+
+## [1.5.1] - 2024-02-22
+
+### Fixed
+- Improved rate limiting implementation
+  - Added dynamic backoff mechanism
+  - Fixed timestamp handling in rate limiter
+  - Added proper request tracking
+  - Enhanced rate limit error handling
+  - Added detailed rate limit logging
+- Enhanced error messages
+  - Added remaining requests information
+  - Better wait time calculations
+  - More informative rate limit messages
+  - Improved error recovery
+
+### Added
+- Rate limiter improvements
+  - Added backoff multiplier for frequent rate limits
+  - Added request tracking before API calls
+  - Added rate limit error specific handling
+  - Enhanced logging for rate limit events
+  - Added rate limit metrics
+
+### Changed
+- Rate limit handling in ChatContext
+  - Better integration with rate limiter
+  - Improved error state management
+  - Enhanced user feedback
+  - Better recovery from rate limit errors
+  - More detailed logging

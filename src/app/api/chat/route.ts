@@ -94,8 +94,14 @@ export async function POST(req: Request) {
       throw new ApiError(500, 'Invalid response format from API');
     }
 
-    return NextResponse.json({ 
-      response: data.choices[0].message.content,
+    return NextResponse.json({
+      choices: [{
+        message: {
+          content: data.choices[0].message.content,
+          role: 'assistant'
+        },
+        finish_reason: data.choices[0].finish_reason || 'stop'
+      }],
       usage: data.usage
     });
 
