@@ -15,5 +15,6 @@ export const CHAT_SETTINGS = {
   frequencyPenalty: 0,
   presencePenalty: 0,
   maxMessages: 50, // Maximum messages to keep in history
-  rateLimitPerMinute: 20, // Maximum API calls per minute
+  rateLimitPerMinute: 10, // Reduced from 20 to be more conservative
+  rateLimitWindowMs: 60000, // 1 minute window
 } as const; 

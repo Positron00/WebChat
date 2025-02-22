@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.7] - 2024-02-21
+
+### Fixed
+- Improved rate limiting handling
+  - Added client-side rate limit checks before API calls
+  - Enhanced rate limit error messages with wait times
+  - Added remaining requests counter
+  - Reduced rate limit to 10 requests per minute
+  - Added rate limiter utility improvements
+  - Better error handling for 429 responses
+
+### Changed
+- Updated chat settings for better reliability
+  - Adjusted rate limiting parameters
+  - Added rate limit window configuration
+  - Improved error message clarity
+
 ## [1.3.6] - 2024-02-21
 
 ### Fixed

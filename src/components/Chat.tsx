@@ -8,6 +8,7 @@ import { storage } from '@/utils/storage';
 import { apiClient } from '@/utils/apiClient';
 import { useApp } from '@/contexts/AppContext';
 import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import { rateLimiter } from '@/utils/rateLimiter';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
@@ -85,6 +86,16 @@ export default function Chat() {
     e.preventDefault();
     if ((!input.trim() && !imageFile) || state.isLoading || isOffline) return;
 
+    // Check rate limit before making request
+    if (rateLimiter.isRateLimited()) {
+      const timeUntilNext = rateLimiter.getTimeUntilNextAllowed();
+      setState(prev => ({
+        ...prev,
+        error: `Please wait ${Math.ceil(timeUntilNext / 1000)} seconds before sending another message. You can send ${rateLimiter.getRemainingRequests()} more messages in the next minute.`
+      }));
+      return;
+    }
+
     const newMessage: ChatMessage = {
       role: 'user',
       content: input,
@@ -138,12 +149,24 @@ export default function Chat() {
       scrollToBottom();
     } catch (error) {
       console.error('Chat error:', error);
-      setState(prev => ({
-        ...prev,
-        isLoading: false,
-        error: error instanceof Error ? error.message : 'An unexpected error occurred',
-        messages: [...prev.messages, newMessage].slice(-CHAT_SETTINGS.maxMessages), // Keep user message even on error
-      }));
+      
+      // Handle rate limit errors specifically
+      if (error instanceof Error && error.message.includes('429')) {
+        const timeUntilNext = rateLimiter.getTimeUntilNextAllowed();
+        setState(prev => ({
+          ...prev,
+          isLoading: false,
+          error: `Rate limit exceeded. Please wait ${Math.ceil(timeUntilNext / 1000)} seconds before trying again.`,
+          messages: [...prev.messages, newMessage].slice(-CHAT_SETTINGS.maxMessages),
+        }));
+      } else {
+        setState(prev => ({
+          ...prev,
+          isLoading: false,
+          error: error instanceof Error ? error.message : 'An unexpected error occurred',
+          messages: [...prev.messages, newMessage].slice(-CHAT_SETTINGS.maxMessages),
+        }));
+      }
     }
   }
 
