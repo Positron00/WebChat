@@ -5,6 +5,246 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.2] - 2024-02-22
+
+### Changed
+- Enhanced message spacing and visual separation
+  - Added 3rem margin and padding between message pairs
+  - Increased spacing between user and assistant messages to 2rem
+  - Added thicker bottom borders between conversation pairs
+  - Improved visual hierarchy with consistent spacing
+  - Removed last border and spacing from final message pair
+
+## [1.5.1] - 2024-02-22
+
+### Fixed
+- Improved rate limiting implementation
+  - Added dynamic backoff mechanism
+  - Fixed timestamp handling in rate limiter
+  - Added proper request tracking
+  - Enhanced rate limit error handling
+  - Added detailed rate limit logging
+- Enhanced error messages
+  - Added remaining requests information
+  - Better wait time calculations
+  - More informative rate limit messages
+  - Improved error recovery
+
+### Added
+- Rate limiter improvements
+  - Added backoff multiplier for frequent rate limits
+  - Added request tracking before API calls
+  - Added rate limit error specific handling
+  - Enhanced logging for rate limit events
+  - Added rate limit metrics
+
+### Changed
+- Rate limit handling in ChatContext
+  - Better integration with rate limiter
+  - Improved error state management
+  - Enhanced user feedback
+  - Better recovery from rate limit errors
+  - More detailed logging
+
+## [1.5.0] - 2024-02-22
+
+### Added
+- Comprehensive logging system
+  - Added structured logging with levels (debug, info, warn, error)
+  - Added request ID tracking for better traceability
+  - Added log rotation to prevent memory issues
+  - Added colored console output for better readability
+  - Added error rate monitoring
+- API metrics tracking
+  - Added request count tracking
+  - Added error rate monitoring
+  - Added response time tracking
+  - Added retry count monitoring
+  - Added performance threshold warnings
+
+### Enhanced
+- Improved error handling
+  - Added centralized error handling in ChatContext
+  - Enhanced error messages with request IDs
+  - Added error recovery mechanisms
+  - Better error state management
+  - Improved error reporting
+
+### Changed
+- Optimized API client
+  - Added request ID tracking
+  - Enhanced retry mechanism
+  - Added metrics collection
+  - Improved error handling
+  - Better request/response logging
+- Enhanced ChatContext implementation
+  - Added message history management
+  - Improved state updates
+  - Better error recovery
+  - Enhanced storage handling
+  - Added performance monitoring
+
+### Developer Experience
+- Added comprehensive logging utilities
+- Improved debugging capabilities
+- Enhanced error traceability
+- Better performance monitoring
+- Added development tools for debugging
+
+## [1.4.1] - 2024-02-22
+
+### Fixed
+- Resolved ChatContext provider error
+  - Added ChatProvider to root layout
+  - Implemented sendMessage functionality in ChatContext
+  - Fixed context initialization and state management
+  - Added proper error handling for chat operations
+  - Integrated rate limiting in chat context
+
+### Changed
+- Development server now uses port 3001 when 3000 is occupied
+- Enhanced error handling in chat operations
+- Improved message state management
+- Better integration with rate limiter
+
+## [1.4.0] - 2024-02-22
+
+### Added
+- Environment configuration with Together AI API key
+- Comprehensive component testing
+  - Added MessageInput component tests
+  - Added MessageList component tests
+  - Added test coverage for accessibility features
+- New ChatContext for centralized state management
+- Dedicated API client with retry mechanism
+
+### Changed
+- Refactored Chat component into smaller, focused components
+  - Extracted MessageInput component
+  - Extracted MessageList component
+  - Improved component organization
+- Enhanced state management with ChatContext
+- Improved error handling in API client
+- Better separation of concerns in components
+- Enhanced accessibility implementation
+
+### Developer Experience
+- Added detailed component documentation
+- Improved test coverage
+- Better type safety with TypeScript
+- Enhanced code organization
+- Cleaner component structure
+
+## [1.3.24] - 2024-02-21
+
+### Changed
+- Increased input field width
+  - Expanded container width from 30% to 50%
+  - Improved overall layout proportions
+  - Enhanced readability with wider text area
+  - Better use of screen space
+  - Maintained centered alignment 
+
+## [1.3.23] - 2024-02-21
+
+### Changed
+- Increased input field height
+  - Changed textarea from 1 row to 3 rows
+  - Adjusted padding for better text visibility
+  - Improved overall input field appearance
+  - Removed overflow restriction
+  - Enhanced text input experience 
+
+## [1.3.22] - 2024-02-21
+
+### Changed
+- Reordered chat interface layout
+  - Moved input field above response field
+  - Adjusted spacing between components
+  - Improved visual flow from input to responses
+  - Enhanced overall user experience
+  - Maintained consistent styling 
+
+## [1.3.21] - 2024-02-21
+
+### Changed
+- Enhanced response field visibility and appearance
+  - Made response field always visible with consistent styling
+  - Added background and border to response area
+  - Increased minimum height to 300px
+  - Improved empty state appearance
+  - Better spacing and padding for messages
+
+## [1.3.20] - 2024-02-21
+
+### Changed
+- Improved text alignment consistency
+  - Centered all messages in the chat
+  - Added proper padding for message container
+  - Centered form elements and toolbar
+  - Improved overall visual balance
+  - Enhanced spacing and alignment
+
+## [1.3.19] - 2024-02-21
+
+### Changed
+- Updated package name
+  - Changed package name to "web-chat-app"
+  - Updated package.json configuration
+  - Maintained version number and other settings
+  - Improved project identification
+  - Better package naming convention
+
+## [1.3.18] - 2024-02-21
+
+### Changed
+- Increased input field width
+  - Expanded container width from 30% to 50%
+  - Improved overall layout proportions
+  - Enhanced readability with wider text area
+  - Better use of screen space
+  - Maintained centered alignment 
+
+## [1.3.17] - 2024-02-21
+
+### Changed
+- Increased input field height
+  - Changed textarea from 1 row to 3 rows
+  - Adjusted padding for better text visibility
+  - Improved overall input field appearance
+  - Removed overflow restriction
+  - Enhanced text input experience 
+
+## [1.3.16] - 2024-02-21
+
+### Changed
+- Reordered chat interface layout
+  - Moved input field above response field
+  - Adjusted spacing between components
+  - Improved visual flow from input to responses
+  - Enhanced overall user experience
+  - Maintained consistent styling 
+
+## [1.3.15] - 2024-02-21
+
+### Changed
+- Enhanced response field visibility and appearance
+  - Made response field always visible with consistent styling
+  - Added background and border to response area
+  - Increased minimum height to 300px
+  - Improved empty state appearance
+  - Better spacing and padding for messages
+
+## [1.3.14] - 2024-02-21
+
+### Changed
+- Improved text alignment consistency
+  - Centered all messages in the chat
+  - Added proper padding for message container
+  - Centered form elements and toolbar
+  - Improved overall visual balance
+  - Enhanced spacing and alignment
+
 ## [1.3.13] - 2024-02-21
 
 ### Changed
@@ -333,243 +573,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tailwind CSS
 - React 18
 - Together AI API integration
-
-## [1.3.14] - 2024-02-21
-
-### Changed
-- Improved text alignment consistency
-  - Centered all messages in the chat
-  - Added proper padding for message container
-  - Centered form elements and toolbar
-  - Improved overall visual balance
-  - Enhanced spacing and alignment
-
-## [1.3.15] - 2024-02-21
-
-### Changed
-- Enhanced response field visibility and appearance
-  - Made response field always visible with consistent styling
-  - Added background and border to response area
-  - Increased minimum height to 300px
-  - Improved empty state appearance
-  - Better spacing and padding for messages
-
-## [1.3.16] - 2024-02-21
-
-### Changed
-- Reordered chat interface layout
-  - Moved input field above response field
-  - Adjusted spacing between components
-  - Improved visual flow from input to responses
-  - Enhanced overall user experience
-  - Maintained consistent styling 
-
-## [1.3.17] - 2024-02-21
-
-### Changed
-- Increased input field height
-  - Changed textarea from 1 row to 3 rows
-  - Adjusted padding for better text visibility
-  - Improved overall input field appearance
-  - Removed overflow restriction
-  - Enhanced text input experience 
-
-## [1.3.18] - 2024-02-21
-
-### Changed
-- Increased input field width
-  - Expanded container width from 30% to 50%
-  - Improved overall layout proportions
-  - Enhanced readability with wider text area
-  - Better use of screen space
-  - Maintained centered alignment 
-
-## [1.3.19] - 2024-02-21
-
-### Changed
-- Updated package name
-  - Changed package name to "web-chat-app"
-  - Updated package.json configuration
-  - Maintained version number and other settings
-  - Improved project identification
-  - Better package naming convention
-
-## [1.3.20] - 2024-02-21
-
-### Changed
-- Improved text alignment consistency
-  - Centered all messages in the chat
-  - Added proper padding for message container
-  - Centered form elements and toolbar
-  - Improved overall visual balance
-  - Enhanced spacing and alignment
-
-## [1.3.21] - 2024-02-21
-
-### Changed
-- Enhanced response field visibility and appearance
-  - Made response field always visible with consistent styling
-  - Added background and border to response area
-  - Increased minimum height to 300px
-  - Improved empty state appearance
-  - Better spacing and padding for messages
-
-## [1.3.22] - 2024-02-21
-
-### Changed
-- Reordered chat interface layout
-  - Moved input field above response field
-  - Adjusted spacing between components
-  - Improved visual flow from input to responses
-  - Enhanced overall user experience
-  - Maintained consistent styling 
-
-## [1.3.23] - 2024-02-21
-
-### Changed
-- Increased input field height
-  - Changed textarea from 1 row to 3 rows
-  - Adjusted padding for better text visibility
-  - Improved overall input field appearance
-  - Removed overflow restriction
-  - Enhanced text input experience 
-
-## [1.3.24] - 2024-02-21
-
-### Changed
-- Increased input field width
-  - Expanded container width from 30% to 50%
-  - Improved overall layout proportions
-  - Enhanced readability with wider text area
-  - Better use of screen space
-  - Maintained centered alignment 
-
-## [1.4.0] - 2024-02-22
-
-### Added
-- Environment configuration with Together AI API key
-- Comprehensive component testing
-  - Added MessageInput component tests
-  - Added MessageList component tests
-  - Added test coverage for accessibility features
-- New ChatContext for centralized state management
-- Dedicated API client with retry mechanism
-
-### Changed
-- Refactored Chat component into smaller, focused components
-  - Extracted MessageInput component
-  - Extracted MessageList component
-  - Improved component organization
-- Enhanced state management with ChatContext
-- Improved error handling in API client
-- Better separation of concerns in components
-- Enhanced accessibility implementation
-
-### Developer Experience
-- Added detailed component documentation
-- Improved test coverage
-- Better type safety with TypeScript
-- Enhanced code organization
-- Cleaner component structure
-
-## [1.4.1] - 2024-02-22
-
-### Fixed
-- Resolved ChatContext provider error
-  - Added ChatProvider to root layout
-  - Implemented sendMessage functionality in ChatContext
-  - Fixed context initialization and state management
-  - Added proper error handling for chat operations
-  - Integrated rate limiting in chat context
-
-### Changed
-- Development server now uses port 3001 when 3000 is occupied
-- Enhanced error handling in chat operations
-- Improved message state management
-- Better integration with rate limiter
-
-## [1.5.0] - 2024-02-22
-
-### Added
-- Comprehensive logging system
-  - Added structured logging with levels (debug, info, warn, error)
-  - Added request ID tracking for better traceability
-  - Added log rotation to prevent memory issues
-  - Added colored console output for better readability
-  - Added error rate monitoring
-- API metrics tracking
-  - Added request count tracking
-  - Added error rate monitoring
-  - Added response time tracking
-  - Added retry count monitoring
-  - Added performance threshold warnings
-
-### Enhanced
-- Improved error handling
-  - Added centralized error handling in ChatContext
-  - Enhanced error messages with request IDs
-  - Added error recovery mechanisms
-  - Better error state management
-  - Improved error reporting
-
-### Changed
-- Optimized API client
-  - Added request ID tracking
-  - Enhanced retry mechanism
-  - Added metrics collection
-  - Improved error handling
-  - Better request/response logging
-- Enhanced ChatContext implementation
-  - Added message history management
-  - Improved state updates
-  - Better error recovery
-  - Enhanced storage handling
-  - Added performance monitoring
-
-### Developer Experience
-- Added comprehensive logging utilities
-- Improved debugging capabilities
-- Enhanced error traceability
-- Better performance monitoring
-- Added development tools for debugging
-
-## [1.5.1] - 2024-02-22
-
-### Fixed
-- Improved rate limiting implementation
-  - Added dynamic backoff mechanism
-  - Fixed timestamp handling in rate limiter
-  - Added proper request tracking
-  - Enhanced rate limit error handling
-  - Added detailed rate limit logging
-- Enhanced error messages
-  - Added remaining requests information
-  - Better wait time calculations
-  - More informative rate limit messages
-  - Improved error recovery
-
-### Added
-- Rate limiter improvements
-  - Added backoff multiplier for frequent rate limits
-  - Added request tracking before API calls
-  - Added rate limit error specific handling
-  - Enhanced logging for rate limit events
-  - Added rate limit metrics
-
-### Changed
-- Rate limit handling in ChatContext
-  - Better integration with rate limiter
-  - Improved error state management
-  - Enhanced user feedback
-  - Better recovery from rate limit errors
-  - More detailed logging
-
-## [1.5.2] - 2024-02-22
-
-### Changed
-- Enhanced message spacing and visual separation
-  - Added 3rem margin and padding between message pairs
-  - Increased spacing between user and assistant messages to 2rem
-  - Added thicker bottom borders between conversation pairs
-  - Improved visual hierarchy with consistent spacing
-  - Removed last border and spacing from final message pair
