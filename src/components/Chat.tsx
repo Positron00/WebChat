@@ -119,27 +119,41 @@ export default function Chat() {
         });
       }
 
-      const response = await apiClient.sendChatRequest({
-        messages: [...state.messages, newMessage],
-        image: imageUrl,
-        model: 'meta-llama/Llama-3.3-70b-instruct-turbo-free',
-        max_tokens: CHAT_SETTINGS.maxTokens,
-        temperature: CHAT_SETTINGS.temperature,
-        top_p: CHAT_SETTINGS.topP,
-        frequency_penalty: CHAT_SETTINGS.frequencyPenalty,
-        presence_penalty: CHAT_SETTINGS.presencePenalty
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [...state.messages, newMessage],
+          image: imageUrl,
+          model: 'meta-llama/Llama-3.3-70b-instruct-turbo-free',
+          max_tokens: CHAT_SETTINGS.maxTokens,
+          temperature: CHAT_SETTINGS.temperature,
+          top_p: CHAT_SETTINGS.topP,
+          frequency_penalty: CHAT_SETTINGS.frequencyPenalty,
+          presence_penalty: CHAT_SETTINGS.presencePenalty
+        })
       });
 
-      // Validate response structure
-      if (!response?.choices?.[0]?.message?.content) {
-        throw new Error('Invalid response from API');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `API error: ${response.statusText}`);
       }
 
+      const data = await response.json();
+      
+      const assistantMessage: ChatMessage = {
+        role: 'assistant',
+        content: data.response
+      };
+
       setState(prev => ({
+        ...prev,
         messages: [
           ...prev.messages,
           newMessage,
-          { role: 'assistant', content: response.choices[0].message.content }
+          assistantMessage
         ].slice(-CHAT_SETTINGS.maxMessages),
         isLoading: false,
         error: undefined,
@@ -172,8 +186,8 @@ export default function Chat() {
 
   // Apply high contrast theme if enabled
   const getMessageClassName = (role: string) => {
-    const baseClass = 'p-4 rounded-lg max-w-[80%] break-words';
-    const roleClass = role === 'user' ? 'ml-auto' : '';
+    const baseClass = 'p-4 rounded-lg break-words max-w-[80%]';
+    const alignmentClass = role === 'assistant' ? 'ml-auto' : '';
     const colorClass = accessibility.highContrast
       ? role === 'user'
         ? 'bg-blue-700 text-white'
@@ -182,14 +196,14 @@ export default function Chat() {
         ? 'bg-blue-100'
         : 'bg-gray-100';
     
-    return `${baseClass} ${roleClass} ${colorClass}`;
+    return `${baseClass} ${alignmentClass} ${colorClass}`;
   };
 
   return (
     <div className="w-full flex flex-col gap-8">
       {/* Messages Area */}
       <div 
-        className="flex-1 space-y-4 min-h-[200px] max-h-[60vh] overflow-y-auto"
+        className="flex-1 space-y-4 min-h-[200px] max-h-[60vh] overflow-y-auto w-full"
         role="log"
         aria-live="polite"
         aria-label="Chat Messages"
@@ -206,7 +220,7 @@ export default function Chat() {
         ))}
         {state.isLoading && (
           <div 
-            className="flex items-center justify-center text-gray-400 space-x-2"
+            className="flex items-center justify-end text-gray-400 space-x-2"
             role="status"
             aria-label="Loading response"
           >
@@ -221,7 +235,7 @@ export default function Chat() {
         )}
         {state.error && (
           <div 
-            className="text-center text-red-400 p-2 bg-red-900/50 rounded"
+            className="text-right text-red-400 p-2 bg-red-900/50 rounded w-full"
             role="alert"
             aria-live="assertive"
           >
@@ -235,11 +249,11 @@ export default function Chat() {
       <div className="relative w-full">
         <form 
           onSubmit={handleSubmit} 
-          className="w-full"
+          className="w-full flex flex-col items-center"
           aria-label="Message Form"
         >
           {/* Main Input Field */}
-          <div className="relative">
+          <div className="relative w-full">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -268,7 +282,7 @@ export default function Chat() {
           </div>
 
           {/* Toolbar */}
-          <div className="flex items-center justify-between mt-2 px-1">
+          <div className="flex items-center justify-between mt-2 px-1 w-full">
             <div className="flex items-center gap-4">
               <button
                 type="button"

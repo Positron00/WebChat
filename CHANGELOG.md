@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.10] - 2024-02-21
+
+### Changed
+- Updated message layout
+  - Positioned assistant responses on the right side
+  - Kept user messages on the left side
+  - Improved message width and spacing
+  - Right-aligned loading indicator and error messages
+  - Enhanced visual distinction between user and assistant messages
+
+## [1.3.9] - 2024-02-21
+
+### Changed
+- Updated content alignment
+  - Center-aligned all messages and text
+  - Centered input field text
+  - Improved visual balance with centered layout
+  - Enhanced readability with consistent alignment
+  - Maintained 30% width and left offset
+
+## [1.3.8] - 2024-02-21
+
+### Changed
+- Updated landing page layout
+  - Positioned content at 30% from left edge
+  - Improved message alignment and width
+  - Enhanced visual balance
+  - Adjusted text alignment for better readability
+  - Optimized spacing for new layout
+
 ## [1.3.7] - 2024-02-21
 
 ### Fixed
