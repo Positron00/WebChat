@@ -111,6 +111,11 @@ export default function Chat() {
         presence_penalty: CHAT_SETTINGS.presencePenalty
       });
 
+      // Validate response structure
+      if (!response?.choices?.[0]?.message?.content) {
+        throw new Error('Invalid response from API');
+      }
+
       setState(prev => ({
         messages: [
           ...prev.messages,
@@ -124,10 +129,12 @@ export default function Chat() {
       resetForm();
       scrollToBottom();
     } catch (error) {
+      console.error('Chat error:', error);
       setState(prev => ({
         ...prev,
         isLoading: false,
         error: error instanceof Error ? error.message : 'An unexpected error occurred',
+        messages: [...prev.messages, newMessage].slice(-CHAT_SETTINGS.maxMessages), // Keep user message even on error
       }));
     }
   }

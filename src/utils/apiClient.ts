@@ -58,6 +58,17 @@ export class ApiClient {
     return true; // Retry on network/unknown errors
   }
 
+  private validateResponse(data: any): data is ChatCompletionResponse {
+    return (
+      data &&
+      Array.isArray(data.choices) &&
+      data.choices.length > 0 &&
+      data.choices[0].message &&
+      typeof data.choices[0].message.content === 'string' &&
+      typeof data.choices[0].message.role === 'string'
+    );
+  }
+
   async fetchWithRetry<T>(
     url: string,
     options: RequestInit,
@@ -79,14 +90,24 @@ export class ApiClient {
 
         if (!response.ok) {
           throw new ApiError(
-            data.error || 'API request failed',
+            data.error?.message || `API request failed with status ${response.status}`,
             response.status,
+            data
+          );
+        }
+
+        // Validate response structure
+        if (!this.validateResponse(data)) {
+          throw new ApiError(
+            'Invalid response format from API',
+            500,
             data
           );
         }
 
         return data as T;
       } catch (error) {
+        console.error(`API error (attempt ${attempt + 1}/${retryOpts.maxRetries + 1}):`, error);
         lastError = error as Error;
         
         if (!this.isRetryableError(error) || attempt === retryOpts.maxRetries) {
