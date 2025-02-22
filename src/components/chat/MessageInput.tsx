@@ -56,46 +56,46 @@ export function MessageInput({
           type="submit"
           disabled={!value.trim()}
           onClick={onSubmit}
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00FFE0] transition-colors disabled:opacity-50 disabled:hover:text-gray-400"
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors disabled:opacity-40 disabled:bg-gray-600"
           aria-label="Send Message"
         >
-          <MicrophoneIcon className="w-5 h-5" />
+          Submit
         </button>
       </div>
 
       {/* Toolbar */}
-      <div className="flex justify-center items-center gap-4 mt-2">
+      <div className="flex justify-center items-center gap-2 mt-1">
         <button
           type="button"
-          className="p-2 hover:bg-white/5 rounded transition-colors flex items-center gap-1"
+          className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
         >
-          <SparklesIcon className="w-4 h-4 text-gray-400" />
+          <SparklesIcon className="w-3 h-3 text-gray-400" />
           <span className="text-xs text-gray-400">Focus</span>
         </button>
 
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          className="p-2 hover:bg-white/5 rounded transition-colors flex items-center gap-1"
+          className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
           disabled={isOffline}
         >
-          <PaperClipIcon className="w-4 h-4 text-gray-400" />
+          <PaperClipIcon className="w-3 h-3 text-gray-400" />
           <span className="text-xs text-gray-400">Attach</span>
         </button>
 
         <button
           type="button"
-          className="p-2 hover:bg-white/5 rounded transition-colors flex items-center gap-1"
+          className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
         >
-          <MicrophoneIcon className="w-4 h-4 text-gray-400" />
+          <MicrophoneIcon className="w-3 h-3 text-gray-400" />
           <span className="text-xs text-gray-400">Voice</span>
         </button>
 
         <button
           type="button"
-          className="p-2 hover:bg-white/5 rounded transition-colors flex items-center gap-1"
+          className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
         >
-          <ComputerDesktopIcon className="w-4 h-4 text-gray-400" />
+          <ComputerDesktopIcon className="w-3 h-3 text-gray-400" />
           <span className="text-xs text-gray-400">Screen</span>
         </button>
       </div>
