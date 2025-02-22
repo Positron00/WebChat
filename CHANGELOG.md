@@ -563,3 +563,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced user feedback
   - Better recovery from rate limit errors
   - More detailed logging
+
+## [1.5.2] - 2024-02-22
+
+### Changed
+- Enhanced message spacing and visual separation
+  - Added 3rem margin and padding between message pairs
+  - Increased spacing between user and assistant messages to 2rem
+  - Added thicker bottom borders between conversation pairs
+  - Improved visual hierarchy with consistent spacing
+  - Removed last border and spacing from final message pair

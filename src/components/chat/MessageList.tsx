@@ -49,10 +49,11 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
         Responses
       </div>
       <div 
-        className="w-full flex-1 min-h-[300px] bg-white/5 rounded-lg border border-white/10 overflow-y-auto space-y-4 p-4"
+        className="w-full flex-1 min-h-[300px] bg-white/5 rounded-lg border border-white/10 overflow-y-auto p-4"
         role="log"
         aria-live="polite"
         aria-label="Chat Messages"
+        key={messages.length}
       >
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-gray-400">
@@ -61,16 +62,37 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
           </div>
         ) : (
           <>
-            {messages.map((message, i) => (
-              <div
-                key={i}
-                className={getMessageClassName(message.role)}
-                role={message.role === 'assistant' ? 'article' : 'note'}
-                aria-label={`${message.role}'s message`}
-              >
-                {message.content}
-              </div>
-            ))}
+            {/* Group messages into pairs */}
+            {Array.from({ length: Math.ceil(messages.length / 2) }, (_, index) => {
+              const userMessage = messages[index * 2];
+              const assistantMessage = messages[index * 2 + 1];
+              return (
+                <div key={index} className="mb-12 pb-12 border-b-2 border-white/10 last:border-b-0 last:mb-0 last:pb-0">
+                  {/* User message */}
+                  <div className="mb-8">
+                    <div
+                      className={getMessageClassName('user')}
+                      role="note"
+                      aria-label="user's message"
+                    >
+                      {userMessage.content}
+                    </div>
+                  </div>
+                  {/* Assistant message */}
+                  {assistantMessage && (
+                    <div>
+                      <div
+                        className={getMessageClassName('assistant')}
+                        role="article"
+                        aria-label="assistant's message"
+                      >
+                        {assistantMessage.content}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </>
         )}
         {isLoading && (

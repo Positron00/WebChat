@@ -123,7 +123,6 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
         ...prev,
         messages: [
           ...prev.messages,
-          newMessage,
           assistantMessage
         ].slice(-CHAT_SETTINGS.maxMessages),
         isLoading: false,
