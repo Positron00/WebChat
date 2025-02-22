@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.4] - 2024-02-21
+
+### Fixed
+- Improved input field interactivity
+  - Changed input to textarea for better text handling
+  - Added proper styling for text input
+  - Fixed focus and interaction issues
+  - Maintained single-line appearance with overflow control
+
+## [1.3.3] - 2024-02-21
+
+### Changed
+- Improved landing page experience
+  - Input field always visible and ready for typing
+  - Added autofocus to input field
+  - Improved messages area layout with proper spacing
+  - Added min-height and max-height constraints
+  - Enhanced overall visual hierarchy
+
+## [1.3.2] - 2024-02-21
+
+### Enhanced
+- Improved text input functionality
+  - Added Enter key support for form submission
+  - Converted microphone button to submit button
+  - Added proper button states (disabled when input is empty)
+  - Improved form submission handling
+
 ## [1.3.1] - 2024-02-21
 
 ### Changed

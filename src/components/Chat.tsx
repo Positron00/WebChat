@@ -148,52 +148,50 @@ export default function Chat() {
   };
 
   return (
-    <div className="w-full">
-      {/* Messages Area - Only show if there are messages */}
-      {state.messages.length > 0 && (
-        <div 
-          className="mb-8 space-y-4"
-          role="log"
-          aria-live="polite"
-          aria-label="Chat Messages"
-        >
-          {state.messages.map((message, i) => (
-            <div
-              key={i}
-              className={getMessageClassName(message.role)}
-              role={message.role === 'assistant' ? 'article' : 'note'}
-              aria-label={`${message.role}'s message`}
-            >
-              {message.content}
-            </div>
-          ))}
-          {state.isLoading && (
+    <div className="w-full flex flex-col gap-8">
+      {/* Messages Area */}
+      <div 
+        className="flex-1 space-y-4 min-h-[200px] max-h-[60vh] overflow-y-auto"
+        role="log"
+        aria-live="polite"
+        aria-label="Chat Messages"
+      >
+        {state.messages.map((message, i) => (
+          <div
+            key={i}
+            className={getMessageClassName(message.role)}
+            role={message.role === 'assistant' ? 'article' : 'note'}
+            aria-label={`${message.role}'s message`}
+          >
+            {message.content}
+          </div>
+        ))}
+        {state.isLoading && (
+          <div 
+            className="flex items-center justify-center text-gray-400 space-x-2"
+            role="status"
+            aria-label="Loading response"
+          >
             <div 
-              className="flex items-center justify-center text-gray-400 space-x-2"
-              role="status"
-              aria-label="Loading response"
-            >
-              <div 
-                className={`${
-                  accessibility.reducedMotion ? '' : 'animate-spin'
-                } rounded-full h-4 w-4 border-2 border-gray-400 border-t-transparent`}
-                aria-hidden="true"
-              />
-              <span>Thinking...</span>
-            </div>
-          )}
-          {state.error && (
-            <div 
-              className="text-center text-red-400 p-2 bg-red-900/50 rounded"
-              role="alert"
-              aria-live="assertive"
-            >
-              {state.error}
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-      )}
+              className={`${
+                accessibility.reducedMotion ? '' : 'animate-spin'
+              } rounded-full h-4 w-4 border-2 border-gray-400 border-t-transparent`}
+              aria-hidden="true"
+            />
+            <span>Thinking...</span>
+          </div>
+        )}
+        {state.error && (
+          <div 
+            className="text-center text-red-400 p-2 bg-red-900/50 rounded"
+            role="alert"
+            aria-live="assertive"
+          >
+            {state.error}
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
 
       {/* Input Area */}
       <div className="relative w-full">
@@ -204,20 +202,28 @@ export default function Chat() {
         >
           {/* Main Input Field */}
           <div className="relative">
-            <input
-              type="text"
+            <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit(e as unknown as FormEvent);
+                }
+              }}
               placeholder="Ask anything..."
-              className="w-full p-4 pr-12 bg-[#2C2C2C] text-white rounded-lg border border-gray-700 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-500"
+              rows={1}
+              className="w-full p-4 pr-12 bg-[#2C2C2C] text-white rounded-lg border border-gray-700 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-500 resize-none overflow-hidden"
               disabled={state.isLoading || isOffline}
               aria-label="Message Input"
               aria-disabled={state.isLoading || isOffline}
+              autoFocus
             />
             <button
-              type="button"
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00FFE0] transition-colors"
-              aria-label="Voice Input"
+              type="submit"
+              disabled={!input.trim() && !imageFile}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00FFE0] transition-colors disabled:opacity-50 disabled:hover:text-gray-400"
+              aria-label="Send Message"
             >
               <MicrophoneIcon className="w-6 h-6" />
             </button>
