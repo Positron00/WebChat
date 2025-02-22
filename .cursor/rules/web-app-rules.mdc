@@ -1,6 +1,6 @@
 ---
-description: 
-globs: 
+description: Rules for building a React + TypeScript web app with Tailwind CSS
+globs: *.tsx, *.ts
 ---
 
 # Your rule content
@@ -8,39 +8,61 @@ globs:
 - You can @ files here
 - You can use markdown but dont have to
 
+# Description: Rules for building a React + TypeScript web app with Tailwind CSS
 # File patterns: *.tsx, *.ts
 
 ## General Rules
 - Use TypeScript for all new code.
+- Prefer functional components over class components.
 - Follow clean code principles (e.g., meaningful variable names, single responsibility functions).
+- Write modular and reusable code; avoid code duplication.
 - Prefer async/await over callbacks for asynchronous operations.
 - Write comprehensive error handling for all critical functions.
 
 ## React Guidelines
-- Use functional components instead of class components.
 - Implement proper prop types using TypeScript interfaces.
 - Avoid inline styles; use Tailwind CSS or styled-components instead.
-- Write reusable components and avoid duplication.
+- Use hooks like `useState`, `useEffect`, and `useContext` where applicable.
+- Use React Server Components (RSC) wherever possible for better performance.
+
+## Styling
+- Use Tailwind CSS for styling HTML elements.
+- Follow the mobile-first design approach.
+- Avoid inline styles; use utility classes from Tailwind instead.
+- Adhere to the project's design system and naming conventions.
+
+## File Structure
+- Organize files into folders like `components/`, `hooks/`, `pages/`, and `utils/`.
+- Use lowercase with dashes for folder names (e.g., `auth-wizard`).
+- Export one main component per file.
+
+## Naming Conventions
+- Use camelCase for variables and functions.
+- Use PascalCase for component names (e.g., `AuthWizard`).
+- Prefix state variables with auxiliary verbs (e.g., `isLoading`, `hasError`).
+
+## Performance Optimization
+- Minimize the use of `useEffect` unless necessary.
+- Optimize images using lazy loading and WebP format.
+- Dynamically load non-critical components using React's `lazy()` and `Suspense`.
+
+## Testing
+- Write unit tests for all utility functions and critical components.
+- Use Jest and React Testing Library for testing React components.
+- Ensure all components have at least 80% test coverage.
 
 ## API Integration
-- Use Axios for HTTP requests and handle errors with try/catch blocks.
+- Use Axios for API calls and manage requests in a separate `services/` folder.
+- Handle errors gracefully using try-catch blocks and display user-friendly messages.
 - Centralize API calls in a dedicated service layer (e.g., `api/` folder).
 
 ## State Management
 - Use React Context or Zustand for global state management where applicable.
 - Avoid unnecessary nested states; keep the state structure flat.
 
-## Styling
-- Use Tailwind CSS for styling HTML elements.
-- Adhere to the project's design system and naming conventions.
-
-## Testing
-- Write unit tests for all utility functions and critical components.
-- Use Jest and React Testing Library for testing React components.
-- Ensure 80%+ test coverage before merging code.
+## Additional Notes
+- Always follow clean code principles.
+- Always include comments for complex logic or non-intuitive code sections.
 
 @file ../tsconfig.json
 @file ../tailwind.config.js
-
-## Additional Notes
-- Always include comments for complex logic or non-intuitive code sections.
