@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2024-02-21
+
+### Changed
+- Updated application tagline to "Intelligence at your fingertips"
+
+## [1.3.0] - 2024-02-21
+
+### Changed
+- Complete UI redesign inspired by Perplexity's interface
+  - New dark theme with teal accent color
+  - Centered layout with logo and tagline
+  - Modernized input field with microphone button
+  - Added bottom toolbar with Focus, Attach, Voice, and Screen options
+  - Enhanced image preview styling
+  - Added GPT and Pro badge indicators
+- Updated component styling for better dark mode support
+- Improved accessibility in dark theme
+
+### Added
+- New logo SVG with geometric design
+- Hero Icons for UI elements
+- Bottom toolbar functionality
+- Enhanced visual feedback on hover states
+
 ## [1.2.1] - 2024-02-21
 
 ### Fixed

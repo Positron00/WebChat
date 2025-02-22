@@ -7,6 +7,7 @@ import { CHAT_SETTINGS } from '@/config/chat';
 import { storage } from '@/utils/storage';
 import { apiClient } from '@/utils/apiClient';
 import { useApp } from '@/contexts/AppContext';
+import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon } from '@heroicons/react/24/outline';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
@@ -147,60 +148,131 @@ export default function Chat() {
   };
 
   return (
-    <div 
-      className="flex flex-col h-screen max-w-3xl mx-auto p-4"
-      role="main"
-      aria-label="Chat Interface"
-    >
-      <div 
-        className="flex-1 overflow-y-auto space-y-4 mb-4"
-        role="log"
-        aria-live="polite"
-        aria-label="Chat Messages"
-      >
-        {state.messages.map((message, i) => (
-          <div
-            key={i}
-            className={getMessageClassName(message.role)}
-            role={message.role === 'assistant' ? 'article' : 'note'}
-            aria-label={`${message.role}'s message`}
-          >
-            {message.content}
-          </div>
-        ))}
-        {state.isLoading && (
-          <div 
-            className="flex items-center justify-center text-gray-500 space-x-2"
-            role="status"
-            aria-label="Loading response"
-          >
+    <div className="w-full">
+      {/* Messages Area - Only show if there are messages */}
+      {state.messages.length > 0 && (
+        <div 
+          className="mb-8 space-y-4"
+          role="log"
+          aria-live="polite"
+          aria-label="Chat Messages"
+        >
+          {state.messages.map((message, i) => (
+            <div
+              key={i}
+              className={getMessageClassName(message.role)}
+              role={message.role === 'assistant' ? 'article' : 'note'}
+              aria-label={`${message.role}'s message`}
+            >
+              {message.content}
+            </div>
+          ))}
+          {state.isLoading && (
             <div 
-              className={`${
-                accessibility.reducedMotion ? '' : 'animate-spin'
-              } rounded-full h-4 w-4 border-2 border-gray-500 border-t-transparent`}
-              aria-hidden="true"
-            />
-            <span>Thinking...</span>
-          </div>
-        )}
-        {state.error && (
-          <div 
-            className="text-center text-red-500 p-2 bg-red-50 rounded"
-            role="alert"
-            aria-live="assertive"
-          >
-            {state.error}
-          </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
+              className="flex items-center justify-center text-gray-400 space-x-2"
+              role="status"
+              aria-label="Loading response"
+            >
+              <div 
+                className={`${
+                  accessibility.reducedMotion ? '' : 'animate-spin'
+                } rounded-full h-4 w-4 border-2 border-gray-400 border-t-transparent`}
+                aria-hidden="true"
+              />
+              <span>Thinking...</span>
+            </div>
+          )}
+          {state.error && (
+            <div 
+              className="text-center text-red-400 p-2 bg-red-900/50 rounded"
+              role="alert"
+              aria-live="assertive"
+            >
+              {state.error}
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+      )}
 
-      <form 
-        onSubmit={handleSubmit} 
-        className="flex flex-col gap-2"
-        aria-label="Message Form"
-      >
-        <div className="flex gap-2">
+      {/* Input Area */}
+      <div className="relative w-full">
+        <form 
+          onSubmit={handleSubmit} 
+          className="w-full"
+          aria-label="Message Form"
+        >
+          {/* Main Input Field */}
+          <div className="relative">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask anything..."
+              className="w-full p-4 pr-12 bg-[#2C2C2C] text-white rounded-lg border border-gray-700 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-500"
+              disabled={state.isLoading || isOffline}
+              aria-label="Message Input"
+              aria-disabled={state.isLoading || isOffline}
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00FFE0] transition-colors"
+              aria-label="Voice Input"
+            >
+              <MicrophoneIcon className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Toolbar */}
+          <div className="flex items-center justify-between mt-2 px-1">
+            <div className="flex items-center gap-4">
+              <button
+                type="button"
+                className="text-gray-400 hover:text-[#00FFE0] transition-colors flex items-center gap-2"
+              >
+                <SparklesIcon className="w-5 h-5" />
+                <span className="text-sm">Focus</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="text-gray-400 hover:text-[#00FFE0] transition-colors flex items-center gap-2"
+                disabled={isOffline}
+              >
+                <PaperClipIcon className="w-5 h-5" />
+                <span className="text-sm">Attach</span>
+              </button>
+
+              <button
+                type="button"
+                className="text-gray-400 hover:text-[#00FFE0] transition-colors flex items-center gap-2"
+              >
+                <MicrophoneIcon className="w-5 h-5" />
+                <span className="text-sm">Voice</span>
+              </button>
+
+              <button
+                type="button"
+                className="text-gray-400 hover:text-[#00FFE0] transition-colors flex items-center gap-2"
+              >
+                <ComputerDesktopIcon className="w-5 h-5" />
+                <span className="text-sm">Screen</span>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="text-gray-400 text-sm">GPT</div>
+              <button
+                type="button"
+                className="bg-gray-700 text-white text-sm px-3 py-1 rounded hover:bg-gray-600 transition-colors"
+              >
+                Pro
+              </button>
+            </div>
+          </div>
+
+          {/* Hidden File Input */}
           <input
             type="file"
             accept={ALLOWED_FILE_TYPES.join(',')}
@@ -210,18 +282,11 @@ export default function Chat() {
             aria-label="Upload Image"
             disabled={isOffline}
           />
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition-colors disabled:opacity-50"
-            aria-label="Upload Image Button"
-            disabled={isOffline}
-          >
-            Upload Image
-          </button>
+
+          {/* Image Preview */}
           {imageFile && (
             <div 
-              className="relative w-12 h-12 group"
+              className="mt-2 relative w-20 h-20 group"
               role="figure"
               aria-label="Uploaded Image Preview"
             >
@@ -229,7 +294,7 @@ export default function Chat() {
                 src={URL.createObjectURL(imageFile)}
                 alt={`Preview of ${imageFile.name}`}
                 fill
-                className="object-cover rounded"
+                className="object-cover rounded-lg"
               />
               <button
                 type="button"
@@ -237,40 +302,17 @@ export default function Chat() {
                   setImageFile(null);
                   if (fileInputRef.current) fileInputRef.current.value = '';
                 }}
-                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 
-                           flex items-center justify-center opacity-0 group-hover:opacity-100 
-                           transition-opacity"
+                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 
+                         flex items-center justify-center opacity-0 group-hover:opacity-100 
+                         transition-opacity"
                 aria-label="Remove Image"
               >
                 ×
               </button>
             </div>
           )}
-        </div>
-        
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your message..."
-            className="flex-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            disabled={state.isLoading || isOffline}
-            aria-label="Message Input"
-            aria-disabled={state.isLoading || isOffline}
-          />
-          <button
-            type="submit"
-            disabled={state.isLoading || (!input.trim() && !imageFile) || isOffline}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 
-                     disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            aria-label="Send Message"
-            aria-disabled={state.isLoading || (!input.trim() && !imageFile) || isOffline}
-          >
-            Send
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 } 
