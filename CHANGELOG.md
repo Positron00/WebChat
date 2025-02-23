@@ -5,6 +5,91 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.3] - 2024-02-22
+
+### Added
+- Comprehensive architectural documentation
+  ```mermaid
+  graph TD
+      subgraph Frontend ["Frontend (Next.js App)"]
+          Layout["/app/layout.tsx<br/>Root Layout + Providers"]
+          Chat["/components/Chat.tsx<br/>Main Chat Component"]
+          
+          subgraph Components ["Components"]
+              MessageInput["/components/chat/MessageInput.tsx<br/>Input + Toolbar"]
+              MessageList["/components/chat/MessageList.tsx<br/>Message Display"]
+          end
+          
+          subgraph Contexts ["Context Providers"]
+              AppContext["/contexts/AppContext.tsx<br/>App Settings + Theme"]
+              ChatContext["/contexts/ChatContext.tsx<br/>Chat State + Logic"]
+          end
+          
+          subgraph Utils ["Utilities"]
+              ApiClient["/utils/apiClient.ts<br/>API Communication"]
+              RateLimiter["/utils/rateLimiter.ts<br/>Request Rate Control"]
+              Logger["/utils/logger.ts<br/>Logging System"]
+              Storage["/utils/storage.ts<br/>Local Storage"]
+          end
+      end
+      
+      subgraph Backend ["Backend (API Routes)"]
+          ChatAPI["/app/api/chat/route.ts<br/>Chat Endpoint"]
+      end
+      
+      subgraph External ["External Services"]
+          TogetherAI["Together AI<br/>LLM API"]
+      end
+
+      %% Component Relationships
+      Layout --> AppContext
+      Layout --> ChatContext
+      Layout --> Chat
+      
+      Chat --> MessageInput
+      Chat --> MessageList
+      
+      %% Context Usage
+      ChatContext --> ApiClient
+      ChatContext --> RateLimiter
+      ChatContext --> Logger
+      ChatContext --> Storage
+      
+      %% API Flow
+      ApiClient --> ChatAPI
+      ChatAPI --> TogetherAI
+      
+      %% Data Flow
+      MessageInput -.-> |"User Input"| ChatContext
+      ChatContext -.-> |"Messages"| MessageList
+      
+      %% Utility Dependencies
+      ApiClient --> Logger
+      RateLimiter --> Logger
+
+      classDef context fill:#f9f,stroke:#333,stroke-width:2px
+      classDef component fill:#bbf,stroke:#333,stroke-width:2px
+      classDef util fill:#dfd,stroke:#333,stroke-width:2px
+      classDef api fill:#fdd,stroke:#333,stroke-width:2px
+      classDef external fill:#ddd,stroke:#333,stroke-width:2px
+      
+      class AppContext,ChatContext context
+      class Chat,MessageInput,MessageList component
+      class ApiClient,RateLimiter,Logger,Storage util
+      class ChatAPI api
+      class TogetherAI external
+  ```
+
+### Documentation
+- Added detailed architecture diagram showing:
+  - Frontend component hierarchy and relationships
+  - State management and context providers
+  - Utility layer organization
+  - Backend API integration
+  - External service connections
+  - Data flow between components
+  - System dependencies and interactions
+
 ## [1.5.2] - 2024-02-22
 
 ### Changed
