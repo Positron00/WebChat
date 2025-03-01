@@ -67,11 +67,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       ApiClient --> Logger
       RateLimiter --> Logger
 
-      classDef context fill:#f9f,stroke:#333,stroke-width:2px
-      classDef component fill:#bbf,stroke:#333,stroke-width:2px
-      classDef util fill:#dfd,stroke:#333,stroke-width:2px
-      classDef api fill:#fdd,stroke:#333,stroke-width:2px
-      classDef external fill:#ddd,stroke:#333,stroke-width:2px
+      classDef context fill:#f9f,stroke:#333,stroke-width:2px,color:#333
+      classDef component fill:#bbf,stroke:#333,stroke-width:2px,color:#333
+      classDef util fill:#dfd,stroke:#333,stroke-width:2px,color:#333
+      classDef api fill:#fdd,stroke:#333,stroke-width:2px,color:#333
+      classDef external fill:#ddd,stroke:#333,stroke-width:2px,color:#333
       
       class AppContext,ChatContext context
       class Chat,MessageInput,MessageList component
