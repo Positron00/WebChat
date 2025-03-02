@@ -73,7 +73,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     logger.info('Sending message', { 
       message, 
       hasImage: !!imageFile, 
-      promptStyle: accessibility.promptStyle 
+      promptStyle: accessibility.promptStyle,
+      knowledgeFocus: accessibility.knowledgeFocus
     }, requestId);
 
     // Check rate limit
@@ -115,16 +116,18 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       // Add request to rate limiter before making API call
       rateLimiter.addRequest();
 
-      // Pass the promptStyle to the API client
+      // Pass both promptStyle and knowledgeFocus to the API client
       const data = await apiClient.sendChatMessage(
         [...state.messages, newMessage], 
         imageUrl,
-        accessibility.promptStyle
+        accessibility.promptStyle,
+        accessibility.knowledgeFocus
       );
       
       logger.info('Received response from API', { 
         responseLength: data.choices[0].message.content.length,
-        promptStyle: accessibility.promptStyle
+        promptStyle: accessibility.promptStyle,
+        knowledgeFocus: accessibility.knowledgeFocus
       }, requestId);
       
       const assistantMessage: ChatMessage = {

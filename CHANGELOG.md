@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.1] - 2024-02-22
+
+### Changed
+- Made the "General" knowledge focus area visible in the UI
+  - Removed conditional rendering to always show the knowledge focus pill
+  - "General" knowledge focus now has its own pill indicator like other domains
+  - Improved consistency in the UI for all knowledge focus options
+  - Enhanced user awareness of the current knowledge focus setting
+  - Maintained gray color scheme for the "General" pill
+
+## [1.7.0] - 2024-02-22
+
+### Added
+- Knowledge domain focus feature
+  - Added domain-specific knowledge focus options: Medical, Legal, Physics, Chemistry, Technology, Business, and History
+  - Implemented focus dropdown menu through the Focus button in toolbar
+  - Created specialized system prompts for each knowledge domain
+  - Added colored pill indicator for active knowledge focus
+  - Maintained "General" as the default knowledge domain
+  - Combined knowledge focus with prompt style for more specialized responses
+
+### Changed
+- Enhanced Focus button functionality
+  - Transformed decorative Focus button into an interactive dropdown menu
+  - Added radio button selection for knowledge domains
+  - Implemented visual feedback through color-coded pills
+  - Created logical combination of prompt style and knowledge focus
+  - Improved system prompts with domain-specific knowledge guidance
+
 ## [1.6.2] - 2024-02-22
 
 ### Added

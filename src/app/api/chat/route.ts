@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { config } from '@/config/env';
-import { SYSTEM_PROMPT, SYSTEM_PROMPTS, CHAT_SETTINGS } from '@/config/chat';
+import { SYSTEM_PROMPT, SYSTEM_PROMPTS, KNOWLEDGE_PROMPTS, CHAT_SETTINGS } from '@/config/chat';
 import { ChatCompletionRequest, ChatRequestMessage, ChatCompletionResponse } from '@/types/api';
 import { rateLimiter } from '@/utils/rateLimiter';
 
@@ -33,14 +33,25 @@ export async function POST(req: Request) {
 
     // Parse and validate request
     const body = await req.json();
-    const { messages, image, promptStyle = 'balanced' } = body;
+    const { 
+      messages, 
+      image, 
+      promptStyle = 'balanced',
+      knowledgeFocus = 'general'
+    } = body;
 
     if (!validateRequest(messages)) {
       throw new ApiError(400, 'Invalid message format');
     }
 
     // Get the appropriate system prompt based on the promptStyle
-    const systemPrompt = SYSTEM_PROMPTS[promptStyle as keyof typeof SYSTEM_PROMPTS] || SYSTEM_PROMPT;
+    const basePrompt = SYSTEM_PROMPTS[promptStyle as keyof typeof SYSTEM_PROMPTS] || SYSTEM_PROMPT;
+    
+    // Get the knowledge focus prompt
+    const knowledgePrompt = KNOWLEDGE_PROMPTS[knowledgeFocus as keyof typeof KNOWLEDGE_PROMPTS] || KNOWLEDGE_PROMPTS.general;
+    
+    // Combine the prompts
+    const systemPrompt = `${basePrompt}\n\n${knowledgePrompt}`;
 
     // Ensure messages don't exceed the maximum
     const recentMessages = messages.slice(-CHAT_SETTINGS.maxMessages);

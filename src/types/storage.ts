@@ -7,13 +7,15 @@ const STORAGE_KEYS = {
 export interface AccessibilitySettings {
   reducedMotion: boolean;
   highContrast: boolean;
-  fontSize: 'normal' | 'large' | 'larger';
+  fontSize: 'small' | 'normal' | 'large';
   promptStyle: 'balanced' | 'creative' | 'precise' | 'helpful';
+  knowledgeFocus: 'general' | 'medical' | 'legal' | 'physics' | 'chemistry' | 'technology' | 'business' | 'history';
 }
 
 const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
   reducedMotion: false,
   highContrast: false,
   fontSize: 'normal',
-  promptStyle: 'balanced'
+  promptStyle: 'balanced',
+  knowledgeFocus: 'general'
 }; 

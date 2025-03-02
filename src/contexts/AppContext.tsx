@@ -20,7 +20,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     reducedMotion: false,
     highContrast: false,
     fontSize: 'normal',
-    promptStyle: 'balanced'
+    promptStyle: 'balanced',
+    knowledgeFocus: 'general'
   });
   const [isOffline, setIsOffline] = useState(false);
 
@@ -50,7 +51,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     storage.saveAccessibilitySettings(accessibility);
     
     document.documentElement.style.fontSize = 
-      accessibility.fontSize === 'larger' ? '120%' : 
+      accessibility.fontSize === 'small' ? '90%' : 
       accessibility.fontSize === 'large' ? '110%' : 
       '100%';
     

@@ -31,6 +31,30 @@ const PROMPT_STYLE_COLORS = {
   helpful: 'bg-green-600 text-white'
 };
 
+// Define knowledge focus areas
+const KNOWLEDGE_FOCUS = {
+  general: 'General',
+  medical: 'Medical',
+  legal: 'Legal',
+  physics: 'Physics',
+  chemistry: 'Chemistry',
+  technology: 'Technology',
+  business: 'Business',
+  history: 'History'
+};
+
+// Define colors for knowledge focus areas
+const KNOWLEDGE_FOCUS_COLORS = {
+  general: 'bg-gray-600 text-white',
+  medical: 'bg-red-600 text-white',
+  legal: 'bg-yellow-600 text-white',
+  physics: 'bg-blue-800 text-white',
+  chemistry: 'bg-green-800 text-white',
+  technology: 'bg-cyan-700 text-white',
+  business: 'bg-amber-700 text-white',
+  history: 'bg-orange-700 text-white'
+};
+
 export function MessageInput({
   value,
   onChange,
@@ -43,6 +67,7 @@ export function MessageInput({
   const { isOffline, accessibility, setAccessibility } = useApp();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showSettings, setShowSettings] = useState(false);
+  const [showFocusDropdown, setShowFocusDropdown] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -62,6 +87,14 @@ export function MessageInput({
       ...accessibility,
       promptStyle: style
     });
+  };
+
+  const changeKnowledgeFocus = (focus: 'general' | 'medical' | 'legal' | 'physics' | 'chemistry' | 'technology' | 'business' | 'history') => {
+    setAccessibility({
+      ...accessibility,
+      knowledgeFocus: focus
+    });
+    setShowFocusDropdown(false);
   };
 
   return (
@@ -98,13 +131,47 @@ export function MessageInput({
       {/* Toolbar */}
       <div className="flex justify-between items-center mt-1">
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
-          >
-            <SparklesIcon className="w-3 h-3 text-gray-300" />
-            <span className="text-xs text-gray-300">Focus</span>
-          </button>
+          {/* Focus Button */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowFocusDropdown(!showFocusDropdown)}
+              className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+              aria-expanded={showFocusDropdown}
+              aria-haspopup="true"
+              aria-label="Focus"
+            >
+              <SparklesIcon className="w-3 h-3 text-gray-300" />
+              <span className="text-xs text-gray-300">Focus</span>
+            </button>
+            
+            {/* Focus Dropdown */}
+            {showFocusDropdown && (
+              <div className="absolute bottom-8 left-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-10">
+                <h4 className="text-white text-sm font-medium mb-2">Knowledge Focus</h4>
+                <div className="space-y-2">
+                  {Object.entries(KNOWLEDGE_FOCUS).map(([focus, label]) => (
+                    <div key={focus} className="flex items-center">
+                      <input
+                        type="radio"
+                        id={`focus-${focus}`}
+                        name="knowledgeFocus"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        checked={accessibility.knowledgeFocus === focus}
+                        onChange={() => changeKnowledgeFocus(focus as any)}
+                      />
+                      <label htmlFor={`focus-${focus}`} className="ml-2 text-xs font-medium text-gray-300">
+                        {label}
+                      </label>
+                    </div>
+                  ))}
+                  <p className="text-gray-400 text-xs mt-2">
+                    Select a knowledge domain for AI responses
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
 
           <button
             type="button"
@@ -211,6 +278,14 @@ export function MessageInput({
             aria-label={`Current AI style: ${PROMPT_STYLES[accessibility.promptStyle]}`}
           >
             {PROMPT_STYLES[accessibility.promptStyle]}
+          </div>
+          
+          {/* Knowledge Focus Pill */}
+          <div 
+            className={`px-2 py-0.5 rounded-full text-xs ${KNOWLEDGE_FOCUS_COLORS[accessibility.knowledgeFocus]}`}
+            aria-label={`Knowledge focus: ${KNOWLEDGE_FOCUS[accessibility.knowledgeFocus]}`}
+          >
+            {KNOWLEDGE_FOCUS[accessibility.knowledgeFocus]}
           </div>
         </div>
         
