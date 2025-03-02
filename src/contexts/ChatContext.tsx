@@ -7,6 +7,7 @@ import { CHAT_SETTINGS } from '@/config/chat';
 import { apiClient } from '@/utils/apiClient';
 import { rateLimiter } from '@/utils/rateLimiter';
 import { logger } from '@/utils/logger';
+import { useApp } from '@/contexts/AppContext';
 
 interface ChatContextType {
   state: ChatState;
@@ -21,6 +22,7 @@ const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000;
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
+  const { accessibility } = useApp();
   const [state, setState] = useState<ChatState>(() => ({
     messages: [],
     isLoading: false,
@@ -68,7 +70,11 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 
   const sendMessage = async (message: string, imageFile?: File | null) => {
     const requestId = `chat_${Date.now()}`;
-    logger.info('Sending message', { message, hasImage: !!imageFile }, requestId);
+    logger.info('Sending message', { 
+      message, 
+      hasImage: !!imageFile, 
+      promptStyle: accessibility.promptStyle 
+    }, requestId);
 
     // Check rate limit
     if (rateLimiter.isRateLimited()) {
@@ -109,9 +115,16 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       // Add request to rate limiter before making API call
       rateLimiter.addRequest();
 
-      const data = await apiClient.sendChatMessage([...state.messages, newMessage], imageUrl);
+      // Pass the promptStyle to the API client
+      const data = await apiClient.sendChatMessage(
+        [...state.messages, newMessage], 
+        imageUrl,
+        accessibility.promptStyle
+      );
+      
       logger.info('Received response from API', { 
-        responseLength: data.choices[0].message.content.length 
+        responseLength: data.choices[0].message.content.length,
+        promptStyle: accessibility.promptStyle
       }, requestId);
       
       const assistantMessage: ChatMessage = {

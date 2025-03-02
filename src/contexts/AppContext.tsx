@@ -19,7 +19,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [accessibility, setAccessibility] = useState<AccessibilitySettings>({
     reducedMotion: false,
     highContrast: false,
-    fontSize: 'normal'
+    fontSize: 'normal',
+    promptStyle: 'balanced'
   });
   const [isOffline, setIsOffline] = useState(false);
 

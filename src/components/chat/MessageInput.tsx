@@ -16,6 +16,21 @@ interface MessageInputProps {
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
+const PROMPT_STYLES = {
+  balanced: 'Balanced',
+  creative: 'Creative',
+  precise: 'Precise',
+  helpful: 'Helpful'
+};
+
+// Define colors for each prompt style
+const PROMPT_STYLE_COLORS = {
+  balanced: 'bg-indigo-600 text-white',
+  creative: 'bg-purple-600 text-white',
+  precise: 'bg-blue-600 text-white',
+  helpful: 'bg-green-600 text-white'
+};
+
 export function MessageInput({
   value,
   onChange,
@@ -39,6 +54,13 @@ export function MessageInput({
     setAccessibility({
       ...accessibility,
       highContrast: !accessibility.highContrast
+    });
+  };
+
+  const changePromptStyle = (style: 'balanced' | 'creative' | 'precise' | 'helpful') => {
+    setAccessibility({
+      ...accessibility,
+      promptStyle: style
     });
   };
 
@@ -127,7 +149,8 @@ export function MessageInput({
             {/* Settings Dropdown */}
             {showSettings && (
               <div className="absolute bottom-8 left-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-10">
-                <div className="p-2">
+                {/* High Contrast Setting */}
+                <div className="p-2 border-b border-gray-700">
                   <h4 className="text-white text-sm font-medium mb-2">Appearance</h4>
                   <div className="flex items-center justify-between">
                     <label htmlFor="high-contrast-toggle" className="text-gray-300 text-xs">
@@ -153,8 +176,41 @@ export function MessageInput({
                     Changes the background color of message bubbles for better readability
                   </p>
                 </div>
+                
+                {/* Prompt Style Setting */}
+                <div className="p-2">
+                  <h4 className="text-white text-sm font-medium mb-2">AI Response Style</h4>
+                  <div className="space-y-2">
+                    {Object.entries(PROMPT_STYLES).map(([style, label]) => (
+                      <div key={style} className="flex items-center">
+                        <input
+                          type="radio"
+                          id={`style-${style}`}
+                          name="promptStyle"
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          checked={accessibility.promptStyle === style}
+                          onChange={() => changePromptStyle(style as any)}
+                        />
+                        <label htmlFor={`style-${style}`} className="ml-2 text-xs font-medium text-gray-300">
+                          {label}
+                        </label>
+                      </div>
+                    ))}
+                    <p className="text-gray-400 text-xs mt-2">
+                      Select how you want the AI to respond to your messages
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
+          </div>
+          
+          {/* Prompt Style Pill */}
+          <div 
+            className={`px-2 py-0.5 rounded-full text-xs ${PROMPT_STYLE_COLORS[accessibility.promptStyle]}`}
+            aria-label={`Current AI style: ${PROMPT_STYLES[accessibility.promptStyle]}`}
+          >
+            {PROMPT_STYLES[accessibility.promptStyle]}
           </div>
         </div>
         

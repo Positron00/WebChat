@@ -14,12 +14,14 @@ export interface AccessibilitySettings {
   reducedMotion: boolean;
   highContrast: boolean;
   fontSize: 'normal' | 'large' | 'larger';
+  promptStyle: 'balanced' | 'creative' | 'precise' | 'helpful';
 }
 
 const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
   reducedMotion: false,
   highContrast: false,
-  fontSize: 'normal'
+  fontSize: 'normal',
+  promptStyle: 'balanced'
 };
 
 export type ThemePreference = 'light' | 'dark' | 'system';

@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.2] - 2024-02-22
+
+### Added
+- Prompt style pill indicator in toolbar
+  - Added color-coded pill showing the current prompt style
+  - Positioned next to Settings button for easy reference
+  - Each style has its own distinct color: indigo for Balanced, purple for Creative, blue for Precise, green for Helpful
+  - Enhances visibility of the active prompt style without needing to open settings
+  - Provides visual feedback about the current AI response mode
+
+## [1.6.1] - 2024-02-22
+
+### Fixed
+- Ensured consistent interface definitions across the codebase
+  - Fixed AccessibilitySettings interface in storage utility to include promptStyle
+  - Synchronized type definitions between different modules
+  - Maintained all existing prompt style selection functionality
+  - Ensured system prompts remain hidden from UI while allowing style selection
+  - Fixed potential type errors when accessing promptStyle property
+
+## [1.6.0] - 2024-02-22
+
+### Added
+- AI response style customization
+  - Added four distinct prompt styles: Balanced, Creative, Precise, and Helpful
+  - Implemented radio button selection in the settings dropdown
+  - Created unique system prompts for each style to guide AI responses
+  - Added storage for user's preferred prompt style
+  - Integrated prompt style selection with API requests
+  - Enhanced user control over AI conversation tone and style
+
+### Changed
+- Extended settings dropdown with new AI style section
+  - Organized settings into separate sections with clear headings
+  - Added descriptive text explaining the purpose of each style option
+  - Maintained consistent UI design with existing settings controls
+
 ## [1.5.25] - 2024-02-22
 
 ### Changed

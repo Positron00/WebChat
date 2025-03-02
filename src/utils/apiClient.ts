@@ -237,9 +237,9 @@ export class ApiClient {
     );
   }
 
-  async sendChatMessage(messages: ChatMessage[], image?: string | null): Promise<ChatCompletionResponse> {
+  async sendChatMessage(messages: ChatMessage[], image?: string | null, promptStyle?: string): Promise<ChatCompletionResponse> {
     const requestId = this.generateRequestId();
-    console.log(`[${requestId}] Sending chat message with ${messages.length} messages${image ? ' and image' : ''}`);
+    console.log(`[${requestId}] Sending chat message with ${messages.length} messages${image ? ' and image' : ''}${promptStyle ? `, prompt style: ${promptStyle}` : ''}`);
 
     try {
       return await this.fetchWithRetry<ChatCompletionResponse>(
@@ -253,6 +253,7 @@ export class ApiClient {
           body: JSON.stringify({
             messages,
             image,
+            promptStyle,
             model: 'meta-llama/Llama-3.3-70b-instruct-turbo-free',
             max_tokens: CHAT_SETTINGS.maxTokens,
             temperature: CHAT_SETTINGS.temperature,
