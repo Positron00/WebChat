@@ -33,7 +33,7 @@ export function MessageInput({
   };
 
   return (
-    <div className="w-full px-4 mb-4">
+    <div className="w-full mb-4">
       <div className="relative w-full">
         <textarea
           value={value}

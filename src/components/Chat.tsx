@@ -19,18 +19,20 @@ export default function Chat() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <MessageList
-        messages={state.messages}
-        isLoading={state.isLoading}
-        error={state.error}
-      />
-      <MessageInput
-        value={input}
-        onChange={setInput}
-        onSubmit={handleSubmit}
-        onFileSelect={setImageFile}
-        isLoading={state.isLoading}
-      />
+      <div className="w-full max-w-2xl mx-auto">
+        <MessageList
+          messages={state.messages}
+          isLoading={state.isLoading}
+          error={state.error}
+        />
+        <MessageInput
+          value={input}
+          onChange={setInput}
+          onSubmit={handleSubmit}
+          onFileSelect={setImageFile}
+          isLoading={state.isLoading}
+        />
+      </div>
     </div>
   );
 } 
