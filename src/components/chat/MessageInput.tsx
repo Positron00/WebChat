@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useApp } from '@/contexts/AppContext';
 
 interface MessageInputProps {
@@ -58,10 +58,10 @@ export function MessageInput({
           type="submit"
           disabled={!value.trim()}
           onClick={onSubmit}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-emerald-400 text-black font-semibold px-5 py-2.5 rounded-lg border-2 border-emerald-300 hover:bg-emerald-500 transition-colors disabled:opacity-70 disabled:bg-gray-600 disabled:border-gray-500 disabled:text-white"
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-emerald-400 text-black font-semibold p-3 rounded-full border-2 border-emerald-300 hover:bg-emerald-500 transition-colors disabled:opacity-70 disabled:bg-gray-600 disabled:border-gray-500 disabled:text-white"
           aria-label="Send Message"
         >
-          Submit
+          <PaperAirplaneIcon className="w-5 h-5" />
         </button>
       </div>
 
