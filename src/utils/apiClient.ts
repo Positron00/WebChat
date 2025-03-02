@@ -1,5 +1,5 @@
 import { ChatCompletionRequest, ChatCompletionResponse } from '@/types/api';
-import { ChatMessage, ChatRequestMessage } from '@/types/chat';
+import { ChatMessage } from '@/types/chat';
 import { CHAT_SETTINGS } from '@/config/chat';
 import { logger } from '@/utils/logger';
 
@@ -237,12 +237,12 @@ export class ApiClient {
     );
   }
 
-  async sendChatMessage(messages: ChatMessage[], image?: string | null) {
+  async sendChatMessage(messages: ChatMessage[], image?: string | null): Promise<ChatCompletionResponse> {
     const requestId = this.generateRequestId();
     console.log(`[${requestId}] Sending chat message with ${messages.length} messages${image ? ' and image' : ''}`);
 
     try {
-      return await this.fetchWithRetry(
+      return await this.fetchWithRetry<ChatCompletionResponse>(
         `${this.baseUrl}/chat`,
         {
           method: 'POST',
