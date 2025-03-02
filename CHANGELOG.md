@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.11] - 2024-02-22
+
+### Changed
+- Updated input placeholder text
+  - Changed from "Ask anything..." to "Just ask..."
+  - More concise and direct user prompt
+  - Maintained all existing input field functionality
+  - Simplified user interface text
+
+## [1.5.10] - 2024-02-22
+
+### Changed
+- Removed "Responses" label above message container
+  - Simplified user interface by removing redundant text label
+  - Cleaner visual appearance with less clutter
+  - Maintained all existing functionality and accessibility features
+  - Improved UI minimalism while keeping intuitive design
+
+## [1.5.9] - 2024-02-22
+
+### Changed
+- Reversed chat interface layout order
+  - Moved query input field below the responses section
+  - Enhanced chat flow to match traditional messaging interfaces
+  - Improved user experience for reviewing conversation history
+  - Maintained all existing functionality and styling
+
 ## [1.5.8] - 2024-02-22
 
 ### Changed
