@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.7] - 2024-02-22
+
+### Accessibility
+- Improved text contrast throughout the application
+  - Enhanced message card text contrast in light blue and white cards
+  - Added explicit text colors for better readability: blue-800 text in blue cards, gray-800 text in white cards
+  - Improved contrast of toolbar button text and icons from gray-400 to gray-300
+  - Enhanced visibility of the "Responses" label and empty state text
+  - Improved loading indicator contrast for better visibility
+
+### Changed
+- Updated UI elements for better readability
+  - Changed placeholder text contrast
+  - Enhanced button text visibility 
+  - Improved overall text contrast across message cards
+  - Maintained consistent styling while ensuring accessibility standards
+
 ## [1.5.6] - 2024-02-22
 
 ### Security

@@ -46,7 +46,7 @@ export function MessageInput({
           }}
           placeholder="Ask anything..."
           rows={3}
-          className="w-full p-4 bg-white/5 text-white text-center rounded border border-white/10 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-500 resize-none"
+          className="w-full p-4 bg-white/5 text-white text-center rounded border border-white/10 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-400 resize-none"
           disabled={isLoading || isOffline || disabled}
           aria-label="Message Input"
           aria-disabled={isLoading || isOffline || disabled}
@@ -69,8 +69,8 @@ export function MessageInput({
           type="button"
           className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
         >
-          <SparklesIcon className="w-3 h-3 text-gray-400" />
-          <span className="text-xs text-gray-400">Focus</span>
+          <SparklesIcon className="w-3 h-3 text-gray-300" />
+          <span className="text-xs text-gray-300">Focus</span>
         </button>
 
         <button
@@ -79,24 +79,24 @@ export function MessageInput({
           className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
           disabled={isOffline}
         >
-          <PaperClipIcon className="w-3 h-3 text-gray-400" />
-          <span className="text-xs text-gray-400">Attach</span>
+          <PaperClipIcon className="w-3 h-3 text-gray-300" />
+          <span className="text-xs text-gray-300">Attach</span>
         </button>
 
         <button
           type="button"
           className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
         >
-          <MicrophoneIcon className="w-3 h-3 text-gray-400" />
-          <span className="text-xs text-gray-400">Voice</span>
+          <MicrophoneIcon className="w-3 h-3 text-gray-300" />
+          <span className="text-xs text-gray-300">Voice</span>
         </button>
 
         <button
           type="button"
           className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
         >
-          <ComputerDesktopIcon className="w-3 h-3 text-gray-400" />
-          <span className="text-xs text-gray-400">Screen</span>
+          <ComputerDesktopIcon className="w-3 h-3 text-gray-300" />
+          <span className="text-xs text-gray-300">Screen</span>
         </button>
       </div>
 

@@ -37,15 +37,15 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
         ? 'bg-blue-700 text-white'
         : 'bg-gray-700 text-white'
       : role === 'user'
-        ? 'bg-blue-100'
-        : 'bg-gray-100';
+        ? 'bg-blue-100 text-blue-800'
+        : 'bg-gray-100 text-gray-800';
     
     return `${baseClass} ${colorClass}`;
   };
 
   return (
     <div className="w-full text-center">
-      <div className="text-sm text-gray-400 mb-2">
+      <div className="text-sm text-gray-300 mb-2">
         Responses
       </div>
       <div 
@@ -56,7 +56,7 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
         key={messages.length}
       >
         {messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-gray-400">
+          <div className="h-full flex flex-col items-center justify-center text-gray-300">
             <span>Start a conversation...</span>
             <span>Responses will appear here</span>
           </div>
@@ -97,14 +97,14 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
         )}
         {isLoading && (
           <div 
-            className="flex items-center justify-center text-gray-400 space-x-2"
+            className="flex items-center justify-center text-gray-300 space-x-2"
             role="status"
             aria-label="Loading response"
           >
             <div 
               className={`${
                 accessibility.reducedMotion ? '' : 'animate-spin'
-              } rounded-full h-4 w-4 border-2 border-gray-400 border-t-transparent`}
+              } rounded-full h-4 w-4 border-2 border-gray-300 border-t-transparent`}
               aria-hidden="true"
             />
             <span>Thinking...</span>
