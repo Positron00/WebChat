@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import React, { useRef, useState } from 'react';
+import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 import { useApp } from '@/contexts/AppContext';
 
 interface MessageInputProps {
@@ -25,13 +25,21 @@ export function MessageInput({
   disabled = false,
   onNewChat
 }: MessageInputProps) {
-  const { isOffline } = useApp();
+  const { isOffline, accessibility, setAccessibility } = useApp();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showSettings, setShowSettings] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     onFileSelect(file);
+  };
+
+  const toggleHighContrast = () => {
+    setAccessibility({
+      ...accessibility,
+      highContrast: !accessibility.highContrast
+    });
   };
 
   return (
@@ -101,6 +109,53 @@ export function MessageInput({
             <ComputerDesktopIcon className="w-3 h-3 text-gray-300" />
             <span className="text-xs text-gray-300">Screen</span>
           </button>
+          
+          {/* Settings Button */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowSettings(!showSettings)}
+              className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+              aria-expanded={showSettings}
+              aria-haspopup="true"
+              aria-label="Settings"
+            >
+              <Cog6ToothIcon className="w-3 h-3 text-gray-300" />
+              <span className="text-xs text-gray-300">Settings</span>
+            </button>
+            
+            {/* Settings Dropdown */}
+            {showSettings && (
+              <div className="absolute bottom-8 left-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-10">
+                <div className="p-2">
+                  <h4 className="text-white text-sm font-medium mb-2">Appearance</h4>
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="high-contrast-toggle" className="text-gray-300 text-xs">
+                      High Contrast Bubbles
+                    </label>
+                    <button
+                      id="high-contrast-toggle"
+                      onClick={toggleHighContrast}
+                      className={`relative inline-flex h-5 w-10 items-center rounded-full ${
+                        accessibility.highContrast ? 'bg-blue-600' : 'bg-gray-600'
+                      }`}
+                      aria-pressed={accessibility.highContrast}
+                      aria-label="Toggle high contrast mode"
+                    >
+                      <span
+                        className={`${
+                          accessibility.highContrast ? 'translate-x-5' : 'translate-x-1'
+                        } inline-block h-3 w-3 transform rounded-full bg-white transition`}
+                      />
+                    </button>
+                  </div>
+                  <p className="text-gray-400 text-xs mt-1">
+                    Changes the contrast of message bubbles for better readability
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         
         {onNewChat && (

@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.24] - 2024-02-22
+
+### Added
+- Settings button in toolbar with dropdown menu 
+  - Added gear icon and "Settings" label in the toolbar
+  - Created dropdown panel with accessibility controls
+  - Positioned menu with proper styling and z-index
+  - Implemented toggle switch with visual feedback
+  - Added descriptive text for better usability
+
+### Changed
+- Made message bubble contrast adjustable through UI
+  - Restored functionality of highContrast accessibility setting
+  - Added toggle switch to control contrast of message bubbles
+  - Lower contrast: blue-600 for user and gray-600 for assistant messages
+  - High contrast: blue-950 for user and gray-800 for assistant messages
+  - Enhanced user control over visual appearance
+
 ## [1.5.23] - 2024-02-22
 
 ### Changed

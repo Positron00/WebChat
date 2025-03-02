@@ -32,10 +32,11 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
   // Apply high contrast theme if enabled
   const getMessageClassName = (role: string) => {
     const baseClass = 'p-4 rounded-lg break-words max-w-[80%] text-center mx-auto';
-    // Always use high contrast dark theme for message bubbles
-    const colorClass = role === 'user'
-      ? 'bg-blue-950 text-white'
-      : 'bg-gray-800 text-white';
+    
+    // Use high contrast setting to determine colors
+    const colorClass = accessibility.highContrast
+      ? (role === 'user' ? 'bg-blue-950 text-white' : 'bg-gray-800 text-white')
+      : (role === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white');
     
     return `${baseClass} ${colorClass}`;
   };
