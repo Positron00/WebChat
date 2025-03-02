@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.17] - 2024-02-22
+
+### Changed
+- Increased width of message fields by 50%
+  - Changed container max-width from max-w-2xl (672px) to max-w-5xl (1024px)
+  - Both response and query fields maintain equal width
+  - Provides more space for content display
+  - Improves readability for longer messages
+  - Enhances overall user experience with wider chat interface
+
 ## [1.5.16] - 2024-02-22
 
 ### Changed
