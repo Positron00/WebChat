@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.25] - 2024-02-22
+
+### Changed
+- Renamed settings toggle option for better clarity
+  - Changed label from "High Contrast Bubbles" to "Darker Background"
+  - Updated description text to reference background color
+  - Changed accessibility label to match new terminology
+  - Maintained the same toggle functionality
+  - Improved user understanding of the setting's purpose
+
 ## [1.5.24] - 2024-02-22
 
 ### Added
