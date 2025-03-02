@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.22] - 2024-02-22
+
+### Changed
+- Made response field border more subtle
+  - Changed border color from bright blue to semi-transparent dark gray
+  - Updated border-color CSS property to use rgba(55, 65, 81, 0.5) for a softer appearance
+  - Modified message dividers to match the new subtle border style
+  - Improved visual harmony between the response container and page background
+  - Enhanced overall focus on content by reducing visual distractions
+
 ## [1.5.21] - 2024-02-22
 
 ### Changed

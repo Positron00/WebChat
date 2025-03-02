@@ -46,8 +46,8 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
   return (
     <div className="w-full text-center mb-4">
       <div 
-        className="w-full flex-1 min-h-[300px] max-h-[625px] bg-gray-900 text-white rounded-lg border border-blue-500 overflow-y-auto p-4 dark:bg-gray-900 dark:text-white dark:border-blue-500"
-        style={{ backgroundColor: '#111827', color: 'white', borderColor: '#3b82f6' }}
+        className="w-full flex-1 min-h-[300px] max-h-[625px] bg-gray-900 text-white rounded-lg border border-gray-700 overflow-y-auto p-4 dark:bg-gray-900 dark:text-white dark:border-gray-700"
+        style={{ backgroundColor: '#111827', color: 'white', borderColor: 'rgba(55, 65, 81, 0.5)' }}
         role="log"
         aria-live="polite"
         aria-label="Chat Messages"
@@ -65,8 +65,8 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
               const userMessage = messages[index * 2];
               const assistantMessage = messages[index * 2 + 1];
               return (
-                <div key={index} className="mb-12 pb-12 border-b-2 border-blue-500/50 last:border-b-0 last:mb-0 last:pb-0" 
-                  style={{ borderColor: 'rgba(59, 130, 246, 0.5)' }}>
+                <div key={index} className="mb-12 pb-12 border-b-2 border-gray-700/50 last:border-b-0 last:mb-0 last:pb-0" 
+                  style={{ borderColor: 'rgba(55, 65, 81, 0.5)' }}>
                   {/* User message */}
                   <div className="mb-8">
                     <div
