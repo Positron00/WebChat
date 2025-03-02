@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - New Chat button for easy conversation reset
-  - Added button in the top-right corner of the chat interface
-  - Allows users to quickly clear all messages and start fresh
-  - Utilizes the existing clearMessages function from ChatContext
-  - Styled to match the application's design language
-  - Includes hover effects for better user interaction
+  - Integrated directly into the toolbar alongside other tools
+  - Positioned on the right side of the toolbar for better visual balance
+  - Styled consistently with other toolbar buttons
+  - Text vertically aligned with the Submit button text
+  - Added proper hover effects for better user interaction
 
 ## [1.5.12] - 2024-02-22
 

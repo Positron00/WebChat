@@ -11,6 +11,7 @@ interface MessageInputProps {
   onFileSelect: (file: File) => void;
   isLoading: boolean;
   disabled?: boolean;
+  onNewChat?: () => void;
 }
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
@@ -21,7 +22,8 @@ export function MessageInput({
   onSubmit,
   onFileSelect,
   isLoading,
-  disabled = false
+  disabled = false,
+  onNewChat
 }: MessageInputProps) {
   const { isOffline } = useApp();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -64,40 +66,53 @@ export function MessageInput({
       </div>
 
       {/* Toolbar */}
-      <div className="flex justify-center items-center gap-2 mt-1">
-        <button
-          type="button"
-          className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
-        >
-          <SparklesIcon className="w-3 h-3 text-gray-300" />
-          <span className="text-xs text-gray-300">Focus</span>
-        </button>
+      <div className="flex justify-between items-center mt-1">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+          >
+            <SparklesIcon className="w-3 h-3 text-gray-300" />
+            <span className="text-xs text-gray-300">Focus</span>
+          </button>
 
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
-          disabled={isOffline}
-        >
-          <PaperClipIcon className="w-3 h-3 text-gray-300" />
-          <span className="text-xs text-gray-300">Attach</span>
-        </button>
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+            disabled={isOffline}
+          >
+            <PaperClipIcon className="w-3 h-3 text-gray-300" />
+            <span className="text-xs text-gray-300">Attach</span>
+          </button>
 
-        <button
-          type="button"
-          className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
-        >
-          <MicrophoneIcon className="w-3 h-3 text-gray-300" />
-          <span className="text-xs text-gray-300">Voice</span>
-        </button>
+          <button
+            type="button"
+            className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+          >
+            <MicrophoneIcon className="w-3 h-3 text-gray-300" />
+            <span className="text-xs text-gray-300">Voice</span>
+          </button>
 
-        <button
-          type="button"
-          className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
-        >
-          <ComputerDesktopIcon className="w-3 h-3 text-gray-300" />
-          <span className="text-xs text-gray-300">Screen</span>
-        </button>
+          <button
+            type="button"
+            className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+          >
+            <ComputerDesktopIcon className="w-3 h-3 text-gray-300" />
+            <span className="text-xs text-gray-300">Screen</span>
+          </button>
+        </div>
+        
+        {onNewChat && (
+          <button
+            type="button"
+            onClick={onNewChat}
+            className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+            aria-label="Start a new chat"
+          >
+            <span className="text-xs text-gray-300">New Chat</span>
+          </button>
+        )}
       </div>
 
       {/* Hidden File Input */}
