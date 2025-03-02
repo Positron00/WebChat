@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.23] - 2024-02-22
+
+### Changed
+- Updated message bubbles to use high contrast dark theme by default
+  - Changed user messages to deep navy background (bg-blue-950) with white text
+  - Changed assistant messages to dark charcoal background (bg-gray-800) with white text
+  - Removed dependency on accessibility.highContrast setting
+  - Improved readability with darker color scheme for better contrast
+  - Enhanced visual distinction between message bubbles and container background
+
 ## [1.5.22] - 2024-02-22
 
 ### Changed
