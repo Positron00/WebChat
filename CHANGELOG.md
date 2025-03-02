@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.4] - 2024-02-22
+
+### Fixed
+- Resolved incorrect offline detection
+  - Fixed false "You are currently offline" message display
+  - Implemented active connectivity verification instead of relying on browser events
+  - Added fallback checks to ensure accurate connection status detection
+  - Improved user experience by preventing misleading status messages
+
+### Added
+- Enhanced offline detection system
+  - Added active connectivity checks via fetch requests
+  - Created new /api/ping API endpoint for connectivity verification
+  - Implemented periodic connectivity checks (every 30 seconds)
+  - Added automatic re-checking when browser tab becomes active
+  - Added fallback to external endpoint checks when internal API is unreachable
+  
+### Changed
+- Improved Submit button contrast
+  - Enhanced visibility with brighter background color (emerald-400)
+  - Changed text color to black for better contrast against the background
+  - Added border highlight for improved visual prominence
+  - Increased button size slightly for better usability
+  - Enhanced disabled state visibility
+
 ## [1.5.3] - 2024-02-22
 
 ### Added

@@ -56,7 +56,7 @@ export function MessageInput({
           type="submit"
           disabled={!value.trim()}
           onClick={onSubmit}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors disabled:opacity-40 disabled:bg-gray-600"
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-emerald-400 text-black font-semibold px-5 py-2.5 rounded-lg border-2 border-emerald-300 hover:bg-emerald-500 transition-colors disabled:opacity-70 disabled:bg-gray-600 disabled:border-gray-500 disabled:text-white"
           aria-label="Send Message"
         >
           Submit

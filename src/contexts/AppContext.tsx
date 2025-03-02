@@ -74,12 +74,54 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setIsOffline(true);
     }
 
+    // Initial active check
+    const checkConnection = () => {
+      // Use a tiny fetch request to verify actual connectivity
+      fetch('/api/ping', { 
+        method: 'HEAD',
+        cache: 'no-cache',
+        headers: { 'Cache-Control': 'no-cache' } 
+      })
+      .then(() => setIsOffline(false))
+      .catch(() => {
+        // If we can't reach our own API but browser says we're online,
+        // do another check against a public endpoint
+        if (navigator.onLine) {
+          fetch('https://www.google.com/favicon.ico', { 
+            method: 'HEAD',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            headers: { 'Cache-Control': 'no-cache' }
+          })
+          .then(() => setIsOffline(false))
+          .catch(() => setIsOffline(true));
+        } else {
+          setIsOffline(true);
+        }
+      });
+    };
+
+    // Run initial check
+    checkConnection();
+    
+    // Set up periodic checking
+    const connectionInterval = setInterval(checkConnection, 30000); // Check every 30 seconds
+    
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
+    
+    // Also check when visibility changes (tab becomes active)
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        checkConnection();
+      }
+    });
 
     return () => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
+      document.removeEventListener('visibilitychange', checkConnection);
+      clearInterval(connectionInterval);
     };
   }, []);
 
