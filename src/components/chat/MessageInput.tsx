@@ -48,7 +48,7 @@ export function MessageInput({
           }}
           placeholder="Just ask..."
           rows={3}
-          className="w-full p-4 bg-white/5 text-white text-center rounded border border-white/10 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-400 resize-none"
+          className="w-full p-4 pr-48 bg-white/5 text-white text-center rounded border border-white/10 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-400 resize-none"
           disabled={isLoading || isOffline || disabled}
           aria-label="Message Input"
           aria-disabled={isLoading || isOffline || disabled}

@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.15] - 2024-02-22
+
+### Changed
+- Doubled the input text padding area
+  - Increased right padding from pr-24 (6rem) to pr-48 (12rem)
+  - Created more space between typed text and Submit button
+  - Further improved user experience with longer messages
+  - Enhanced text visibility in the input field
+
+## [1.5.14] - 2024-02-22
+
+### Fixed
+- Prevented text overlap with Submit button
+  - Added proper right padding (pr-24) to input textarea
+  - Ensured typed text remains visible and doesn't flow under the button
+  - Maintained all input field functionality
+  - Improved user experience when typing longer messages
+
 ## [1.5.13] - 2024-02-22
 
 ### Added
