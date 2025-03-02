@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.18] - 2024-02-22
+
+### Changed
+- Increased response field height by 25%
+  - Changed maximum height from 500px to 625px
+  - Maintains minimum height of 300px
+  - Provides more vertical space for viewing messages
+  - Reduces need for scrolling with longer conversations
+  - Enhances overall reading experience
+
 ## [1.5.17] - 2024-02-22
 
 ### Changed

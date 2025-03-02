@@ -46,7 +46,7 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
   return (
     <div className="w-full text-center mb-4">
       <div 
-        className="w-full flex-1 min-h-[300px] max-h-[500px] bg-white/5 rounded-lg border border-white/10 overflow-y-auto p-4"
+        className="w-full flex-1 min-h-[300px] max-h-[625px] bg-white/5 rounded-lg border border-white/10 overflow-y-auto p-4"
         role="log"
         aria-live="polite"
         aria-label="Chat Messages"
