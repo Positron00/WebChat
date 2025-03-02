@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.21] - 2024-02-22
+
+### Changed
+- Re-implemented dark mode styling for response field
+  - Changed background to dark gray (bg-gray-900) for better contrast
+  - Updated text color to white for improved readability on dark background
+  - Added blue highlight border (border-blue-500) for visual emphasis
+  - Changed message dividers to blue (border-blue-500/50) for better visibility
+  - Enhanced visual distinction between messages and background
+
+## [1.5.20] - 2024-02-22
+
+### Changed
+- Reverted response field styling back to original appearance
+  - Restored light background (bg-white/5) from dark gray
+  - Changed text color back to gray-800 for light background compatibility
+  - Reverted border to subtle white/10 border
+  - Restored original message divider styling
+  - Returned to the original visual design while maintaining increased size
+
+## [1.5.19] - 2024-02-22
+
+### Changed
+- Enhanced response field styling with dark mode
+  - Changed background to dark gray (bg-gray-900) for stronger contrast
+  - Updated text color to pure white for maximum readability
+  - Added blue highlight border (border-blue-500) for visual emphasis
+  - Changed message dividers to blue (border-blue-500/50) for better visibility
+  - Improved visual distinction between the response area and page background
+  - Enhanced overall readability with high-contrast color scheme
+
 ## [1.5.18] - 2024-02-22
 
 ### Changed
