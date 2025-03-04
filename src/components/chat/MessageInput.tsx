@@ -3,6 +3,8 @@
 import React, { useRef, useState } from 'react';
 import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 import { useApp } from '@/contexts/AppContext';
+import path from 'path';
+import { saveAs } from 'file-saver';
 
 interface MessageInputProps {
   value: string;
@@ -68,6 +70,7 @@ export function MessageInput({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [showFocusDropdown, setShowFocusDropdown] = useState(false);
+  const [isCapturingScreen, setIsCapturingScreen] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -95,6 +98,69 @@ export function MessageInput({
       knowledgeFocus: focus
     });
     setShowFocusDropdown(false);
+  };
+
+  const captureScreen = async () => {
+    try {
+      setIsCapturingScreen(true);
+      
+      // Request screen capture permission and stream
+      const mediaStream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+        audio: false,
+      });
+      
+      // Create video element to capture the stream
+      const video = document.createElement('video');
+      video.srcObject = mediaStream;
+      
+      // Wait for video metadata to load
+      await new Promise<void>((resolve) => {
+        video.onloadedmetadata = () => {
+          video.play();
+          resolve();
+        };
+      });
+      
+      // Create canvas to draw the captured frame
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      
+      // Draw the video frame to canvas
+      const context = canvas.getContext('2d');
+      context?.drawImage(video, 0, 0, canvas.width, canvas.height);
+      
+      // Stop all tracks in the stream
+      mediaStream.getTracks().forEach(track => track.stop());
+      
+      // Convert canvas to blob
+      const blob = await new Promise<Blob>((resolve) => {
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else throw new Error('Failed to create screenshot blob');
+        }, 'image/png');
+      });
+      
+      // Create file with timestamp
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const fileName = `screenshot-${timestamp}.png`;
+      
+      // Create a File object
+      const file = new File([blob], fileName, { type: 'image/png' });
+      
+      // Save the file
+      saveAs(blob, fileName);
+      
+      // Use the existing onFileSelect handler to add the screenshot to the chat
+      onFileSelect(file);
+      
+    } catch (error) {
+      console.error('Error capturing screen:', error);
+      alert('Failed to capture screen. Please ensure you have granted screen capture permissions.');
+    } finally {
+      setIsCapturingScreen(false);
+    }
   };
 
   return (
@@ -194,9 +260,12 @@ export function MessageInput({
           <button
             type="button"
             className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+            onClick={captureScreen}
+            disabled={isCapturingScreen || isOffline}
+            aria-label="Capture screenshot"
           >
             <ComputerDesktopIcon className="w-3 h-3 text-gray-300" />
-            <span className="text-xs text-gray-300">Screen</span>
+            <span className="text-xs text-gray-300">{isCapturingScreen ? 'Capturing...' : 'Screen'}</span>
           </button>
           
           {/* Settings Button */}

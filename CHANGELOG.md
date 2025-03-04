@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2024-02-22
+
+### Added
+- Screen capture functionality
+  - Connected the Screen button in toolbar to screenshot capability
+  - Added browser's native screen capture API integration
+  - Implemented automatic file saving with timestamps
+  - Created seamless upload to conversation after capture
+  - Added loading state during screen capture process
+  - Included error handling with user-friendly messages
+
 ## [1.7.1] - 2024-02-22
 
 ### Changed

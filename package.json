@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
+    "@types/file-saver": "^2.0.7",
     "axios": "^1.6.7",
+    "file-saver": "^2.0.5",
     "next": "^14.2.24",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
