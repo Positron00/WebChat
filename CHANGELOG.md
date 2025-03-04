@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.2] - 2024-02-22
+
+### Changed
+- Redesigned screenshot preview experience
+  - Added larger screenshot preview panel to the left side of the chat interface
+  - Replaced small thumbnail with dedicated preview pane for better visibility
+  - Implemented responsive layout that adapts to screen size
+  - Enhanced the Screen button to toggle between capture and clear functions
+  - Improved visual hierarchy with proper panel styling and header
+  - Added clear screenshot functionality directly from toolbar
+  - Optimized layout for better use of screen space
+
 ## [1.8.1] - 2024-02-22
 
 ### Enhanced
