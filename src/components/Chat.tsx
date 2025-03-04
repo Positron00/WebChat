@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useChat } from '@/contexts/ChatContext';
 import { MessageInput } from './chat/MessageInput';
 import { MessageList } from './chat/MessageList';
@@ -10,8 +10,20 @@ export default function Chat() {
   const { state, sendMessage, clearMessages } = useChat();
   const [input, setInput] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
   const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
+
+  // Create/clear preview URL when imageFile changes
+  useEffect(() => {
+    if (imageFile) {
+      const url = URL.createObjectURL(imageFile);
+      setImagePreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setImagePreviewUrl(null);
+    }
+  }, [imageFile]);
 
   const handleSubmit = async () => {
     if (!input.trim() && !imageFile) return;
@@ -66,6 +78,7 @@ export default function Chat() {
           onNewChat={clearMessages}
           screenshotActive={!!imageFile && imageFile.name.startsWith('screenshot-')}
           onClearScreenshot={() => setImageFile(null)}
+          imagePreviewUrl={imagePreviewUrl}
         />
       </div>
 

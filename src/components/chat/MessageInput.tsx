@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon, Cog6ToothIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useApp } from '@/contexts/AppContext';
 import path from 'path';
 import { saveAs } from 'file-saver';
@@ -16,6 +16,7 @@ interface MessageInputProps {
   onNewChat?: () => void;
   screenshotActive?: boolean;
   onClearScreenshot?: () => void;
+  imagePreviewUrl?: string | null;
 }
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
@@ -68,7 +69,8 @@ export function MessageInput({
   disabled = false,
   onNewChat,
   screenshotActive = false,
-  onClearScreenshot
+  onClearScreenshot,
+  imagePreviewUrl
 }: MessageInputProps) {
   const { isOffline, accessibility, setAccessibility } = useApp();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -170,12 +172,36 @@ export function MessageInput({
   return (
     <div className="w-full mb-4">
       <div className="relative">
-        {/* Input field */}
+        {/* Mini-preview of attached image */}
+        {imagePreviewUrl && (
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center">
+            <div className="relative">
+              <img 
+                src={imagePreviewUrl} 
+                alt="Attached image" 
+                className="w-8 h-8 object-cover rounded"
+              />
+              {onClearScreenshot && (
+                <button
+                  onClick={onClearScreenshot}
+                  className="absolute -top-2 -right-2 bg-gray-800 rounded-full p-0.5 hover:bg-gray-700"
+                  aria-label="Remove attached image"
+                >
+                  <XMarkIcon className="w-3 h-3 text-white" />
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+        
+        {/* Input field with adjusted padding if image is present */}
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Just ask..."
-          className="w-full py-3 pl-3 pr-48 bg-gray-950 border border-white/10 rounded-full outline-none text-white placeholder-gray-500 disabled:opacity-50 transition-all"
+          className={`w-full py-3 pr-48 bg-gray-950 border border-white/10 rounded-full outline-none text-white placeholder-gray-500 disabled:opacity-50 transition-all ${
+            imagePreviewUrl ? 'pl-14' : 'pl-3'
+          }`}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey && !disabled) {
               e.preventDefault();
@@ -189,7 +215,7 @@ export function MessageInput({
         <button
           type="submit"
           className="absolute right-3 top-1/2 -translate-y-1/2 bg-emerald-500 hover:bg-emerald-400 text-black font-medium rounded-full p-2 disabled:opacity-50 disabled:pointer-events-none"
-          disabled={!value.trim() || isLoading || disabled}
+          disabled={!value.trim() && !imagePreviewUrl || isLoading || disabled}
           onClick={onSubmit}
           aria-label="Submit message"
         >
