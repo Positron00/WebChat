@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.3] - 2024-02-22
+
+### Changed
+- Enhanced screenshot preview UI
+  - Changed preview to fullscreen modal overlay for better visibility
+  - Increased maximum size to utilize more screen space (up to 90% of viewport)
+  - Added semi-transparent dark background to focus attention on screenshot
+  - Improved close button with hover effects
+  - Maintained chat layout integrity without displacing content
+  - Enhanced scrolling behavior for very large screenshots
+  - Improved responsive design for all screen sizes
+
 ## [1.8.2] - 2024-02-22
 
 ### Changed
