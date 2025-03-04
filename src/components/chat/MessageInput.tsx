@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
+import React, { useRef, useState, useEffect } from 'react';
+import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon, Cog6ToothIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useApp } from '@/contexts/AppContext';
 import path from 'path';
 import { saveAs } from 'file-saver';
@@ -71,6 +71,7 @@ export function MessageInput({
   const [showSettings, setShowSettings] = useState(false);
   const [showFocusDropdown, setShowFocusDropdown] = useState(false);
   const [isCapturingScreen, setIsCapturingScreen] = useState(false);
+  const [screenshotThumbnail, setScreenshotThumbnail] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -152,6 +153,10 @@ export function MessageInput({
       // Save the file
       saveAs(blob, fileName);
       
+      // Create thumbnail URL for preview
+      const thumbnailUrl = URL.createObjectURL(blob);
+      setScreenshotThumbnail(thumbnailUrl);
+      
       // Use the existing onFileSelect handler to add the screenshot to the chat
       onFileSelect(file);
       
@@ -162,35 +167,71 @@ export function MessageInput({
       setIsCapturingScreen(false);
     }
   };
+  
+  // Clean up object URLs when component unmounts or thumbnail changes
+  useEffect(() => {
+    return () => {
+      if (screenshotThumbnail) {
+        URL.revokeObjectURL(screenshotThumbnail);
+      }
+    };
+  }, [screenshotThumbnail]);
+  
+  const clearThumbnail = () => {
+    if (screenshotThumbnail) {
+      URL.revokeObjectURL(screenshotThumbnail);
+      setScreenshotThumbnail(null);
+    }
+  };
 
   return (
     <div className="w-full mb-4">
-      <div className="relative w-full">
+      <div className="relative">
+        {/* Screenshot Thumbnail */}
+        {screenshotThumbnail && (
+          <div className="absolute left-2 top-1/2 -translate-y-1/2 z-10">
+            <div className="relative group">
+              <img 
+                src={screenshotThumbnail} 
+                alt="Screenshot thumbnail" 
+                className="h-8 w-auto max-w-[80px] rounded-sm border border-gray-700 object-cover"
+              />
+              <button
+                type="button"
+                onClick={clearThumbnail}
+                className="absolute -top-2 -right-2 bg-gray-800 rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-label="Remove screenshot"
+              >
+                <XMarkIcon className="w-3 h-3 text-gray-300" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Input field with adjusted padding when thumbnail is present */}
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          placeholder="Just ask..."
+          className={`w-full py-3 ${screenshotThumbnail ? 'pl-[90px]' : 'pl-3'} pr-48 bg-gray-950 border border-white/10 rounded-full outline-none text-white placeholder-gray-500 disabled:opacity-50 transition-all`}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
+            if (e.key === 'Enter' && !e.shiftKey && !disabled) {
               e.preventDefault();
               onSubmit();
             }
           }}
-          placeholder="Just ask..."
-          rows={3}
-          className="w-full p-4 pr-48 bg-white/5 text-white text-center rounded border border-white/10 focus:outline-none focus:border-[#00FFE0] focus:ring-1 focus:ring-[#00FFE0] placeholder-gray-400 resize-none"
-          disabled={isLoading || isOffline || disabled}
-          aria-label="Message Input"
-          aria-disabled={isLoading || isOffline || disabled}
-          autoFocus
+          rows={1}
+          disabled={disabled}
         />
+
         <button
           type="submit"
-          disabled={!value.trim()}
+          className="absolute right-3 top-1/2 -translate-y-1/2 bg-emerald-500 hover:bg-emerald-400 text-black font-medium rounded-full p-2 disabled:opacity-50 disabled:pointer-events-none"
+          disabled={!value.trim() || isLoading || disabled}
           onClick={onSubmit}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-emerald-400 text-black font-semibold p-3 rounded-full border-2 border-emerald-300 hover:bg-emerald-500 transition-colors disabled:opacity-70 disabled:bg-gray-600 disabled:border-gray-500 disabled:text-white"
-          aria-label="Send Message"
+          aria-label="Submit message"
         >
-          <PaperAirplaneIcon className="w-5 h-5" />
+          <PaperAirplaneIcon className="w-4 h-4" />
         </button>
       </div>
 

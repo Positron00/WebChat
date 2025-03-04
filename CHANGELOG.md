@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.1] - 2024-02-22
+
+### Enhanced
+- Improved screenshot functionality
+  - Enhanced thumbnail display with better positioning
+  - Optimized image preview with proper aspect ratio handling
+  - Improved UI responsiveness when screenshots are added
+  - Better memory management for screenshot object URLs
+  - Added visual feedback for clearer user interaction
+
 ## [1.8.0] - 2024-02-22
 
 ### Added
@@ -15,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Created seamless upload to conversation after capture
   - Added loading state during screen capture process
   - Included error handling with user-friendly messages
+  - Displays thumbnail preview of captured screenshot next to input field
+  - Added ability to dismiss the thumbnail with a hover-reveal close button
+  - Implemented proper thumbnail cleanup when removed or component unmounts
 
 ## [1.7.1] - 2024-02-22
 
