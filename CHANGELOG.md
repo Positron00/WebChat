@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2024-02-22
+
+### Added
+- Voice input functionality through computer microphone
+  - Implemented speech recognition using the Web Speech API
+  - Added voice recording toggle with the Voice button in toolbar
+  - Included visual feedback during recording with animated microphone icon
+  - Added red background highlight to indicate active recording state
+  - Implemented automatic transcription of speech to text input
+  - Added browser compatibility detection with helpful error messages
+  - Included proper cleanup of speech recognition resources
+  - Enhanced accessibility with appropriate ARIA labels
+
 ## [1.8.5] - 2024-02-22
 
 ### Added

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon, Cog6ToothIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useApp } from '@/contexts/AppContext';
 import path from 'path';
@@ -60,6 +60,39 @@ const KNOWLEDGE_FOCUS_COLORS = {
   history: 'bg-orange-700 text-white'
 };
 
+// Define Speech Recognition type for TypeScript
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  start: () => void;
+  stop: () => void;
+  abort: () => void;
+  addEventListener: (type: string, listener: EventListenerOrEventListenerObject) => void;
+  removeEventListener: (type: string, listener: EventListenerOrEventListenerObject) => void;
+}
+
+interface SpeechRecognitionResult {
+  transcript: string;
+  isFinal: boolean;
+}
+
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionResultList {
+  length: number;
+  item(index: number): SpeechRecognitionResult;
+  [index: number]: SpeechRecognitionResult;
+}
+
+// Browser compatibility type for Speech Recognition
+interface Window {
+  SpeechRecognition?: new () => SpeechRecognition;
+  webkitSpeechRecognition?: new () => SpeechRecognition;
+}
+
 export function MessageInput({
   value,
   onChange,
@@ -77,6 +110,86 @@ export function MessageInput({
   const [showSettings, setShowSettings] = useState(false);
   const [showFocusDropdown, setShowFocusDropdown] = useState(false);
   const [isCapturingScreen, setIsCapturingScreen] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [speechRecognition, setSpeechRecognition] = useState<SpeechRecognition | null>(null);
+
+  // Initialize speech recognition
+  useEffect(() => {
+    // Check if browser supports speech recognition
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+      
+      // Configure event listeners
+      recognition.addEventListener('result', handleSpeechResult);
+      recognition.addEventListener('error', handleSpeechError);
+      recognition.addEventListener('end', handleSpeechEnd);
+      
+      setSpeechRecognition(recognition);
+      
+      // Clean up event listeners when component unmounts
+      return () => {
+        if (recognition) {
+          recognition.removeEventListener('result', handleSpeechResult);
+          recognition.removeEventListener('error', handleSpeechError);
+          recognition.removeEventListener('end', handleSpeechEnd);
+          
+          if (isRecording) {
+            recognition.stop();
+          }
+        }
+      };
+    }
+  }, []);
+  
+  // Handle speech recognition results
+  const handleSpeechResult = (event: any) => {
+    if (event.results.length > 0) {
+      const transcript = Array.from(event.results)
+        .map((result: any) => result[0].transcript)
+        .join('');
+      
+      if (event.results[0].isFinal) {
+        onChange(value + transcript);
+      }
+    }
+  };
+  
+  // Handle speech recognition errors
+  const handleSpeechError = (error: any) => {
+    console.error('Speech recognition error:', error);
+    setIsRecording(false);
+  };
+  
+  // Handle speech recognition end
+  const handleSpeechEnd = () => {
+    setIsRecording(false);
+  };
+  
+  // Toggle voice recording
+  const toggleVoiceRecording = () => {
+    if (!speechRecognition) {
+      alert('Speech recognition is not supported in your browser. Please try using Chrome, Edge, or Safari.');
+      return;
+    }
+    
+    if (isRecording) {
+      speechRecognition.stop();
+      setIsRecording(false);
+    } else {
+      try {
+        speechRecognition.start();
+        setIsRecording(true);
+      } catch (error) {
+        console.error('Failed to start speech recognition:', error);
+        alert('Failed to start speech recognition. Please try again.');
+      }
+    }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -209,7 +322,7 @@ export function MessageInput({
             }
           }}
           rows={1}
-          disabled={disabled}
+          disabled={disabled || isRecording}
         />
 
         <button
@@ -277,10 +390,15 @@ export function MessageInput({
 
           <button
             type="button"
-            className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+            onClick={toggleVoiceRecording}
+            className={`p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px] ${isRecording ? 'bg-red-600 text-white' : ''}`}
+            disabled={isOffline}
+            aria-label={isRecording ? "Stop recording" : "Start voice recording"}
           >
-            <MicrophoneIcon className="w-3 h-3 text-gray-300" />
-            <span className="text-xs text-gray-300">Voice</span>
+            <MicrophoneIcon className={`w-3 h-3 ${isRecording ? 'text-white animate-pulse' : 'text-gray-300'}`} />
+            <span className={`text-xs ${isRecording ? 'text-white' : 'text-gray-300'}`}>
+              {isRecording ? 'Recording...' : 'Voice'}
+            </span>
           </button>
 
           <button
