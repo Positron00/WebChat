@@ -115,6 +115,7 @@ export function MessageInput({
 
   // Initialize speech recognition
   useEffect(() => {
+    console.log('Initializing speech recognition');
     // Check if browser supports speech recognition
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     
@@ -124,64 +125,89 @@ export function MessageInput({
       recognition.interimResults = true;
       recognition.lang = 'en-US';
       
-      // Configure event listeners
-      recognition.addEventListener('result', handleSpeechResult);
-      recognition.addEventListener('error', handleSpeechError);
-      recognition.addEventListener('end', handleSpeechEnd);
-      
       setSpeechRecognition(recognition);
+    } else {
+      console.warn('Speech recognition is not supported in this browser');
+    }
+    
+    return () => {
+      // No cleanup needed for initialization
+    };
+  }, []);  // Empty dependency array since this only needs to run once
+
+  // Set up event listeners for speech recognition
+  useEffect(() => {
+    if (!speechRecognition) return;
+    
+    console.log('Setting up speech recognition event listeners');
+    
+    // Handle speech recognition results
+    const handleSpeechResult = (event: any) => {
+      console.log('Speech recognition result received', event.results);
+      const results = event.results;
       
-      // Clean up event listeners when component unmounts
-      return () => {
-        if (recognition) {
-          recognition.removeEventListener('result', handleSpeechResult);
-          recognition.removeEventListener('error', handleSpeechError);
-          recognition.removeEventListener('end', handleSpeechEnd);
-          
-          if (isRecording) {
-            recognition.stop();
-          }
+      if (results.length > 0) {
+        // Get the latest result
+        const latest = results[results.length - 1];
+        
+        // Extract transcript
+        const transcript = latest[0].transcript;
+        console.log('Transcript:', transcript, 'Final:', latest.isFinal);
+        
+        if (latest.isFinal) {
+          console.log('Updating input with final transcript:', transcript);
+          // Add space only if there's existing text
+          const newValue = value ? `${value} ${transcript}` : transcript;
+          onChange(newValue);
         }
-      };
-    }
-  }, []);
-  
-  // Handle speech recognition results
-  const handleSpeechResult = (event: any) => {
-    if (event.results.length > 0) {
-      const transcript = Array.from(event.results)
-        .map((result: any) => result[0].transcript)
-        .join('');
-      
-      if (event.results[0].isFinal) {
-        onChange(value + transcript);
       }
-    }
-  };
-  
-  // Handle speech recognition errors
-  const handleSpeechError = (error: any) => {
-    console.error('Speech recognition error:', error);
-    setIsRecording(false);
-  };
-  
-  // Handle speech recognition end
-  const handleSpeechEnd = () => {
-    setIsRecording(false);
-  };
-  
+    };
+    
+    // Handle speech recognition errors
+    const handleSpeechError = (error: any) => {
+      console.error('Speech recognition error:', error);
+      setIsRecording(false);
+    };
+    
+    // Handle speech recognition end
+    const handleSpeechEnd = () => {
+      console.log('Speech recognition ended');
+      setIsRecording(false);
+    };
+    
+    // Configure event listeners
+    speechRecognition.addEventListener('result', handleSpeechResult);
+    speechRecognition.addEventListener('error', handleSpeechError);
+    speechRecognition.addEventListener('end', handleSpeechEnd);
+    
+    // Clean up event listeners
+    return () => {
+      console.log('Cleaning up speech recognition event listeners');
+      speechRecognition.removeEventListener('result', handleSpeechResult);
+      speechRecognition.removeEventListener('error', handleSpeechError);
+      speechRecognition.removeEventListener('end', handleSpeechEnd);
+      
+      if (isRecording) {
+        speechRecognition.stop();
+      }
+    };
+  }, [speechRecognition, onChange, value, isRecording]); // Include all dependencies
+
   // Toggle voice recording
   const toggleVoiceRecording = () => {
+    console.log('Toggle voice recording, current state:', isRecording);
     if (!speechRecognition) {
       alert('Speech recognition is not supported in your browser. Please try using Chrome, Edge, or Safari.');
       return;
     }
     
     if (isRecording) {
+      console.log('Stopping speech recognition');
       speechRecognition.stop();
       setIsRecording(false);
     } else {
       try {
+        console.log('Starting speech recognition');
         speechRecognition.start();
         setIsRecording(true);
       } catch (error) {
