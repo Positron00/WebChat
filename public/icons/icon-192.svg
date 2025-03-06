@@ -1,5 +1,72 @@
 <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="192" height="192" fill="#111827"/>
-  <path d="M96 16L176 64V128L96 176L16 128V64L96 16Z" stroke="#00FFE0" stroke-width="8" stroke-linejoin="round"/>
-  <path d="M96 176V112M176 64L96 112L16 64M96 16V80L176 128" stroke="#00FFE0" stroke-width="8" stroke-linejoin="round"/>
+  
+  <!-- Brain-inspired neural network with 3D effect -->
+  <g class="brain-network">
+    <!-- Central node -->
+    <circle cx="96" cy="96" r="20" fill="#00FFE0" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.6;0.9" dur="3s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Neural connections - outer layer -->
+    <g opacity="0.7">
+      <!-- Connection lines with pulse effect -->
+      <path d="M96 76L60 50" stroke="#00FFE0" stroke-width="2">
+        <animate attributeName="stroke-width" values="2;3;2" dur="2.5s" repeatCount="indefinite" />
+      </path>
+      <path d="M96 76L130 50" stroke="#00FFE0" stroke-width="2">
+        <animate attributeName="stroke-width" values="2;3;2" dur="2.7s" repeatCount="indefinite" />
+      </path>
+      <path d="M96 116L60 142" stroke="#00FFE0" stroke-width="2">
+        <animate attributeName="stroke-width" values="2;3;2" dur="2.9s" repeatCount="indefinite" />
+      </path>
+      <path d="M96 116L130 142" stroke="#00FFE0" stroke-width="2">
+        <animate attributeName="stroke-width" values="2;3;2" dur="3.1s" repeatCount="indefinite" />
+      </path>
+      <path d="M76 96L50 96" stroke="#00FFE0" stroke-width="2">
+        <animate attributeName="stroke-width" values="2;3;2" dur="3.3s" repeatCount="indefinite" />
+      </path>
+      <path d="M116 96L142 96" stroke="#00FFE0" stroke-width="2">
+        <animate attributeName="stroke-width" values="2;3;2" dur="3.5s" repeatCount="indefinite" />
+      </path>
+    </g>
+    
+    <!-- Nodes at connection points - with pulse effect -->
+    <g>
+      <circle cx="60" cy="50" r="6" fill="#00FFE0" opacity="0.7">
+        <animate attributeName="r" values="6;8;6" dur="3s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="130" cy="50" r="6" fill="#00FFE0" opacity="0.7">
+        <animate attributeName="r" values="6;8;6" dur="2.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="60" cy="142" r="6" fill="#00FFE0" opacity="0.7">
+        <animate attributeName="r" values="6;8;6" dur="2.6s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="130" cy="142" r="6" fill="#00FFE0" opacity="0.7">
+        <animate attributeName="r" values="6;8;6" dur="2.4s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="50" cy="96" r="6" fill="#00FFE0" opacity="0.7">
+        <animate attributeName="r" values="6;8;6" dur="2.9s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="142" cy="96" r="6" fill="#00FFE0" opacity="0.7">
+        <animate attributeName="r" values="6;8;6" dur="3.2s" repeatCount="indefinite" />
+      </circle>
+    </g>
+  </g>
+  
+  <!-- Rotating overlay effect -->
+  <g opacity="0.4">
+    <animateTransform attributeName="transform" type="rotate" from="0 96 96" to="360 96 96" dur="20s" repeatCount="indefinite" />
+    <circle cx="96" cy="96" r="55" stroke="#00FFE0" stroke-width="1" fill="none" />
+    <circle cx="96" cy="96" r="70" stroke="#00FFE0" stroke-width="0.5" fill="none" />
+  </g>
+  
+  <!-- Subtle highlight for 3D effect -->
+  <circle cx="90" cy="90" r="25" fill="url(#highlight)" opacity="0.3" />
+  <defs>
+    <radialGradient id="highlight" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(90 90) rotate(45) scale(25)">
+      <stop stop-color="white" />
+      <stop offset="1" stop-color="white" stop-opacity="0" />
+    </radialGradient>
+  </defs>
 </svg> 
