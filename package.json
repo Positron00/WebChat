@@ -9,7 +9,8 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "generate-icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
@@ -33,6 +34,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.35",
+    "sharp": "^0.33.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
   },

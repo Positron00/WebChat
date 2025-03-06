@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0] - 2024-03-06
+
+### Fixed
+- PWA icon loading errors
+  - Added missing icon files (icon-192.png and icon-512.png) for PWA functionality
+  - Created stylized SVG and PNG icons matching the application design
+  - Added icon generation script for easier maintenance
+  - Fixed 404 errors in browser console related to missing icons
+  - Improved PWA installation experience with proper icons
+
 ## [1.9.2] - 2024-02-22
 
 ### Fixed
