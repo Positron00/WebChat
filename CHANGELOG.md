@@ -5,6 +5,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.0] - 2024-03-06
+
+### Documentation
+- Complete current architecture documentation
+  - **Component Structure:**
+    - Single-page application with centralized Chat component
+    - Modular MessageInput component with voice input, screenshot capture, and file upload
+    - MessageList component for rendering conversation history
+    - Clean separation between UI components and business logic
+  
+  - **State Management:**
+    - ChatContext for conversation state and message operations
+    - AppContext for application settings and preferences
+    - Local storage integration for persistence across sessions
+    - Efficient state updates with React hooks
+  
+  - **API Integration:**
+    - Clean API client abstraction with rate limiting and retries
+    - Together AI integration with Llama 3.3 model
+    - Structured request/response handling with TypeScript typing
+    - Proper error handling and recovery mechanisms
+  
+  - **Enhanced Input Features:**
+    - Web Speech API integration for voice input
+    - Screenshot capture with preview and attachment control
+    - File upload with preview and validation
+    - Knowledge domain selection (Medical, Legal, Physics, etc.)
+    - Prompt style customization (Balanced, Creative, Precise, Helpful)
+  
+  - **Progressive Web App:**
+    - Full PWA support with installable capability
+    - Custom animated neural network icons (192px and 512px)
+    - Offline detection and fallback behavior
+    - Manifest configuration for home screen installation
+  
+  - **Accessibility:**
+    - Contrast controls and dark theme support
+    - Screen reader compatibility with ARIA attributes
+    - Responsive design for all device sizes
+    - Keyboard navigation support
+
 ## [1.10.1] - 2024-03-06
 
 ### Changed
