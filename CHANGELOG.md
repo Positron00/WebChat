@@ -46,6 +46,107 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Responsive design for all device sizes
     - Keyboard navigation support
 
+  - **Architectural Diagram:**
+    ```mermaid
+    graph TD
+        subgraph Frontend ["Frontend (Next.js App)"]
+            subgraph Components ["UI Components"]
+                Chat["Chat.tsx<br/>Main Chat Component"]
+                MessageInput["MessageInput.tsx<br/>Input + Controls"]
+                MessageList["MessageList.tsx<br/>Messages Display"]
+                ScreenshotModal["ScreenshotModal<br/>Image Preview"]
+                SettingsDropdown["Settings UI<br/>User Preferences"]
+            end
+            
+            subgraph Contexts ["Context Providers"]
+                AppContext["AppContext.tsx<br/>App Settings & Theme"]
+                ChatContext["ChatContext.tsx<br/>Message State & API"]
+            end
+            
+            subgraph Utils ["Utilities"]
+                ApiClient["apiClient.ts<br/>API Communication"]
+                RateLimiter["rateLimiter.ts<br/>Request Throttling"]
+                Storage["storage.ts<br/>Local Storage"]
+                Logger["logger.ts<br/>Logging System"]
+            end
+            
+            subgraph InputFeatures ["Input Features"]
+                SpeechRecognition["Web Speech API<br/>Voice Input"]
+                ScreenCapture["Screen Capture API<br/>Screenshots"]
+                FileUpload["File Upload<br/>Image Input"]
+                KnowledgeFocus["Knowledge Domain<br/>Selection"]
+                PromptStyles["Prompt Style<br/>Customization"]
+            end
+            
+            subgraph PWA ["Progressive Web App"]
+                Manifest["manifest.json<br/>App Installation"]
+                Icons["SVG Icons<br/>Neural Network Design"]
+                OfflineSupport["Offline Detection<br/>Connectivity Checks"]
+            end
+        end
+        
+        subgraph Backend ["Backend"]
+            APIRoutes["API Routes<br/>NextJS App Router"]
+            ChatRoute["chat/route.ts<br/>LLM API Handler"]
+            TogetherAI["Together AI<br/>Llama 3.3 Model"]
+        end
+        
+        %% Component Relationships
+        Chat --> MessageInput
+        Chat --> MessageList
+        Chat --> ScreenshotModal
+        MessageInput --> SettingsDropdown
+        
+        %% Context Connections
+        Chat --> AppContext
+        Chat --> ChatContext
+        MessageInput --> AppContext
+        MessageList --> ChatContext
+        
+        %% Utility Connections
+        ChatContext --> ApiClient
+        ApiClient --> RateLimiter
+        ApiClient --> Logger
+        AppContext --> Storage
+        
+        %% Input Features Connections
+        MessageInput --> SpeechRecognition
+        MessageInput --> ScreenCapture
+        MessageInput --> FileUpload
+        MessageInput --> KnowledgeFocus
+        MessageInput --> PromptStyles
+        
+        %% PWA Connections
+        Frontend --> PWA
+        
+        %% Backend Connections
+        ApiClient --> APIRoutes
+        APIRoutes --> ChatRoute
+        ChatRoute --> TogetherAI
+        
+        %% Data Flow
+        MessageInput -.-> |"User Input"| ChatContext
+        ChatContext -.-> |"API Request"| ApiClient
+        ApiClient -.-> |"LLM Request"| TogetherAI
+        TogetherAI -.-> |"LLM Response"| ApiClient
+        ApiClient -.-> |"API Response"| ChatContext
+        ChatContext -.-> |"Messages"| MessageList
+        
+        classDef component fill:#bbf,stroke:#333,stroke-width:1px
+        classDef context fill:#f9f,stroke:#333,stroke-width:1px
+        classDef utility fill:#dfd,stroke:#333,stroke-width:1px
+        classDef feature fill:#ffd,stroke:#333,stroke-width:1px
+        classDef pwa fill:#dff,stroke:#333,stroke-width:1px
+        classDef api fill:#fdd,stroke:#333,stroke-width:1px
+        
+        class Chat,MessageInput,MessageList,ScreenshotModal,SettingsDropdown component
+        class AppContext,ChatContext context
+        class ApiClient,RateLimiter,Storage,Logger utility
+        class SpeechRecognition,ScreenCapture,FileUpload,KnowledgeFocus,PromptStyles feature
+        class Manifest,Icons,OfflineSupport pwa
+        class APIRoutes,ChatRoute,TogetherAI api
+    ```
+
 ## [1.10.1] - 2024-03-06
 
 ### Changed
@@ -497,76 +598,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Comprehensive architectural documentation
-  ```mermaid
-  graph TD
-      subgraph Frontend ["Frontend (Next.js App)"]
-          Layout["/app/layout.tsx<br/>Root Layout + Providers"]
-          Chat["/components/Chat.tsx<br/>Main Chat Component"]
-          
-          subgraph Components ["Components"]
-              MessageInput["/components/chat/MessageInput.tsx<br/>Input + Toolbar"]
-              MessageList["/components/chat/MessageList.tsx<br/>Message Display"]
-          end
-          
-          subgraph Contexts ["Context Providers"]
-              AppContext["/contexts/AppContext.tsx<br/>App Settings + Theme"]
-              ChatContext["/contexts/ChatContext.tsx<br/>Chat State + Logic"]
-          end
-          
-          subgraph Utils ["Utilities"]
-              ApiClient["/utils/apiClient.ts<br/>API Communication"]
-              RateLimiter["/utils/rateLimiter.ts<br/>Request Rate Control"]
-              Logger["/utils/logger.ts<br/>Logging System"]
-              Storage["/utils/storage.ts<br/>Local Storage"]
-          end
-      end
-      
-      subgraph Backend ["Backend (API Routes)"]
-          ChatAPI["/app/api/chat/route.ts<br/>Chat Endpoint"]
-      end
-      
-      subgraph External ["External Services"]
-          TogetherAI["Together AI<br/>LLM API"]
-      end
-
-      %% Component Relationships
-      Layout --> AppContext
-      Layout --> ChatContext
-      Layout --> Chat
-      
-      Chat --> MessageInput
-      Chat --> MessageList
-      
-      %% Context Usage
-      ChatContext --> ApiClient
-      ChatContext --> RateLimiter
-      ChatContext --> Logger
-      ChatContext --> Storage
-      
-      %% API Flow
-      ApiClient --> ChatAPI
-      ChatAPI --> TogetherAI
-      
-      %% Data Flow
-      MessageInput -.-> |"User Input"| ChatContext
-      ChatContext -.-> |"Messages"| MessageList
-      
-      %% Utility Dependencies
-      ApiClient --> Logger
-      RateLimiter --> Logger
-
-      classDef context fill:#f9f,stroke:#333,stroke-width:2px,color:#333
-      classDef component fill:#bbf,stroke:#333,stroke-width:2px,color:#333
-      classDef util fill:#dfd,stroke:#333,stroke-width:2px,color:#333
-      classDef api fill:#fdd,stroke:#333,stroke-width:2px,color:#333
-      classDef external fill:#ddd,stroke:#333,stroke-width:2px,color:#333
-      
-      class AppContext,ChatContext context
-      class Chat,MessageInput,MessageList component
-      class ApiClient,RateLimiter,Logger,Storage util
-      class ChatAPI api
-      class TogetherAI external
-  ```
 
 ### Documentation
 - Added detailed architecture diagram showing:
