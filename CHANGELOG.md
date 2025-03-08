@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.14.0] - 2024-03-07
+## [1.14.1] - 2024-03-08
+
+### Added
+- Academic publication-style formatting with citation references
+- Included in Knowledge Focus prompts: "Include sources of information as citations in your response similar to academic papers"
+
+## [1.14.0] - 2024-03-08
 
 ### Added
 - Academic publication-style formatting with citation references
@@ -18,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved AI responses to resemble scholarly publications
   - Enhanced visual presentation with superscript citation numbers
 
-## [1.13.7] - 2024-03-07
+## [1.13.7] - 2024-03-08
 
 ### Changed
 - Enhanced section spacing in response content
@@ -31,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced text processing to ensure consistent section breaks
   - Balanced content density with proper visual separation
 
-## [1.13.6] - 2024-03-07
+## [1.13.6] - 2024-03-08
 
 ### Changed
 - Doubled horizontal padding inside message bubbles
@@ -43,7 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Created better balance between content density and readability
   - Added more breathing room for message content
 
-## [1.13.5] - 2024-03-07
+## [1.13.5] - 2024-03-08
 
 ### Changed
 - Halved vertical margins throughout the content container
@@ -56,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Minimized list and blockquote spacing
   - Created ultra-compact layout with maximum content density
 
-## [1.13.4] - 2024-03-07
+## [1.13.4] - 2024-03-08
 
 ### Changed
 - Minimized horizontal margins to bare minimum
@@ -68,7 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Reduced assistant message padding from 16px to 12px
   - Created almost borderless appearance for maximum content space
 
-## [1.13.3] - 2024-03-07
+## [1.13.3] - 2024-03-08
 
 ### Changed
 - Further reduced horizontal margins in content container
@@ -80,7 +86,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced content density while preserving readability
   - Maximized available screen real estate for conversations
 
-## [1.13.2] - 2024-03-07
+## [1.13.2] - 2024-03-08
 
 ### Changed
 - Reduced margins around content in response container
@@ -92,7 +98,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Increased maximum message width from 80% to 85% for better space utilization
   - Created a more streamlined visual experience with thinner borders
 
-## [1.13.1] - 2024-03-07
+## [1.13.1] - 2024-03-08
 
 ### Changed
 - Increased response and query fields width by 20%
@@ -103,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Optimized container sizes for different screen resolutions
   - Maintained responsive behavior across all device sizes
 
-## [1.13.0] - 2024-03-07
+## [1.13.0] - 2024-03-08
 
 ### Added
 - Source canvas with information tiles
@@ -126,7 +132,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added flexible layout that adapts when source panel is toggled
   - Maintained visual consistency with the application's design language
 
-## [1.12.2] - 2024-03-07
+## [1.12.2] - 2024-03-08
 
 ### Added
 - New "Nature" knowledge focus option
@@ -137,7 +143,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhances AI responses for questions about flora, fauna, and ecosystems
   - Includes specialized knowledge about environmental conservation
 
-## [1.12.1] - 2024-03-07
+## [1.12.1] - 2024-03-08
 
 ### Changed
 - Combined "Physics" and "Chemistry" knowledge focus areas into a single "Science" category
@@ -147,7 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Applied a new teal color for the Science knowledge focus indicator
   - Improved knowledge prompt with comprehensive scientific guidance
 
-## [1.12.0] - 2024-03-06
+## [1.12.0] - 2024-03-07
 
 ### Changed
 - Improved toolbar layout for better user experience
@@ -158,7 +164,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Adjusted dropdown positioning to open from right edge
   - Maintained consistent styling and behavior for all toolbar elements
 
-## [1.11.6] - 2024-03-06
+## [1.11.6] - 2024-03-07
 
 ### Changed
 - Enhanced spacing in formatted message content
@@ -169,7 +175,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added consistent spacing for blockquotes and other markdown elements
   - Made text consistently left-aligned for better readability
 
-## [1.11.5] - 2024-03-06
+## [1.11.5] - 2024-03-07
 
 ### Added
 - Markdown rendering for message content
@@ -180,7 +186,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Left-aligned text within message bubbles for better readability
   - Created a more polished and professional response display
 
-## [1.11.4] - 2024-03-06
+## [1.11.4] - 2024-03-07
 
 ### Fixed
 - Enhanced message formatting in response field
@@ -191,7 +197,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented React Fragment-based rendering for consistent spacing
   - Prevented excessive line breaks by limiting consecutive newlines
 
-## [1.11.3] - 2024-03-06
+## [1.11.3] - 2024-03-07
 
 ### Changed
 - Improved message formatting in response field
@@ -202,7 +208,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added intelligent whitespace management for better text layout
   - Maintained compatibility with existing message content
 
-## [1.11.2] - 2024-03-06
+## [1.11.2] - 2024-03-07
 
 ### Added
 - New "Concise" prompt style option
@@ -213,7 +219,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Designed for users who prefer minimal, straight-to-the-point answers
   - Programmed to limit responses to 3 sentences when possible
 
-## [1.11.1] - 2024-03-06
+## [1.11.1] - 2024-03-07
 
 ### Added
 - New "Verbose" prompt style option
