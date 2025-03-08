@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.5] - 2024-03-06
+
+### Added
+- Markdown rendering for message content
+  - Integrated react-markdown library for proper formatting
+  - Added support for bold text with double asterisks (**text**)
+  - Enabled proper rendering of headings, lists, and other markdown elements
+  - Maintained improved spacing between sections
+  - Left-aligned text within message bubbles for better readability
+  - Created a more polished and professional response display
+
 ## [1.11.4] - 2024-03-06
 
 ### Fixed
