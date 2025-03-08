@@ -5,6 +5,126 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.15.1] - 2024-03-10
+
+### Documentation
+- Updated architecture documentation with latest features
+  - **Component Architecture:**
+    - Main Chat component orchestrates all interactions and UI layout
+    - MessageList handles rendering of conversation content
+    - Conditional canvas system for Sources and Code display
+    - Color-themed UI with customizable appearances
+    - Accessible design with high contrast options
+  
+  - **Feature Organization:**
+    - Input features: text input, voice recognition, file uploads
+    - Output features: formatted messages, code blocks, source citations
+    - Settings system: appearance, citations, AI response styles
+    - Canvas system: interchangeable code and source canvases
+  
+  - **Data Flow:**
+    - User inputs flow from MessageInput to Chat component
+    - Messages processed through the ChatContext system
+    - Response formatting handled by MessageList component
+    - Canvas visibility controlled by message content detection
+    - Style settings propagated through context providers
+  
+  - **Enhanced Architecture Diagram:**
+    ```mermaid
+    graph TD
+        subgraph FrontendComponents["Frontend Components"]
+            Chat["Chat.tsx<br/>Main Component"]
+            
+            subgraph InputComponents["Input Components"]
+                MessageInput["MessageInput.tsx<br/>User Input"]
+                VoiceRecognition["Voice Recognition"]
+                ScreenshotCapture["Screenshot Capture"]
+                FileUpload["File Upload"]
+            end
+            
+            subgraph OutputComponents["Output Components"]
+                MessageList["MessageList.tsx<br/>Messages Display"]
+                SourceCanvas["SourceCanvas.tsx<br/>Citation Display"]
+                CodeCanvas["CodeCanvas.tsx<br/>Code Display"]
+            end
+            
+            subgraph SettingsSystem["Settings"]
+                SettingsDropdown["Settings UI"]
+                StyleOptions["Style Dropdown"]
+                FocusOptions["Focus Dropdown"]
+                ColorCustomization["Advanced Color Controls"]
+            end
+        end
+        
+        subgraph ContextProviders["Context Providers"]
+            AppContext["AppContext.tsx<br/>App Settings"]
+            ChatContext["ChatContext.tsx<br/>Message State"]
+        end
+        
+        subgraph UtilityLayer["Utilities"]
+            ApiClient["apiClient.ts"]
+            Storage["storage.ts"]
+            ContentProcessing["Content Processors<br/>Code & Citation Detection"]
+        end
+        
+        subgraph BackendServices["Backend"]
+            ApiRoutes["API Routes"]
+            TogetherAI["Together AI<br/>Llama 3.3"]
+        end
+        
+        %% Component Relationships
+        Chat --> MessageInput
+        Chat --> MessageList
+        Chat --> SourceCanvas
+        Chat --> CodeCanvas
+        
+        MessageInput --> VoiceRecognition
+        MessageInput --> ScreenshotCapture
+        MessageInput --> FileUpload
+        MessageInput --> SettingsDropdown
+        SettingsDropdown --> StyleOptions
+        SettingsDropdown --> FocusOptions
+        SettingsDropdown --> ColorCustomization
+        
+        %% Context Connections
+        Chat --> AppContext
+        Chat --> ChatContext
+        MessageInput --> AppContext
+        MessageList --> AppContext
+        SourceCanvas --> AppContext
+        CodeCanvas --> AppContext
+        
+        %% Utility Connections
+        ChatContext --> ApiClient
+        MessageList --> ContentProcessing
+        AppContext --> Storage
+        
+        %% Backend Connections
+        ApiClient --> ApiRoutes
+        ApiRoutes --> TogetherAI
+        
+        %% Data Flow
+        MessageInput -.-> |"User Input"| Chat
+        Chat -.-> |"Send Message"| ChatContext
+        ChatContext -.-> |"API Request"| ApiClient
+        ApiClient -.-> |"Response"| ChatContext
+        ChatContext -.-> |"Messages"| Chat
+        Chat -.-> |"Render"| MessageList
+        Chat -.-> |"Code Detection"| CodeCanvas
+        Chat -.-> |"Source Detection"| SourceCanvas
+        MessageList -.-> |"Code Block Detection"| ContentProcessing
+        
+        classDef component fill:#bbf,stroke:#333,stroke-width:1px
+        classDef context fill:#f9f,stroke:#333,stroke-width:1px
+        classDef utility fill:#dfd,stroke:#333,stroke-width:1px
+        classDef backend fill:#fdd,stroke:#333,stroke-width:1px
+        
+        class Chat,MessageInput,MessageList,SourceCanvas,CodeCanvas,VoiceRecognition,ScreenshotCapture,FileUpload,SettingsDropdown,StyleOptions,FocusOptions,ColorCustomization component
+        class AppContext,ChatContext context
+        class ApiClient,Storage,ContentProcessing utility
+        class ApiRoutes,TogetherAI backend
+    ```
+
 ## [1.15.0] - 2024-03-10
 
 ### Added
