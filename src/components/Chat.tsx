@@ -78,10 +78,10 @@ export default function Chat() {
         <button
           onClick={toggleSourcesPanel}
           className="flex items-center text-sm text-gray-300 hover:text-white p-1 rounded"
-          aria-label={showSources ? "Hide sources" : "Show sources"}
+          aria-label={showSources ? "Hide canvas" : "Show canvas"}
         >
           <InformationCircleIcon className="w-5 h-5 mr-1" />
-          {showSources ? "Hide Sources" : "Show Sources"}
+          {showSources ? "Hide Canvas" : "Show Canvas"}
         </button>
       </div>
       

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.2] - 2024-03-08
+
+### Changed
+- Enhanced source display with visual tile interface
+  - Renamed "Sources" panel to "Canvas" for better representation
+  - Redesigned source display with modern tile-based interface
+  - Added color-coded banners based on source domain
+  - Included snippet previews with quotation styling
+  - Enhanced visual feedback with hover effects and animations
+  - Added direct links to source content when available
+  - Improved empty state with helpful placeholder
+  - Enhanced relevance indicators with percentage badges
+
 ## [1.14.1] - 2024-03-08
 
 ### Added
