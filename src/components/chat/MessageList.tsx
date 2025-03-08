@@ -12,6 +12,41 @@ interface MessageListProps {
   error?: string;
 }
 
+// Add academic-style citation references to the text
+const addCitationReferences = (content: string, sourcesCount: number): string => {
+  if (sourcesCount === 0) return content;
+  
+  // Create array of available citation numbers
+  const citationNumbers = Array.from({ length: sourcesCount }, (_, i) => i + 1);
+  let modifiedContent = content;
+  
+  // Add citations at the end of sentences for longer content
+  if (content.length > 200) {
+    // Find sentence endings
+    const sentences = content.match(/[^.!?]+[.!?]+/g) || [];
+    
+    // Add citations to ~40% of sentences
+    const sentencesToCite = Math.max(1, Math.floor(sentences.length * 0.4));
+    for (let i = 0; i < sentencesToCite && citationNumbers.length > 0; i++) {
+      // Choose random sentences to cite, but avoid consecutive citations
+      const sentenceIndex = Math.floor(Math.random() * sentences.length);
+      const citation = citationNumbers.shift() || 1;
+      
+      // Replace the sentence with cited version
+      if (sentences[sentenceIndex] && !sentences[sentenceIndex].includes('[')) {
+        const citedSentence = sentences[sentenceIndex].replace(/([.!?]+)$/, ` [${citation}]$1`);
+        modifiedContent = modifiedContent.replace(sentences[sentenceIndex], citedSentence);
+        sentences[sentenceIndex] = citedSentence;
+      }
+    }
+  } else {
+    // For shorter content, just add a citation at the end
+    modifiedContent = modifiedContent.replace(/([.!?]+)$/, ` [${citationNumbers[0]}]$1`);
+  }
+  
+  return modifiedContent;
+};
+
 // Format message content with double line breaks between sections
 // Now returning a string as react-markdown will handle the rendering
 const formatMessageContent = (content: string): string => {
@@ -64,6 +99,67 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
     return `${baseClass} ${colorClass}`;
   };
 
+  // Custom renderer for the citation references
+  const renderMessageWithCitations = (content: string) => {
+    // Prepare for rendering
+    const formattedContent = formatMessageContent(content);
+    
+    // Split by citation markers
+    const parts = formattedContent.split(/(\[\d+\])/g);
+    
+    if (parts.length <= 1) {
+      return <ReactMarkdown components={{
+        // Add proper spacing between paragraphs
+        p: ({node, ...props}) => <p className="text-left mb-4" {...props} />,
+        // Add spacing after headings
+        h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-4 mt-6" {...props} />,
+        h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-3 mt-5" {...props} />,
+        h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-4" {...props} />,
+        // Improve list spacing
+        ul: ({node, ...props}) => <ul className="text-left mb-4 ml-5 list-disc" {...props} />,
+        ol: ({node, ...props}) => <ol className="text-left mb-4 ml-5 list-decimal" {...props} />,
+        li: ({node, ...props}) => <li className="mb-1" {...props} />,
+        // Add spacing for other elements
+        blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-3 italic mb-4" {...props} />,
+        strong: ({node, ...props}) => <strong className="font-bold" {...props} />
+      }}>
+        {formattedContent}
+      </ReactMarkdown>;
+    }
+    
+    return (
+      <>
+        {parts.map((part, index) => {
+          if (part.match(/\[\d+\]/)) {
+            // This is a citation reference
+            const num = part.match(/\[(\d+)\]/)?.[1];
+            return <sup key={index} className="text-blue-400 font-semibold">{part}</sup>;
+          } else if (part) {
+            // This is regular text
+            return <ReactMarkdown key={index} components={{
+              // Add proper spacing between paragraphs
+              p: ({node, ...props}) => <p className="text-left mb-4" {...props} />,
+              // Add spacing after headings
+              h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-4 mt-6" {...props} />,
+              h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-3 mt-5" {...props} />,
+              h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-4" {...props} />,
+              // Improve list spacing
+              ul: ({node, ...props}) => <ul className="text-left mb-4 ml-5 list-disc" {...props} />,
+              ol: ({node, ...props}) => <ol className="text-left mb-4 ml-5 list-decimal" {...props} />,
+              li: ({node, ...props}) => <li className="mb-1" {...props} />,
+              // Add spacing for other elements
+              blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-3 italic mb-4" {...props} />,
+              strong: ({node, ...props}) => <strong className="font-bold" {...props} />
+            }}>
+              {part}
+            </ReactMarkdown>;
+          }
+          return null;
+        })}
+      </>
+    );
+  };
+
   return (
     <div className="w-full text-center mb-4">
       <div 
@@ -85,6 +181,16 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
             {Array.from({ length: Math.ceil(messages.length / 2) }, (_, index) => {
               const userMessage = messages[index * 2];
               const assistantMessage = messages[index * 2 + 1];
+              
+              // Add citation references to assistant messages that have sources
+              let processedContent = assistantMessage?.content;
+              if (assistantMessage?.sources && assistantMessage.sources.length > 0) {
+                processedContent = addCitationReferences(
+                  assistantMessage.content, 
+                  assistantMessage.sources.length
+                );
+              }
+              
               return (
                 <div key={index} className="mb-4 pb-4 border-b border-gray-700/50 last:border-b-0 last:mb-0 last:pb-0" 
                   style={{ borderColor: 'rgba(55, 65, 81, 0.5)' }}>
@@ -107,29 +213,13 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
                           role="article"
                           aria-label="assistant's message"
                         >
-                          <ReactMarkdown components={{
-                            // Add proper spacing between paragraphs
-                            p: ({node, ...props}) => <p className="text-left mb-4" {...props} />,
-                            // Add spacing after headings
-                            h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-4 mt-6" {...props} />,
-                            h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-3 mt-5" {...props} />,
-                            h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-4" {...props} />,
-                            // Improve list spacing
-                            ul: ({node, ...props}) => <ul className="text-left mb-4 ml-5 list-disc" {...props} />,
-                            ol: ({node, ...props}) => <ol className="text-left mb-4 ml-5 list-decimal" {...props} />,
-                            li: ({node, ...props}) => <li className="mb-1" {...props} />,
-                            // Add spacing for other elements
-                            blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-3 italic mb-4" {...props} />,
-                            strong: ({node, ...props}) => <strong className="font-bold" {...props} />
-                          }}>
-                            {formatMessageContent(assistantMessage.content)}
-                          </ReactMarkdown>
+                          {processedContent && renderMessageWithCitations(processedContent)}
                           
                           {/* Source indicator badge */}
                           {assistantMessage.sources && assistantMessage.sources.length > 0 && (
                             <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
                               <InformationCircleIcon className="w-3 h-3 mr-1" />
-                              {assistantMessage.sources.length} {assistantMessage.sources.length === 1 ? 'Source' : 'Sources'}
+                              Cited Sources: {assistantMessage.sources.length}
                             </div>
                           )}
                         </div>

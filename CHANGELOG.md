@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.0] - 2024-03-07
+
+### Added
+- Academic publication-style formatting with citation references
+  - Implemented numbered citation system with superscript references in text
+  - Redesigned source canvas to display academic-style citations
+  - Created bibliography format with proper citation structure
+  - Added author, title, publication, and URL formatting for sources
+  - Enhanced source information display with proper academic styling
+  - Modified text processing to intelligently place citations within content
+  - Improved AI responses to resemble scholarly publications
+  - Enhanced visual presentation with superscript citation numbers
+
+## [1.13.7] - 2024-03-07
+
+### Changed
+- Enhanced section spacing in response content
+  - Added triple line breaks between content sections
+  - Increased paragraph bottom margin from 6px to 16px
+  - Restored original heading spacing with proper vertical rhythm
+  - Expanded list margins from 6px to 16px for better separation
+  - Improved blockquote spacing for clearer content organization
+  - Optimized spacing between list items for better readability
+  - Enhanced text processing to ensure consistent section breaks
+  - Balanced content density with proper visual separation
+
 ## [1.13.6] - 2024-03-07
 
 ### Changed
@@ -1375,16 +1401,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tailwind CSS
 - React 18
 - Together AI API integration
-
-## [1.13.7] - 2024-03-07
-
-### Changed
-- Enhanced section spacing in response content
-  - Added triple line breaks between content sections
-  - Increased paragraph bottom margin from 6px to 16px
-  - Restored original heading spacing with proper vertical rhythm
-  - Expanded list margins from 6px to 16px for better separation
-  - Improved blockquote spacing for clearer content organization
-  - Optimized spacing between list items for better readability
-  - Enhanced text processing to ensure consistent section breaks
-  - Balanced content density with proper visual separation
