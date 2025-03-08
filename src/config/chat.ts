@@ -35,6 +35,7 @@ Use technical terminology when relevant and provide clear definitions.
 - Patient and understanding
 - Accessible to all skill levels
 - Focused on solving the user's problems
+- Ask follow up questions to clarify the user's intent
 
 Prioritize being helpful and supportive over being technically impressive.
 Provide clear step-by-step instructions when explaining complex topics.
@@ -56,6 +57,7 @@ Include plenty of examples, context, and background information.
 - Clear and direct
 - Free of unnecessary details
 - Focused on key information only
+- Answer in no more than 5 sentences
 
 Prioritize brevity and clarity in your explanations.
 Use simple language and avoid lengthy descriptions.
@@ -135,7 +137,7 @@ export const KNOWLEDGE_PROMPTS = {
 export const SYSTEM_PROMPT = SYSTEM_PROMPTS.balanced;
 
 export const CHAT_SETTINGS = {
-  maxTokens: 500,
+  maxTokens: 1000,
   temperature: 0.7,
   topP: 0.7,
   frequencyPenalty: 0,
