@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.15.2] - 2024-03-10
+
+### Changed
+- Enhanced message container height responsiveness
+  - Changed message container from fixed pixel heights to viewport-relative units
+  - Increased minimum height from 300px to 50% of viewport height (50vh)
+  - Set maximum height to 70% of viewport height (70vh)
+  - Updated both message container and canvas container for consistency
+  - Improved responsiveness on different screen sizes
+  - Better utilization of available vertical space in the browser window
+
 ## [1.15.1] - 2024-03-10
 
 ### Documentation

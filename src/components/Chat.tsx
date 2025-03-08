@@ -133,7 +133,7 @@ export default function Chat() {
         
         {/* Canvas - Conditional Display */}
         {showCanvas && (
-          <div className="lg:w-[32%] min-h-[300px] max-h-[625px] hidden lg:block">
+          <div className="lg:w-[32%] min-h-[50vh] max-h-[70vh] hidden lg:block">
             {canvasType === 'code' ? (
               <CodeCanvas 
                 codeBlocks={codeBlocks}

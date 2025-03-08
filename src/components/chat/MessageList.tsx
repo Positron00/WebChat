@@ -280,7 +280,7 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
   return (
     <div className="w-full text-center mb-4">
       <div 
-        className="w-full flex-1 min-h-[300px] max-h-[625px] bg-gray-900 text-white rounded-lg border border-gray-700 overflow-y-auto px-[2px] py-1 dark:bg-gray-900 dark:text-white dark:border-gray-700"
+        className="w-full flex-1 min-h-[50vh] max-h-[70vh] bg-gray-900 text-white rounded-lg border border-gray-700 overflow-y-auto px-[2px] py-1 dark:bg-gray-900 dark:text-white dark:border-gray-700"
         style={{ backgroundColor: '#111827', color: 'white', borderColor: 'rgba(55, 65, 81, 0.5)' }}
         role="log"
         aria-live="polite"
