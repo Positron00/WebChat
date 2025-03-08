@@ -117,6 +117,9 @@ export function MessageInput({
   const [isCapturingScreen, setIsCapturingScreen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [speechRecognition, setSpeechRecognition] = useState<SpeechRecognition | null>(null);
+  const [showFocus, setShowFocus] = useState(false);
+  const [showStyle, setShowStyle] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   // Initialize speech recognition
   useEffect(() => {
@@ -318,6 +321,20 @@ export function MessageInput({
     } finally {
       setIsCapturingScreen(false);
     }
+  };
+
+  // Function to toggle the advanced settings dropdown
+  const toggleAdvanced = () => {
+    setShowAdvanced(!showAdvanced);
+  };
+
+  // Functions to update color settings
+  const updateColorSetting = (setting: 'responseTextColor' | 'queryTextColor' | 'responseBackgroundColor' | 'queryBackgroundColor', color: string) => {
+    const newSettings = { 
+      ...accessibility, 
+      [setting]: color 
+    };
+    setAccessibility(newSettings);
   };
 
   return (
@@ -560,7 +577,99 @@ export function MessageInput({
                   <p className="text-gray-400 text-xs mt-1">
                     Changes the background color of message bubbles for better readability
                   </p>
+                  
+                  {/* Advanced Button */}
+                  <div className="mt-3">
+                    <button
+                      className="w-full px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs text-gray-300 transition-colors flex items-center justify-center"
+                      aria-label="Advanced appearance settings"
+                      onClick={toggleAdvanced}
+                    >
+                      Advanced
+                    </button>
+                  </div>
                 </div>
+                
+                {/* Advanced Settings Dropdown (conditionally shown) */}
+                {showAdvanced && (
+                  <div className="p-3 border-b border-gray-700">
+                    <h4 className="text-white text-sm font-medium mb-3">Advanced Color Settings</h4>
+                    
+                    {/* Response Text Color */}
+                    <div className="mb-3">
+                      <label className="block text-gray-300 text-xs mb-1">Response Text Color</label>
+                      <div className="flex items-center">
+                        <input 
+                          type="color" 
+                          value={accessibility.responseTextColor}
+                          onChange={(e) => updateColorSetting('responseTextColor', e.target.value)}
+                          className="w-8 h-8 rounded mr-2 border border-gray-600"
+                          aria-label="Choose response text color"
+                        />
+                        <span className="text-xs text-gray-400">{accessibility.responseTextColor}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Response Background Color */}
+                    <div className="mb-3">
+                      <label className="block text-gray-300 text-xs mb-1">Response Background</label>
+                      <div className="flex items-center">
+                        <input 
+                          type="color" 
+                          value={accessibility.responseBackgroundColor} 
+                          onChange={(e) => updateColorSetting('responseBackgroundColor', e.target.value)}
+                          className="w-8 h-8 rounded mr-2 border border-gray-600"
+                          aria-label="Choose response background color"
+                        />
+                        <span className="text-xs text-gray-400">{accessibility.responseBackgroundColor}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Query Text Color */}
+                    <div className="mb-3">
+                      <label className="block text-gray-300 text-xs mb-1">Query Text Color</label>
+                      <div className="flex items-center">
+                        <input 
+                          type="color" 
+                          value={accessibility.queryTextColor}
+                          onChange={(e) => updateColorSetting('queryTextColor', e.target.value)}
+                          className="w-8 h-8 rounded mr-2 border border-gray-600"
+                          aria-label="Choose query text color"
+                        />
+                        <span className="text-xs text-gray-400">{accessibility.queryTextColor}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Query Background Color */}
+                    <div className="mb-3">
+                      <label className="block text-gray-300 text-xs mb-1">Query Background</label>
+                      <div className="flex items-center">
+                        <input 
+                          type="color" 
+                          value={accessibility.queryBackgroundColor}
+                          onChange={(e) => updateColorSetting('queryBackgroundColor', e.target.value)}
+                          className="w-8 h-8 rounded mr-2 border border-gray-600"
+                          aria-label="Choose query background color"
+                        />
+                        <span className="text-xs text-gray-400">{accessibility.queryBackgroundColor}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Reset Button */}
+                    <button
+                      onClick={() => {
+                        updateColorSetting('responseTextColor', '#FFFFFF');
+                        updateColorSetting('queryTextColor', '#FFFFFF');
+                        updateColorSetting('responseBackgroundColor', '#111827');
+                        updateColorSetting('queryBackgroundColor', '#1E3A8A');
+                      }}
+                      className="w-full mt-2 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs text-gray-300 transition-colors"
+                      aria-label="Reset colors to default"
+                    >
+                      Reset to Default
+                    </button>
+                  </div>
+                )}
                 
                 {/* Cite Sources Setting */}
                 <div className="p-2">

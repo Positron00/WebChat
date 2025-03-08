@@ -17,6 +17,10 @@ export interface AccessibilitySettings {
   promptStyle: 'balanced' | 'creative' | 'precise' | 'helpful' | 'verbose' | 'concise';
   knowledgeFocus: 'general' | 'medical' | 'legal' | 'science' | 'technology' | 'business' | 'history' | 'nature';
   citeSources: boolean;
+  responseTextColor: string;
+  queryTextColor: string;
+  responseBackgroundColor: string;
+  queryBackgroundColor: string;
 }
 
 const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
@@ -25,7 +29,11 @@ const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
   fontSize: 'normal',
   promptStyle: 'balanced',
   knowledgeFocus: 'general',
-  citeSources: true
+  citeSources: true,
+  responseTextColor: '#FFFFFF',
+  queryTextColor: '#FFFFFF',
+  responseBackgroundColor: '#111827',
+  queryBackgroundColor: '#1E3A8A'
 };
 
 export type ThemePreference = 'light' | 'dark' | 'system';

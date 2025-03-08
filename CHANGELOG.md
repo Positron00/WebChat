@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.15] - 2024-03-10
+
+### Added
+- Color customization through Advanced settings
+  - Implemented new Advanced dropdown in the Appearance settings section
+  - Added color pickers for response text, response background, query text, and query background
+  - Created live preview of selected colors in the chat interface
+  - Added "Reset to Default" button for quick restoration of default colors
+  - Saved color preferences in application settings for persistence
+- Advanced button in Appearance settings section
+  - Added a new "Advanced" button at the bottom of the Appearance section
+  - Placed within the Settings dropdown for easy access
+  - Styled consistently with application design language
+  - Toggles visibility of the color customization controls
+
+## [1.14.14] - 2024-03-10
+
+### Changed
+- Enhanced UI layout and visibility
+  - Increased main container width from 50% to 75% of browser window for better space utilization
+  - Doubled the size of the tagline text for improved visual hierarchy
+  - Better readability for AI responses with expanded display area
+  - Optimized overall chat interface proportions for modern wide screens
+
 ## [1.14.13] - 2024-03-09
 
 ### Added

@@ -152,17 +152,33 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
     scrollToBottom();
   }, [messages, isLoading]);
 
-  // Apply high contrast theme if enabled
+  // Apply custom colors or high contrast theme if enabled
   const getMessageClassName = (role: string) => {
     if (role === 'user') {
       const baseClass = 'py-2 px-4 rounded-lg break-words max-w-[95%] text-center mx-auto';
       const colorClass = accessibility.highContrast
         ? 'bg-blue-950 text-white'
-        : 'bg-blue-600 text-white';
+        : 'bg-blue-800 text-white';
       return `${baseClass} ${colorClass}`;
     } else {
       // Special styling for assistant messages to make them look like articles
-      return 'py-6 px-8 rounded-lg break-words max-w-[95%] mx-auto font-serif text-left bg-gray-800 text-white border-l-4 border-blue-500 article-content';
+      return 'py-6 px-8 rounded-lg break-words max-w-[95%] mx-auto font-serif text-left border-l-4 border-blue-500 article-content';
+    }
+  };
+
+  // Get styles for messages based on accessibility settings
+  const getMessageStyles = (role: string) => {
+    if (role === 'user') {
+      return { 
+        backgroundColor: accessibility.queryBackgroundColor,
+        color: accessibility.queryTextColor
+      };
+    } else {
+      // For assistant messages
+      return { 
+        backgroundColor: accessibility.responseBackgroundColor,
+        color: accessibility.responseTextColor
+      };
     }
   };
 
@@ -263,6 +279,7 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
                       className={getMessageClassName('user')}
                       role="note"
                       aria-label="user's message"
+                      style={getMessageStyles('user')}
                     >
                       {userMessage.content}
                     </div>
@@ -275,6 +292,7 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
                           className={getMessageClassName('assistant')}
                           role="article"
                           aria-label="assistant's article response"
+                          style={getMessageStyles('assistant')}
                         >
                           {processedContent && renderArticleContent(processedContent, hasSources)}
                         </div>
