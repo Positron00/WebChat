@@ -74,7 +74,7 @@ export default function Chat() {
   return (
     <div className="w-full flex flex-col items-center">
       {/* Sources Toggle Button */}
-      <div className="w-full max-w-[84rem] mx-auto flex justify-end mb-2">
+      <div className="w-full max-w-[95%] mx-auto flex justify-end mb-2">
         <button
           onClick={toggleSourcesPanel}
           className="flex items-center text-sm text-gray-300 hover:text-white p-1 rounded"
@@ -86,7 +86,7 @@ export default function Chat() {
       </div>
       
       {/* Main Chat Content with Responsive Layout */}
-      <div className="w-full max-w-[84rem] mx-auto flex flex-col lg:flex-row gap-4">
+      <div className="w-full max-w-[95%] mx-auto flex flex-col lg:flex-row gap-4">
         {/* Response Area - Now in a flex container */}
         <div className={`${showSources ? 'lg:w-[68%]' : 'w-full'} transition-all duration-300`}>
           <MessageList

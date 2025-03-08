@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.4] - 2024-03-08
+
+### Changed
+- Significantly expanded chat interface width
+  - Increased content width from 75% to 95% of viewport width
+  - Maximized usable screen space for content display
+  - Enhanced visibility of longer text content
+  - Reduced unnecessary margins on larger screens
+  - Further improved space utilization for modern high-resolution displays
+  - Maintained proportional layout with source canvas
+
+## [1.14.3] - 2024-03-08
+
+### Changed
+- Modified chat interface to use percentage-based width
+  - Changed fixed width containers (84rem) to responsive 75% width
+  - Enhanced adaptability to different screen sizes
+  - Improved space utilization on larger displays
+  - Maintained proportional layout with source canvas
+  - Better alignment with modern responsive design principles
+  - Ensured consistent user experience across various device widths
+
 ## [1.14.2] - 2024-03-08
 
 ### Changed
