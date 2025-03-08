@@ -161,7 +161,6 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
         {/* Article header with icon */}
         <div className="flex items-center mb-4 text-blue-400">
           <NewspaperIcon className="w-5 h-5 mr-2" />
-          <h2 className="text-lg font-medium">Article</h2>
         </div>
         
         {/* Article content with enhanced typography */}
