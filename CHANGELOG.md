@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.6] - 2024-03-06
+
+### Changed
+- Enhanced spacing in formatted message content
+  - Added proper vertical spacing between paragraphs (16px margin)
+  - Improved formatting for headings with appropriate margins
+  - Enhanced list display with proper indentation and bullet points
+  - Increased padding in assistant message bubbles for better readability
+  - Added consistent spacing for blockquotes and other markdown elements
+  - Made text consistently left-aligned for better readability
+
 ## [1.11.5] - 2024-03-06
 
 ### Added
