@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.1] - 2024-03-07
+
+### Changed
+- Increased response and query fields width by 20%
+  - Expanded max-width from 7xl to 84rem for better content display
+  - Adjusted layout proportions for source panel integration
+  - Improved space utilization for conversation interfaces
+  - Enhanced readability of longer messages
+  - Optimized container sizes for different screen resolutions
+  - Maintained responsive behavior across all device sizes
+
 ## [1.13.0] - 2024-03-07
 
 ### Added

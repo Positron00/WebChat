@@ -74,7 +74,7 @@ export default function Chat() {
   return (
     <div className="w-full flex flex-col items-center">
       {/* Sources Toggle Button */}
-      <div className="w-full max-w-7xl mx-auto flex justify-end mb-2">
+      <div className="w-full max-w-[84rem] mx-auto flex justify-end mb-2">
         <button
           onClick={toggleSourcesPanel}
           className="flex items-center text-sm text-gray-300 hover:text-white p-1 rounded"
@@ -86,9 +86,9 @@ export default function Chat() {
       </div>
       
       {/* Main Chat Content with Responsive Layout */}
-      <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-4">
+      <div className="w-full max-w-[84rem] mx-auto flex flex-col lg:flex-row gap-4">
         {/* Response Area - Now in a flex container */}
-        <div className={`${showSources ? 'lg:w-3/5' : 'w-full'} transition-all duration-300`}>
+        <div className={`${showSources ? 'lg:w-[68%]' : 'w-full'} transition-all duration-300`}>
           <MessageList
             messages={state.messages}
             isLoading={state.isLoading}
@@ -109,7 +109,7 @@ export default function Chat() {
         
         {/* Source Canvas - Conditional Display */}
         {showSources && (
-          <div className="lg:w-2/5 min-h-[300px] max-h-[625px] hidden lg:block">
+          <div className="lg:w-[32%] min-h-[300px] max-h-[625px] hidden lg:block">
             <SourceCanvas 
               sources={latestAssistantMessageWithSources?.sources || []}
               isVisible={true}
