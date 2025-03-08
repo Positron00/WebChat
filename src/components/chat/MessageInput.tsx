@@ -45,8 +45,7 @@ const KNOWLEDGE_FOCUS = {
   general: 'General',
   medical: 'Medical',
   legal: 'Legal',
-  physics: 'Physics',
-  chemistry: 'Chemistry',
+  science: 'Science',
   technology: 'Technology',
   business: 'Business',
   history: 'History'
@@ -57,8 +56,7 @@ const KNOWLEDGE_FOCUS_COLORS = {
   general: 'bg-gray-600 text-white',
   medical: 'bg-red-600 text-white',
   legal: 'bg-yellow-600 text-white',
-  physics: 'bg-blue-800 text-white',
-  chemistry: 'bg-green-800 text-white',
+  science: 'bg-teal-700 text-white',
   technology: 'bg-cyan-700 text-white',
   business: 'bg-amber-700 text-white',
   history: 'bg-orange-700 text-white'
@@ -241,7 +239,7 @@ export function MessageInput({
     });
   };
 
-  const changeKnowledgeFocus = (focus: 'general' | 'medical' | 'legal' | 'physics' | 'chemistry' | 'technology' | 'business' | 'history') => {
+  const changeKnowledgeFocus = (focus: 'general' | 'medical' | 'legal' | 'science' | 'technology' | 'business' | 'history') => {
     setAccessibility({
       ...accessibility,
       knowledgeFocus: focus

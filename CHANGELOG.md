@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.1] - 2024-03-07
+
+### Changed
+- Combined "Physics" and "Chemistry" knowledge focus areas into a single "Science" category
+  - Simplified knowledge domain selection in the Focus dropdown
+  - Created a unified science prompt that covers both physics and chemistry topics
+  - Updated knowledge focus types throughout the application
+  - Applied a new teal color for the Science knowledge focus indicator
+  - Improved knowledge prompt with comprehensive scientific guidance
+
 ## [1.12.0] - 2024-03-06
 
 ### Changed

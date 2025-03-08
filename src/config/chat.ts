@@ -84,21 +84,16 @@ export const KNOWLEDGE_PROMPTS = {
 - Recommend consulting qualified legal professionals for specific situations
 - Avoid making claims about how laws apply to specific personal situations`,
 
-  physics: `When answering physics questions:
-- Use accurate physics terminology and equations
-- Explain principles clearly with appropriate mathematical formalism
-- Reference established physical laws and theories
+  science: `When answering science questions:
+- Use accurate scientific terminology, equations, and formulas
+- Explain scientific principles clearly with appropriate mathematical formalism
+- Reference established scientific laws and theories
 - Use analogies to help explain complex concepts
+- Provide clear explanations of structures, processes, and relationships
 - Maintain scientific accuracy while simplifying complex topics
-- Include key variables and units when discussing measurements`,
-
-  chemistry: `When answering chemistry questions:
-- Use accurate chemical terminology, formulas, and equations
-- Explain chemical principles clearly with appropriate formalism
-- Reference established chemical laws and theories
-- Provide clear explanations of chemical structures and reactions
-- Emphasize lab safety when discussing chemical processes
-- Include relevant atomic/molecular details when appropriate`,
+- Include key variables and units when discussing measurements
+- Emphasize lab safety when discussing scientific processes
+- Include relevant atomic/molecular details when appropriate for chemistry topics`,
 
   technology: `When answering technology questions:
 - Use accurate technical terminology
