@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { useChat } from '@/contexts/ChatContext';
 import { MessageInput } from './chat/MessageInput';
 import { MessageList } from './chat/MessageList';
-import { XMarkIcon, PaperClipIcon } from '@heroicons/react/24/outline';
+import { SourceCanvas } from './chat/SourceCanvas';
+import { XMarkIcon, PaperClipIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 
 export default function Chat() {
   const { state, sendMessage, clearMessages } = useChat();
@@ -13,6 +14,12 @@ export default function Chat() {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
   const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
+  const [showSources, setShowSources] = useState(true);
+  
+  // Find the latest assistant message with sources
+  const latestAssistantMessageWithSources = [...state.messages]
+    .reverse()
+    .find(msg => msg.role === 'assistant' && msg.sources && msg.sources.length > 0);
 
   // Create/clear preview URL when imageFile changes
   useEffect(() => {
@@ -60,26 +67,55 @@ export default function Chat() {
     }
   };
 
+  const toggleSourcesPanel = () => {
+    setShowSources(!showSources);
+  };
+
   return (
     <div className="w-full flex flex-col items-center">
-      {/* Main Chat Content - Always Full Width */}
-      <div className="w-full max-w-5xl mx-auto">
-        <MessageList
-          messages={state.messages}
-          isLoading={state.isLoading}
-          error={state.error}
-        />
-        <MessageInput
-          value={input}
-          onChange={setInput}
-          onSubmit={handleSubmit}
-          onFileSelect={handleFileSelect}
-          isLoading={state.isLoading}
-          onNewChat={clearMessages}
-          screenshotActive={!!imageFile && imageFile.name.startsWith('screenshot-')}
-          onClearScreenshot={() => setImageFile(null)}
-          imagePreviewUrl={imagePreviewUrl}
-        />
+      {/* Sources Toggle Button */}
+      <div className="w-full max-w-7xl mx-auto flex justify-end mb-2">
+        <button
+          onClick={toggleSourcesPanel}
+          className="flex items-center text-sm text-gray-300 hover:text-white p-1 rounded"
+          aria-label={showSources ? "Hide sources" : "Show sources"}
+        >
+          <InformationCircleIcon className="w-5 h-5 mr-1" />
+          {showSources ? "Hide Sources" : "Show Sources"}
+        </button>
+      </div>
+      
+      {/* Main Chat Content with Responsive Layout */}
+      <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-4">
+        {/* Response Area - Now in a flex container */}
+        <div className={`${showSources ? 'lg:w-3/5' : 'w-full'} transition-all duration-300`}>
+          <MessageList
+            messages={state.messages}
+            isLoading={state.isLoading}
+            error={state.error}
+          />
+          <MessageInput
+            value={input}
+            onChange={setInput}
+            onSubmit={handleSubmit}
+            onFileSelect={handleFileSelect}
+            isLoading={state.isLoading}
+            onNewChat={clearMessages}
+            screenshotActive={!!imageFile && imageFile.name.startsWith('screenshot-')}
+            onClearScreenshot={() => setImageFile(null)}
+            imagePreviewUrl={imagePreviewUrl}
+          />
+        </div>
+        
+        {/* Source Canvas - Conditional Display */}
+        {showSources && (
+          <div className="lg:w-2/5 min-h-[300px] max-h-[625px] hidden lg:block">
+            <SourceCanvas 
+              sources={latestAssistantMessageWithSources?.sources || []}
+              isVisible={true}
+            />
+          </div>
+        )}
       </div>
 
       {/* Screenshot Preview Overlay */}
@@ -100,16 +136,21 @@ export default function Chat() {
               <img 
                 src={screenshotPreview} 
                 alt="Screenshot preview" 
-                className="w-full h-auto object-contain rounded max-h-[80vh]"
+                className="max-w-full h-auto rounded"
               />
             </div>
-            <div className="p-3 bg-gray-900 border-t border-gray-800 flex justify-end">
+            <div className="flex justify-end gap-2 p-3 bg-gray-800 border-t border-gray-700">
+              <button
+                onClick={clearScreenshotPreview}
+                className="px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded"
+              >
+                Cancel
+              </button>
               <button
                 onClick={attachScreenshotToQuery}
-                className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-md transition-colors"
-                aria-label="Attach screenshot to your query"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center"
               >
-                <PaperClipIcon className="w-5 h-5" />
+                <PaperClipIcon className="w-4 h-4 mr-1" />
                 Attach to Query
               </button>
             </div>

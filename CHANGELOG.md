@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.0] - 2024-03-07
+
+### Added
+- Source canvas with information tiles
+  - Added right-side panel showing sources used in AI responses
+  - Implemented collapsible source display with toggle button
+  - Created source tiles with domain information and relevance scores
+  - Added badges to indicate when a message has sources available
+  - Included source snippets with preview of content
+  - Developed responsive layout that adapts to screen sizes
+  - Created consistent styling for source information display
+  - Added support for clickable source URLs when available
+
+### Changed
+- Restructured main chat layout to support source information
+  - Expanded maximum container width from 5xl to 7xl to accommodate sources
+  - Improved responsive behavior for different screen sizes
+  - Added smooth transitions between source panel states
+  - Enhanced message display with source count indicators
+  - Preserved all existing chat functionality while adding sources
+  - Added flexible layout that adapts when source panel is toggled
+  - Maintained visual consistency with the application's design language
+
 ## [1.12.2] - 2024-03-07
 
 ### Added

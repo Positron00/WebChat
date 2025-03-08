@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import { ChatMessage } from '@/types/chat';
 import { useApp } from '@/contexts/AppContext';
 import ReactMarkdown from 'react-markdown';
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 interface MessageListProps {
   messages: ChatMessage[];
@@ -98,28 +99,38 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
                   {/* Assistant message */}
                   {assistantMessage && (
                     <div>
-                      <div
-                        className={getMessageClassName('assistant')}
-                        role="article"
-                        aria-label="assistant's message"
-                      >
-                        <ReactMarkdown components={{
-                          // Add proper spacing between paragraphs
-                          p: ({node, ...props}) => <p className="text-left mb-4" {...props} />,
-                          // Add spacing after headings
-                          h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-4 mt-6" {...props} />,
-                          h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-3 mt-5" {...props} />,
-                          h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-4" {...props} />,
-                          // Improve list spacing
-                          ul: ({node, ...props}) => <ul className="text-left mb-4 ml-6 list-disc" {...props} />,
-                          ol: ({node, ...props}) => <ol className="text-left mb-4 ml-6 list-decimal" {...props} />,
-                          li: ({node, ...props}) => <li className="mb-1" {...props} />,
-                          // Add spacing for other elements
-                          blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-4 italic mb-4" {...props} />,
-                          strong: ({node, ...props}) => <strong className="font-bold" {...props} />
-                        }}>
-                          {formatMessageContent(assistantMessage.content)}
-                        </ReactMarkdown>
+                      <div className="relative">
+                        <div
+                          className={getMessageClassName('assistant')}
+                          role="article"
+                          aria-label="assistant's message"
+                        >
+                          <ReactMarkdown components={{
+                            // Add proper spacing between paragraphs
+                            p: ({node, ...props}) => <p className="text-left mb-4" {...props} />,
+                            // Add spacing after headings
+                            h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-4 mt-6" {...props} />,
+                            h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-3 mt-5" {...props} />,
+                            h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-4" {...props} />,
+                            // Improve list spacing
+                            ul: ({node, ...props}) => <ul className="text-left mb-4 ml-6 list-disc" {...props} />,
+                            ol: ({node, ...props}) => <ol className="text-left mb-4 ml-6 list-decimal" {...props} />,
+                            li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                            // Add spacing for other elements
+                            blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-4 italic mb-4" {...props} />,
+                            strong: ({node, ...props}) => <strong className="font-bold" {...props} />
+                          }}>
+                            {formatMessageContent(assistantMessage.content)}
+                          </ReactMarkdown>
+                          
+                          {/* Source indicator badge */}
+                          {assistantMessage.sources && assistantMessage.sources.length > 0 && (
+                            <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
+                              <InformationCircleIcon className="w-3 h-3 mr-1" />
+                              {assistantMessage.sources.length} {assistantMessage.sources.length === 1 ? 'Source' : 'Sources'}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   )}

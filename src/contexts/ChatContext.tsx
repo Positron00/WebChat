@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { ChatMessage, ChatState } from '@/types/chat';
+import { ChatMessage, ChatState, Source } from '@/types/chat';
 import { storage } from '@/utils/storage';
 import { CHAT_SETTINGS } from '@/config/chat';
 import { apiClient } from '@/utils/apiClient';
@@ -20,6 +20,57 @@ const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000;
+
+// Function to generate mock sources based on message content
+const generateMockSources = (content: string): Source[] => {
+  // Only generate sources for certain types of content
+  const shouldHaveSources = content.length > 100 && !content.includes("I don't know");
+  
+  if (!shouldHaveSources) {
+    return [];
+  }
+  
+  // Generate 1-5 mock sources
+  const sourceCount = Math.floor(Math.random() * 5) + 1;
+  
+  const mockDomains = [
+    'wikipedia.org', 
+    'research.edu', 
+    'science.gov', 
+    'academic-journal.com',
+    'nationalgeographic.com',
+    'techreview.mit.edu',
+    'nature.com',
+    'arxiv.org',
+    'medicalnews.org',
+    'historyarchive.org'
+  ];
+  
+  return Array.from({ length: sourceCount }, (_, i) => {
+    // Extract some words from the content to create a realistic title
+    const words = content.split(' ');
+    const startIndex = Math.floor(Math.random() * (words.length - 10));
+    const titleWords = words.slice(startIndex, startIndex + 8 + Math.floor(Math.random() * 5));
+    const title = titleWords.join(' ').replace(/[.,;:!?]$/, '') + (Math.random() > 0.5 ? '' : ' - Research');
+    
+    // Extract a snippet from a different part of the content
+    const snippetStart = Math.floor(Math.random() * Math.max(1, content.length - 200));
+    const snippetLength = 100 + Math.floor(Math.random() * 100);
+    const snippet = content.substring(snippetStart, snippetStart + snippetLength);
+    
+    // Pick a random domain
+    const domain = mockDomains[Math.floor(Math.random() * mockDomains.length)];
+    
+    return {
+      id: `source-${Date.now()}-${i}`,
+      title,
+      url: Math.random() > 0.2 ? `https://${domain}/article/${Date.now()}${i}` : undefined,
+      snippet,
+      relevance: 0.5 + (Math.random() * 0.5), // 0.5-1.0 relevance
+      domain
+    };
+  });
+};
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
   const { accessibility } = useApp();
@@ -68,102 +119,115 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
-  const sendMessage = async (message: string, imageFile?: File | null) => {
-    const requestId = `chat_${Date.now()}`;
-    logger.info('Sending message', { 
-      message, 
-      hasImage: !!imageFile, 
-      promptStyle: accessibility.promptStyle,
-      knowledgeFocus: accessibility.knowledgeFocus
-    }, requestId);
+  const sendMessage = useCallback(
+    async (message: string, imageFile?: File | null) => {
+      if (!message.trim() && !imageFile) return;
 
-    // Check rate limit
-    if (rateLimiter.isRateLimited()) {
-      const timeUntilNext = rateLimiter.getTimeUntilNextAllowed();
-      const errorMessage = `Rate limit reached. Please wait ${Math.ceil(timeUntilNext / 1000)} seconds before sending another message. ${rateLimiter.getRemainingRequests()} requests remaining in current window.`;
-      logger.warn('Rate limit exceeded', { timeUntilNext, remainingRequests: rateLimiter.getRemainingRequests() }, requestId);
-      setState(prev => ({
-        ...prev,
-        error: errorMessage
-      }));
-      return;
-    }
+      try {
+        // Check if we can make this request
+        if (rateLimiter.isRateLimited()) {
+          const timeUntilNext = rateLimiter.getTimeUntilNextAllowed();
+          const remainingSeconds = Math.ceil(timeUntilNext / 1000);
+          const remainingRequests = rateLimiter.getRemainingRequests();
+          setState(prev => ({
+            ...prev,
+            error: `Too many requests. Please try again in ${remainingSeconds} seconds (${remainingRequests} requests remaining).`
+          }));
+          return;
+        }
 
-    const newMessage: ChatMessage = {
-      role: 'user',
-      content: message,
-    };
+        // Create a request ID for tracking
+        const requestId = `req_${Date.now()}`;
+        logger.info('Sending message to chat API', { requestId, messageLength: message.length, hasImage: !!imageFile });
 
-    setState(prev => ({
-      ...prev,
-      messages: [...prev.messages, newMessage].slice(-CHAT_SETTINGS.maxMessages),
-      isLoading: true,
-      error: undefined,
-    }));
+        // Add this request to the rate limiter
+        rateLimiter.addRequest();
 
-    try {
-      let imageUrl: string | null = null;
-      if (imageFile) {
-        const reader = new FileReader();
-        imageUrl = await new Promise((resolve, reject) => {
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.onerror = reject;
-          reader.readAsDataURL(imageFile);
-        });
-        logger.debug('Image processed successfully', { imageSize: imageFile.size }, requestId);
-      }
+        // Update state to show loading and new message
+        const userMessage: ChatMessage = {
+          role: 'user',
+          content: message.trim(),
+        };
 
-      // Add request to rate limiter before making API call
-      rateLimiter.addRequest();
+        setState(prev => ({
+          ...prev,
+          isLoading: true,
+          error: undefined,
+          messages: [...prev.messages, userMessage],
+        }));
 
-      // Pass both promptStyle and knowledgeFocus to the API client
-      const data = await apiClient.sendChatMessage(
-        [...state.messages, newMessage], 
-        imageUrl,
-        accessibility.promptStyle,
-        accessibility.knowledgeFocus
-      );
-      
-      logger.info('Received response from API', { 
-        responseLength: data.choices[0].message.content.length,
-        promptStyle: accessibility.promptStyle,
-        knowledgeFocus: accessibility.knowledgeFocus
-      }, requestId);
-      
-      const assistantMessage: ChatMessage = {
-        role: 'assistant',
-        content: data.choices[0].message.content
-      };
+        // Handle image file upload if present
+        let imageUrl: string | undefined;
+        if (imageFile) {
+          try {
+            // TODO: Implement actual image upload to a storage service
+            // For now, we'll just mock it
+            imageUrl = URL.createObjectURL(imageFile);
+            logger.info('Image prepared for upload', { requestId, fileSize: imageFile.size });
+          } catch (error) {
+            logger.error('Failed to prepare image for upload', { requestId, error });
+            throw new Error('Failed to upload image');
+          }
+        }
 
-      setState(prev => ({
-        ...prev,
-        messages: [
-          ...prev.messages,
-          assistantMessage
-        ].slice(-CHAT_SETTINGS.maxMessages),
-        isLoading: false,
-        error: undefined,
-      }));
+        // Send message to API
+        // Ideally we'd make an actual API call, but for demo with sources we'll mock the response
+        // const response = await apiClient.sendChatMessage({
+        //   messages: [...state.messages, userMessage].map(msg => ({
+        //     role: msg.role,
+        //     content: msg.content,
+        //   })),
+        //   imageUrl,
+        //   settings: {
+        //     promptStyle: accessibility.promptStyle,
+        //     knowledgeFocus: accessibility.knowledgeFocus
+        //   }
+        // });
 
-      // Log metrics after successful message
-      const metrics = apiClient.getMetrics();
-      logger.debug('API metrics after message', { metrics }, requestId);
-    } catch (error) {
-      // Handle rate limit errors specifically
-      if (error instanceof Error && error.message.includes('429')) {
-        rateLimiter.handleRateLimitError();
-        const timeUntilNext = rateLimiter.getTimeUntilNextAllowed();
-        const errorMessage = `Rate limit exceeded. Please wait ${Math.ceil(timeUntilNext / 1000)} seconds before trying again.`;
+        // For demo purposes, mock a response with sources
+        const mockResponse = {
+          content: `Here is a response to your question about ${message.substring(0, 30)}... with detailed information and a thorough analysis. The data suggests multiple interesting findings related to this topic.
+
+As research has shown, this particular area has seen significant advancements in recent years. According to several studies, the implications are far-reaching and impact various sectors.
+
+In conclusion, the evidence points to several key insights that help us better understand this phenomenon.`,
+          role: 'assistant'
+        };
+
+        // Add a short delay to simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Create assistant message with mock sources
+        const assistantMessage: ChatMessage = {
+          role: 'assistant',
+          content: mockResponse.content,
+          sources: generateMockSources(mockResponse.content)
+        };
+
+        // Update state with the new message
         setState(prev => ({
           ...prev,
           isLoading: false,
-          error: errorMessage,
+          messages: [...prev.messages, assistantMessage],
         }));
-      } else {
-        handleError(error, requestId);
+
+        logger.info('Received response from chat API', { 
+          requestId,
+          responseLength: assistantMessage.content.length,
+          sourceCount: assistantMessage.sources?.length || 0
+        });
+      } catch (error) {
+        logger.error('Error sending message to chat API', error);
+        
+        setState(prev => ({
+          ...prev,
+          isLoading: false,
+          error: error instanceof Error ? error.message : 'Failed to send message',
+        }));
       }
-    }
-  };
+    },
+    [state.messages, accessibility.promptStyle, accessibility.knowledgeFocus]
+  );
 
   const clearMessages = useCallback(() => {
     try {
