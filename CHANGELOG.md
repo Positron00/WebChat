@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.5] - 2024-03-08
+
+### Added
+- Enhanced article formatting for responses
+  - Implemented professional article layout for AI responses
+  - Added article header with newspaper icon and title
+  - Improved typography with serif font for better readability
+  - Enhanced headings with color hierarchy and proper spacing
+  - Automatically structured content with introduction and conclusion sections
+  - Added enhanced styling for lists, tables, blockquotes, and code blocks
+  - Improved paragraph formatting with better line height
+  - Added visual accents like colored headings and blue border
+  - Maintained source citation system with badge indicator
+
 ## [1.14.4] - 2024-03-08
 
 ### Changed

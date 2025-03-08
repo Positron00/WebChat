@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import { ChatMessage } from '@/types/chat';
 import { useApp } from '@/contexts/AppContext';
 import ReactMarkdown from 'react-markdown';
-import { InformationCircleIcon } from '@heroicons/react/24/outline';
+import { InformationCircleIcon, NewspaperIcon } from '@heroicons/react/24/outline';
 
 interface MessageListProps {
   messages: ChatMessage[];
@@ -85,23 +85,37 @@ const addCitationReferences = (content: string, sourcesCount: number): string =>
   return modifiedContent;
 };
 
-// Format message content with double line breaks between sections
-// Now returning a string as react-markdown will handle the rendering
-const formatMessageContent = (content: string): string => {
-  // Process markdown to improve spacing
+// Enhanced message formatting for article-like appearance
+const formatArticleContent = (content: string): string => {
+  // Process markdown to improve article structure
   return content
-    // Add double line breaks between numbered lists
-    .replace(/(\d+\.\s.*?)\n(\d+\.)/g, '$1\n\n\n$2')
-    // Add double line breaks after section headings 
-    .replace(/(.*:)\s*\n/g, '$1\n\n\n')
-    // Add double line breaks between bullet points
-    .replace(/([*\-•].*)\n([*\-•])/g, '$1\n\n\n$2')
-    // Replace single line breaks between paragraphs with double line breaks
-    .replace(/([^\s])\n([^\s])/g, '$1\n\n\n$2')
-    // Ensure consistent paragraph breaks (make double breaks the minimum)
-    .replace(/\n\n/g, '\n\n\n')
-    // Make sure we don't have more than three consecutive newlines
-    .replace(/\n{4,}/g, '\n\n\n');
+    // Ensure headings are properly formatted
+    .replace(/^(?!#)(.+?):\s*$/gm, '## $1\n')
+    // Add proper newlines after headings
+    .replace(/^(#+\s.*?)$/gm, '$1\n\n')
+    // Format lists with proper spacing
+    .replace(/(\d+\.\s.*?)\n(\d+\.)/g, '$1\n\n$2')
+    .replace(/([*\-•].*)\n([*\-•])/g, '$1\n\n$2')
+    // Ensure paragraphs have proper spacing
+    .replace(/([^\s])\n([^\s])/g, '$1\n\n$2')
+    // Add introduction section if not present
+    .replace(/^(?!#)(.+?)(?:\n\n|\n(?=#))/m, '## Introduction\n\n$1\n\n')
+    // Add conclusion if there isn't one and content is long enough
+    .replace(/(.+)$/m, (match) => {
+      if (content.length > 200 && !content.includes('# Conclusion') && !content.includes('## Conclusion')) {
+        // Find the last paragraph that might be a conclusion
+        const lastParagraphs = content.split('\n\n').slice(-2);
+        if (lastParagraphs.some((p: string) => p.toLowerCase().includes('conclusion') || 
+                                     p.toLowerCase().includes('summary') || 
+                                     p.toLowerCase().includes('in sum'))) {
+          // If there's a paragraph that looks like a conclusion, format it properly
+          return match.replace(/(.+?\n\n)(.+)$/m, '$1## Conclusion\n\n$2');
+        }
+      }
+      return match;
+    })
+    // Make sure there are not too many consecutive newlines
+    .replace(/\n{3,}/g, '\n\n');
 };
 
 export function MessageList({ messages, isLoading, error }: MessageListProps) {
@@ -125,76 +139,72 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
 
   // Apply high contrast theme if enabled
   const getMessageClassName = (role: string) => {
-    const baseClass = role === 'user' 
-      ? 'py-2 px-4 rounded-lg break-words max-w-[95%] text-center mx-auto'
-      : 'py-3 px-6 rounded-lg break-words max-w-[95%] text-left mx-auto'; // Still slightly more padding for assistant messages
-    
-    // Use high contrast setting to determine colors
-    const colorClass = accessibility.highContrast
-      ? (role === 'user' ? 'bg-blue-950 text-white' : 'bg-gray-800 text-white')
-      : (role === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white');
-    
-    return `${baseClass} ${colorClass}`;
+    if (role === 'user') {
+      const baseClass = 'py-2 px-4 rounded-lg break-words max-w-[95%] text-center mx-auto';
+      const colorClass = accessibility.highContrast
+        ? 'bg-blue-950 text-white'
+        : 'bg-blue-600 text-white';
+      return `${baseClass} ${colorClass}`;
+    } else {
+      // Special styling for assistant messages to make them look like articles
+      return 'py-6 px-8 rounded-lg break-words max-w-[95%] mx-auto font-serif text-left bg-gray-800 text-white border-l-4 border-blue-500 article-content';
+    }
   };
 
-  // Custom renderer for the citation references
-  const renderMessageWithCitations = (content: string) => {
-    // Prepare for rendering
-    const formattedContent = formatMessageContent(content);
-    
-    // Split by citation markers
-    const parts = formattedContent.split(/(\[\d+\])/g);
-    
-    if (parts.length <= 1) {
-      return <ReactMarkdown components={{
-        // Add proper spacing between paragraphs
-        p: ({node, ...props}) => <p className="text-left mb-4" {...props} />,
-        // Add spacing after headings
-        h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-4 mt-6" {...props} />,
-        h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-3 mt-5" {...props} />,
-        h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-4" {...props} />,
-        // Improve list spacing
-        ul: ({node, ...props}) => <ul className="text-left mb-4 ml-5 list-disc" {...props} />,
-        ol: ({node, ...props}) => <ol className="text-left mb-4 ml-5 list-decimal" {...props} />,
-        li: ({node, ...props}) => <li className="mb-1" {...props} />,
-        // Add spacing for other elements
-        blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-3 italic mb-4" {...props} />,
-        strong: ({node, ...props}) => <strong className="font-bold" {...props} />
-      }}>
-        {formattedContent}
-      </ReactMarkdown>;
-    }
+  // Render article-formatted assistant messages
+  const renderArticleContent = (content: string, hasSources: boolean) => {
+    // Format content as an article
+    const articleContent = formatArticleContent(content);
     
     return (
-      <>
-        {parts.map((part, index) => {
-          if (part.match(/\[\d+\]/)) {
-            // This is a citation reference
-            const num = part.match(/\[(\d+)\]/)?.[1];
-            return <sup key={index} className="text-blue-400 font-semibold">{part}</sup>;
-          } else if (part) {
-            // This is regular text
-            return <ReactMarkdown key={index} components={{
-              // Add proper spacing between paragraphs
-              p: ({node, ...props}) => <p className="text-left mb-4" {...props} />,
-              // Add spacing after headings
-              h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-4 mt-6" {...props} />,
-              h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-3 mt-5" {...props} />,
-              h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-4" {...props} />,
-              // Improve list spacing
-              ul: ({node, ...props}) => <ul className="text-left mb-4 ml-5 list-disc" {...props} />,
-              ol: ({node, ...props}) => <ol className="text-left mb-4 ml-5 list-decimal" {...props} />,
-              li: ({node, ...props}) => <li className="mb-1" {...props} />,
-              // Add spacing for other elements
-              blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-3 italic mb-4" {...props} />,
-              strong: ({node, ...props}) => <strong className="font-bold" {...props} />
-            }}>
-              {part}
-            </ReactMarkdown>;
+      <div className="article-container relative">
+        {/* Article header with icon */}
+        <div className="flex items-center mb-4 text-blue-400">
+          <NewspaperIcon className="w-5 h-5 mr-2" />
+          <h2 className="text-lg font-medium">Article</h2>
+        </div>
+        
+        {/* Article content with enhanced typography */}
+        <ReactMarkdown components={{
+          // Enhanced paragraph styling
+          p: ({node, ...props}) => <p className="text-left mb-4 leading-relaxed" {...props} />,
+          // Improved heading hierarchy
+          h1: ({node, ...props}) => <h1 className="text-center font-bold text-2xl mb-6 mt-2 text-blue-300" {...props} />,
+          h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-4 mt-6 text-blue-400 border-b border-gray-700 pb-1" {...props} />,
+          h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-5 text-blue-500" {...props} />,
+          h4: ({node, ...props}) => <h4 className="text-left font-bold text-base mb-2 mt-4 text-blue-600" {...props} />,
+          // Enhanced list styling
+          ul: ({node, ...props}) => <ul className="text-left mb-4 ml-6 list-disc" {...props} />,
+          ol: ({node, ...props}) => <ol className="text-left mb-4 ml-6 list-decimal" {...props} />,
+          li: ({node, ...props}) => <li className="mb-2 leading-relaxed" {...props} />,
+          // Better blockquote styling
+          blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-blue-500 pl-4 italic mb-4 text-gray-300 bg-gray-700/30 py-2 pr-2 rounded-r" {...props} />,
+          // Enhanced emphasis
+          strong: ({node, ...props}) => <strong className="font-bold text-blue-200" {...props} />,
+          em: ({node, ...props}) => <em className="italic text-gray-300" {...props} />,
+          // Add proper table styling
+          table: ({node, ...props}) => <table className="w-full mb-4 border-collapse border border-gray-700" {...props} />,
+          th: ({node, ...props}) => <th className="border border-gray-700 p-2 bg-gray-700 text-left" {...props} />,
+          td: ({node, ...props}) => <td className="border border-gray-700 p-2" {...props} />,
+          // Code formatting without inline prop
+          code: ({node, className, ...props}) => {
+            const isInline = !className || !className.includes('language-');
+            return isInline ? 
+              <code className="bg-gray-900 px-1 rounded text-blue-300 font-mono text-sm" {...props} /> : 
+              <code className="block bg-gray-900 p-3 rounded text-blue-300 font-mono text-sm my-4 overflow-x-auto" {...props} />;
           }
-          return null;
-        })}
-      </>
+        }}>
+          {articleContent}
+        </ReactMarkdown>
+        
+        {/* Source badge */}
+        {hasSources && (
+          <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
+            <InformationCircleIcon className="w-3 h-3 mr-1" />
+            <span>Cited Sources</span>
+          </div>
+        )}
+      </div>
     );
   };
 
@@ -222,7 +232,8 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
               
               // Add citation references to assistant messages that have sources
               let processedContent = assistantMessage?.content;
-              if (assistantMessage?.sources && assistantMessage.sources.length > 0) {
+              const hasSources = !!(assistantMessage?.sources && assistantMessage.sources.length > 0);
+              if (hasSources && assistantMessage && assistantMessage.sources) {
                 processedContent = addCitationReferences(
                   assistantMessage.content, 
                   assistantMessage.sources.length
@@ -242,24 +253,16 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
                       {userMessage.content}
                     </div>
                   </div>
-                  {/* Assistant message */}
+                  {/* Assistant message as article */}
                   {assistantMessage && (
                     <div>
                       <div className="relative">
                         <div
                           className={getMessageClassName('assistant')}
                           role="article"
-                          aria-label="assistant's message"
+                          aria-label="assistant's article response"
                         >
-                          {processedContent && renderMessageWithCitations(processedContent)}
-                          
-                          {/* Source indicator badge */}
-                          {assistantMessage.sources && assistantMessage.sources.length > 0 && (
-                            <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
-                              <InformationCircleIcon className="w-3 h-3 mr-1" />
-                              Cited Sources: {assistantMessage.sources.length}
-                            </div>
-                          )}
+                          {processedContent && renderArticleContent(processedContent, hasSources)}
                         </div>
                       </div>
                     </div>
