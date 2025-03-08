@@ -30,8 +30,8 @@ const generateMockSources = (content: string): Source[] => {
     return [];
   }
   
-  // Generate 1-5 mock sources
-  const sourceCount = Math.floor(Math.random() * 5) + 1;
+  // Generate 3-5 mock sources (always have at least 3 for testing)
+  const sourceCount = Math.floor(Math.random() * 3) + 3;
   
   const mockDomains = [
     'wikipedia.org', 

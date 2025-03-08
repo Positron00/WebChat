@@ -20,27 +20,65 @@ const addCitationReferences = (content: string, sourcesCount: number): string =>
   const citationNumbers = Array.from({ length: sourcesCount }, (_, i) => i + 1);
   let modifiedContent = content;
   
-  // Add citations at the end of sentences for longer content
-  if (content.length > 200) {
-    // Find sentence endings
-    const sentences = content.match(/[^.!?]+[.!?]+/g) || [];
-    
-    // Add citations to ~40% of sentences
-    const sentencesToCite = Math.max(1, Math.floor(sentences.length * 0.4));
-    for (let i = 0; i < sentencesToCite && citationNumbers.length > 0; i++) {
-      // Choose random sentences to cite, but avoid consecutive citations
-      const sentenceIndex = Math.floor(Math.random() * sentences.length);
-      const citation = citationNumbers.shift() || 1;
-      
-      // Replace the sentence with cited version
-      if (sentences[sentenceIndex] && !sentences[sentenceIndex].includes('[')) {
-        const citedSentence = sentences[sentenceIndex].replace(/([.!?]+)$/, ` [${citation}]$1`);
-        modifiedContent = modifiedContent.replace(sentences[sentenceIndex], citedSentence);
-        sentences[sentenceIndex] = citedSentence;
-      }
+  // Find sentences to cite
+  const sentences = modifiedContent.match(/[^.!?]+[.!?]+/g) || [];
+  
+  if (sentences.length === 0) {
+    // If we couldn't parse sentences, just add a citation at the end
+    return modifiedContent + ` [${citationNumbers[0]}]`;
+  }
+  
+  // Always cite at least 3 sentences if possible, or all sentences if fewer than 3
+  const sentencesToCite = Math.min(
+    Math.max(3, Math.ceil(sentences.length * 0.4)), 
+    sentences.length
+  );
+  
+  // Select sentences to cite, prioritizing the final sentence
+  // and then evenly distributed throughout the text
+  const selectedIndices = new Set<number>();
+  
+  // Always cite the last sentence if available
+  if (sentences.length > 0) {
+    selectedIndices.add(sentences.length - 1);
+  }
+  
+  // Distribute remaining citations throughout the text
+  while (selectedIndices.size < sentencesToCite && selectedIndices.size < citationNumbers.length) {
+    // Find an index that hasn't been selected yet
+    const index = Math.floor(Math.random() * sentences.length);
+    if (!selectedIndices.has(index)) {
+      selectedIndices.add(index);
     }
-  } else {
-    // For shorter content, just add a citation at the end
+  }
+  
+  // Apply citations
+  const indices = Array.from(selectedIndices).sort((a, b) => a - b);
+  for (let i = 0; i < indices.length && i < citationNumbers.length; i++) {
+    const sentenceIndex = indices[i];
+    const citation = citationNumbers[i];
+    
+    // Skip sentences that already have citations
+    if (sentences[sentenceIndex] && !sentences[sentenceIndex].includes('[')) {
+      const citedSentence = sentences[sentenceIndex].replace(/([.!?]+)$/, ` [${citation}]$1`);
+      
+      // Escape special regex characters in the original sentence
+      const escapeRegex = (string: string): string => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const originalSentenceEscaped = escapeRegex(sentences[sentenceIndex]);
+      
+      // Replace just this occurrence
+      modifiedContent = modifiedContent.replace(
+        new RegExp(`${originalSentenceEscaped}(?![^.!?]*\\[)`), 
+        citedSentence
+      );
+      
+      // Update our record of the sentence
+      sentences[sentenceIndex] = citedSentence;
+    }
+  }
+  
+  // If we somehow didn't add any citations, add one to the last sentence
+  if (!modifiedContent.includes('[')) {
     modifiedContent = modifiedContent.replace(/([.!?]+)$/, ` [${citationNumbers[0]}]$1`);
   }
   
