@@ -114,10 +114,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         Chat -.-> |"Source Detection"| SourceCanvas
         MessageList -.-> |"Code Block Detection"| ContentProcessing
         
-        classDef component fill:#bbf,stroke:#333,stroke-width:1px
-        classDef context fill:#f9f,stroke:#333,stroke-width:1px
-        classDef utility fill:#dfd,stroke:#333,stroke-width:1px
-        classDef backend fill:#fdd,stroke:#333,stroke-width:1px
+        classDef component fill:#bbf,stroke:#333,stroke-width:1px,color:#000
+        classDef context fill:#f9f,stroke:#333,stroke-width:1px,color:#000
+        classDef utility fill:#dfd,stroke:#333,stroke-width:1px,color:#000
+        classDef backend fill:#fdd,stroke:#333,stroke-width:1px,color:#000
         
         class Chat,MessageInput,MessageList,SourceCanvas,CodeCanvas,VoiceRecognition,ScreenshotCapture,FileUpload,SettingsDropdown,StyleOptions,FocusOptions,ColorCustomization component
         class AppContext,ChatContext context
@@ -682,12 +682,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         ApiClient -.-> |"API Response"| ChatContext
         ChatContext -.-> |"Messages"| MessageList
         
-        classDef component fill:#bbf,stroke:#333,stroke-width:1px
-        classDef context fill:#f9f,stroke:#333,stroke-width:1px
-        classDef utility fill:#dfd,stroke:#333,stroke-width:1px
-        classDef feature fill:#ffd,stroke:#333,stroke-width:1px
-        classDef pwa fill:#dff,stroke:#333,stroke-width:1px
-        classDef api fill:#fdd,stroke:#333,stroke-width:1px
+        classDef component fill:#bbf,stroke:#333,stroke-width:1px,color:#000
+        classDef context fill:#f9f,stroke:#333,stroke-width:1px,color:#000
+        classDef utility fill:#dfd,stroke:#333,stroke-width:1px,color:#000
+        classDef feature fill:#ffd,stroke:#333,stroke-width:1px,color:#000
+        classDef pwa fill:#dff,stroke:#333,stroke-width:1px,color:#000
+        classDef api fill:#fdd,stroke:#333,stroke-width:1px,color:#000
         
         class Chat,MessageInput,MessageList,ScreenshotModal,SettingsDropdown component
         class AppContext,ChatContext context
