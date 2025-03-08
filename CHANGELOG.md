@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Styled consistently with application design language
   - Toggles visibility of the color customization controls
 
+### Fixed
+- TypeScript error in AppContext initialization
+  - Updated AccessibilitySettings initialization to include new color properties
+  - Ensured consistent default values between storage utility and context provider
+  - Fixed build process by resolving type compatibility issues
+
 ## [1.14.14] - 2024-03-10
 
 ### Changed

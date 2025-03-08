@@ -22,7 +22,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     fontSize: 'normal',
     promptStyle: 'balanced',
     knowledgeFocus: 'general',
-    citeSources: true
+    citeSources: true,
+    responseTextColor: '#FFFFFF',
+    queryTextColor: '#FFFFFF',
+    responseBackgroundColor: '#111827',
+    queryBackgroundColor: '#1E3A8A'
   });
   const [isOffline, setIsOffline] = useState(false);
 
