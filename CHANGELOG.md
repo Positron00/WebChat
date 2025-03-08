@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.9] - 2024-03-08
+
+### Added
+- Real API integration when citations are disabled
+  - Added conditional logic to make real TogetherAI API calls when citeSources is off
+  - Kept mock response generation with sources when citeSources is on
+  - Improved logging for both real and mock response paths
+  - No "Cited Sources" badge shown for real API responses
+  - Enhanced citeSources toggle to control both API behavior and UI display
+
+### Changed
+- Enhanced source citation control
+  - Better integration between UI and backend for citation settings
+  - More consistent behavior when toggling citation mode
+  - Improved user experience with clearer source/no-source modes
+  - Added proper logging for API request decisions
+
 ## [1.14.8] - 2024-03-08
 
 ### Changed

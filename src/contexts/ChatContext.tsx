@@ -171,39 +171,69 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
         }
 
         // Send message to API
-        // Ideally we'd make an actual API call, but for demo with sources we'll mock the response
-        // const response = await apiClient.sendChatMessage({
-        //   messages: [...state.messages, userMessage].map(msg => ({
-        //     role: msg.role,
-        //     content: msg.content,
-        //   })),
-        //   imageUrl,
-        //   settings: {
-        //     promptStyle: accessibility.promptStyle,
-        //     knowledgeFocus: accessibility.knowledgeFocus,
-        //     citeSources: accessibility.citeSources
-        //   }
-        // });
+        let assistantMessage: ChatMessage;
 
-        // For demo purposes, mock a response with sources
-        const mockResponse = {
-          content: `Here is a response to your question about ${message.substring(0, 30)}... with detailed information and a thorough analysis. The data suggests multiple interesting findings related to this topic.
+        if (!accessibility.citeSources) {
+          // Make an actual API call to TogetherAI when citeSources is false
+          try {
+            logger.info('Making real API call to TogetherAI', { requestId, citeSources: false });
+            
+            const response = await apiClient.sendChatMessage(
+              [...state.messages, userMessage].map(msg => ({
+                role: msg.role,
+                content: msg.content,
+              })),
+              imageUrl || null,
+              accessibility.promptStyle,
+              accessibility.knowledgeFocus,
+              false // explicitly set citeSources to false
+            );
+            
+            // Create assistant message without sources
+            assistantMessage = {
+              role: 'assistant',
+              content: response.choices[0].message.content || 'No response received.',
+              sources: [] // No sources for real API calls when citeSources is false
+            };
+            
+            logger.info('Received real API response', { 
+              requestId,
+              responseLength: assistantMessage.content.length,
+              sourceCount: 0
+            });
+          } catch (error) {
+            logger.error('Error in real API call', { requestId, error });
+            throw error;
+          }
+        } else {
+          // For demo purposes with sources, use mock response
+          logger.info('Using mock response with sources', { requestId, citeSources: true });
+          
+          const mockResponse = {
+            content: `Here is a response to your question about ${message.substring(0, 30)}... with detailed information and a thorough analysis. The data suggests multiple interesting findings related to this topic.
 
 As research has shown, this particular area has seen significant advancements in recent years. According to several studies, the implications are far-reaching and impact various sectors.
 
 In conclusion, the evidence points to several key insights that help us better understand this phenomenon.`,
-          role: 'assistant'
-        };
+            role: 'assistant'
+          };
 
-        // Add a short delay to simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+          // Add a short delay to simulate API call
+          await new Promise(resolve => setTimeout(resolve, 1500));
 
-        // Create assistant message with mock sources
-        const assistantMessage: ChatMessage = {
-          role: 'assistant',
-          content: mockResponse.content,
-          sources: generateMockSources(mockResponse.content)
-        };
+          // Create assistant message with mock sources
+          assistantMessage = {
+            role: 'assistant',
+            content: mockResponse.content,
+            sources: generateMockSources(mockResponse.content)
+          };
+          
+          logger.info('Created mock response with sources', { 
+            requestId,
+            responseLength: assistantMessage.content.length,
+            sourceCount: assistantMessage.sources?.length || 0
+          });
+        }
 
         // Update state with the new message
         setState(prev => ({
@@ -212,7 +242,7 @@ In conclusion, the evidence points to several key insights that help us better u
           messages: [...prev.messages, assistantMessage],
         }));
 
-        logger.info('Received response from chat API', { 
+        logger.info('Updated chat state with response', { 
           requestId,
           responseLength: assistantMessage.content.length,
           sourceCount: assistantMessage.sources?.length || 0
