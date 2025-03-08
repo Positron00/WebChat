@@ -11,18 +11,35 @@ interface MessageListProps {
 }
 
 // Format message content with double line breaks between sections
-const formatMessageContent = (content: string): string => {
-  // Replace single line breaks between paragraphs with double line breaks
-  // This regex matches a newline character that has a non-whitespace character before and after it
-  const formattedContent = content.replace(/([^\s])\n([^\s])/g, '$1\n\n$2');
+const formatMessageContent = (content: string): React.ReactNode => {
+  // First, handle markdown-style formatting
+  const processedContent = content
+    // Handle markdown headings and bolded text with line breaks
+    .replace(/\*\*(.*?)\*\*/g, (match, group) => {
+      // If it's at the start of a line or after a newline, treat as a heading
+      if (match.startsWith('**') && (content.indexOf(match) === 0 || content.charAt(content.indexOf(match) - 1) === '\n')) {
+        return `\n\n${match}\n\n`;
+      }
+      return match;
+    })
+    // Add double line breaks between numbered lists
+    .replace(/(\d+\.\s.*?)\n(\d+\.)/g, '$1\n\n$2')
+    // Add double line breaks after section headings 
+    .replace(/(.*:)\s*\n/g, '$1\n\n')
+    // Add double line breaks between bullet points
+    .replace(/([*\-•].*)\n([*\-•])/g, '$1\n\n$2')
+    // Replace single line breaks between paragraphs with double line breaks
+    .replace(/([^\s])\n([^\s])/g, '$1\n\n$2')
+    // Make sure we don't have more than two consecutive newlines
+    .replace(/\n{3,}/g, '\n\n');
   
-  // Also replace single line breaks after headings (lines ending with : or #)
-  const withFormattedHeadings = formattedContent.replace(/([:])[ \t]*\n/g, '$1\n\n');
-  
-  // Replace single line breaks after bullet points
-  const withFormattedLists = withFormattedHeadings.replace(/([*\-•].*)\n([*\-•])/g, '$1\n\n$2');
-  
-  return withFormattedLists;
+  // Split by newlines and map to React elements to preserve formatting
+  return processedContent.split('\n').map((line, i) => (
+    <React.Fragment key={i}>
+      {line}
+      {i < processedContent.split('\n').length - 1 && <br />}
+    </React.Fragment>
+  ));
 };
 
 export function MessageList({ messages, isLoading, error }: MessageListProps) {

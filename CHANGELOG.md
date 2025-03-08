@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.4] - 2024-03-06
+
+### Fixed
+- Enhanced message formatting in response field
+  - Fixed spacing issues with markdown-style formatting
+  - Improved handling of bold text and headings with asterisks
+  - Added proper line breaks for numbered lists and bullet points
+  - Enhanced rendering of section headings and content separation
+  - Implemented React Fragment-based rendering for consistent spacing
+  - Prevented excessive line breaks by limiting consecutive newlines
+
 ## [1.11.3] - 2024-03-06
 
 ### Changed
