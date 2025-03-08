@@ -4,13 +4,36 @@ import React, { useRef, useEffect } from 'react';
 import { ChatMessage } from '@/types/chat';
 import { useApp } from '@/contexts/AppContext';
 import ReactMarkdown from 'react-markdown';
-import { InformationCircleIcon, NewspaperIcon } from '@heroicons/react/24/outline';
+import { InformationCircleIcon, NewspaperIcon, CodeBracketIcon } from '@heroicons/react/24/outline';
 
 interface MessageListProps {
   messages: ChatMessage[];
   isLoading: boolean;
   error?: string;
 }
+
+// Function to check if a message contains code blocks
+export const hasCodeBlocks = (content: string): boolean => {
+  // Check for markdown code blocks (```code```)
+  const codeBlockRegex = /```[\s\S]*?```/g;
+  return codeBlockRegex.test(content);
+};
+
+// Function to extract code blocks from a message
+export const extractCodeBlocks = (content: string): { language: string, code: string }[] => {
+  const codeBlockRegex = /```(\w*)\n([\s\S]*?)```/g;
+  const codeBlocks: { language: string, code: string }[] = [];
+  
+  let match;
+  while ((match = codeBlockRegex.exec(content)) !== null) {
+    codeBlocks.push({
+      language: match[1] || 'text',
+      code: match[2].trim()
+    });
+  }
+  
+  return codeBlocks;
+};
 
 // Add academic-style citation references to the text
 const addCitationReferences = (content: string, sourcesCount: number): string => {

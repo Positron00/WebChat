@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.15.0] - 2024-03-10
+
+### Added
+- Code Canvas for displaying code blocks
+  - Added automatic detection of code blocks in AI responses
+  - Created dedicated Code Canvas view for easy code reading
+  - Implemented language-specific highlighting with color coding
+  - Added one-click copy button for each code block
+  - The "Show Canvas" button now dynamically changes to "Show Code" when code blocks are present
+  - Enhanced code display with syntax formatting and proper spacing
+  - Preserved existing Source Canvas functionality when citations are present instead of code
+
 ## [1.14.16] - 2024-03-10
 
 ### Changed

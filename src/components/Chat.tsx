@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import { useChat } from '@/contexts/ChatContext';
 import { useApp } from '@/contexts/AppContext';
 import { MessageInput } from './chat/MessageInput';
-import { MessageList } from './chat/MessageList';
+import { MessageList, hasCodeBlocks, extractCodeBlocks } from './chat/MessageList';
 import { SourceCanvas } from './chat/SourceCanvas';
-import { XMarkIcon, PaperClipIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
+import { CodeCanvas } from './chat/CodeCanvas';
+import { XMarkIcon, PaperClipIcon, InformationCircleIcon, CodeBracketIcon } from '@heroicons/react/24/outline';
 
 export default function Chat() {
   const { state, sendMessage, clearMessages } = useChat();
@@ -16,15 +17,27 @@ export default function Chat() {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
   const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
-  const [showSources, setShowSources] = useState(false);
+  const [showCanvas, setShowCanvas] = useState(false);
   
   // Find the latest assistant message with sources
   const latestAssistantMessageWithSources = [...state.messages]
     .reverse()
     .find(msg => msg.role === 'assistant' && msg.sources && msg.sources.length > 0);
 
-  // Hide Sources toggle button when citeSources is disabled
-  const showSourcesButton = accessibility.citeSources;
+  // Find the latest assistant message with code blocks
+  const latestAssistantMessageWithCode = [...state.messages]
+    .reverse()
+    .find(msg => msg.role === 'assistant' && hasCodeBlocks(msg.content));
+  
+  const codeBlocks = latestAssistantMessageWithCode 
+    ? extractCodeBlocks(latestAssistantMessageWithCode.content)
+    : [];
+
+  // Determine if we should show the canvas toggle button
+  const hasSourcesOrCode = (latestAssistantMessageWithSources && accessibility.citeSources) || latestAssistantMessageWithCode;
+  
+  // Determine the canvas type
+  const canvasType = latestAssistantMessageWithCode ? 'code' : 'sources';
 
   // Create/clear preview URL when imageFile changes
   useEffect(() => {
@@ -72,22 +85,26 @@ export default function Chat() {
     }
   };
 
-  const toggleSourcesPanel = () => {
-    setShowSources(!showSources);
+  const toggleCanvas = () => {
+    setShowCanvas(!showCanvas);
   };
 
   return (
     <div className="w-full flex flex-col items-center">
-      {/* Sources Toggle Button */}
+      {/* Canvas Toggle Button */}
       <div className="w-full max-w-[95%] mx-auto flex justify-end mb-2">
-        {showSourcesButton && (
+        {hasSourcesOrCode && (
           <button
-            onClick={toggleSourcesPanel}
+            onClick={toggleCanvas}
             className="flex items-center text-sm text-gray-300 hover:text-white p-1 rounded"
-            aria-label={showSources ? "Hide canvas" : "Show canvas"}
+            aria-label={showCanvas ? "Hide canvas" : "Show canvas"}
           >
-            <InformationCircleIcon className="w-5 h-5 mr-1" />
-            {showSources ? "Hide Canvas" : "Show Canvas"}
+            {canvasType === 'code' ? (
+              <CodeBracketIcon className="w-5 h-5 mr-1" />
+            ) : (
+              <InformationCircleIcon className="w-5 h-5 mr-1" />
+            )}
+            {showCanvas ? "Hide Canvas" : `Show ${canvasType === 'code' ? 'Code' : 'Sources'}`}
           </button>
         )}
       </div>
@@ -95,7 +112,7 @@ export default function Chat() {
       {/* Main Chat Content with Responsive Layout */}
       <div className="w-full max-w-[95%] mx-auto flex flex-col lg:flex-row gap-4">
         {/* Response Area - Now in a flex container */}
-        <div className={`${(showSources && accessibility.citeSources) ? 'lg:w-[68%]' : 'w-full'} transition-all duration-300`}>
+        <div className={`${showCanvas ? 'lg:w-[68%]' : 'w-full'} transition-all duration-300`}>
           <MessageList
             messages={state.messages}
             isLoading={state.isLoading}
@@ -114,13 +131,20 @@ export default function Chat() {
           />
         </div>
         
-        {/* Source Canvas - Conditional Display */}
-        {showSources && accessibility.citeSources && (
+        {/* Canvas - Conditional Display */}
+        {showCanvas && (
           <div className="lg:w-[32%] min-h-[300px] max-h-[625px] hidden lg:block">
-            <SourceCanvas 
-              sources={latestAssistantMessageWithSources?.sources || []}
-              isVisible={true}
-            />
+            {canvasType === 'code' ? (
+              <CodeCanvas 
+                codeBlocks={codeBlocks}
+                isVisible={true}
+              />
+            ) : (
+              <SourceCanvas 
+                sources={latestAssistantMessageWithSources?.sources || []}
+                isVisible={true}
+              />
+            )}
           </div>
         )}
       </div>
