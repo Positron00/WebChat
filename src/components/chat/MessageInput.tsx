@@ -25,7 +25,8 @@ const PROMPT_STYLES = {
   balanced: 'Balanced',
   creative: 'Creative',
   precise: 'Precise',
-  helpful: 'Helpful'
+  helpful: 'Helpful',
+  verbose: 'Verbose'
 };
 
 // Define colors for each prompt style
@@ -33,7 +34,8 @@ const PROMPT_STYLE_COLORS = {
   balanced: 'bg-indigo-600 text-white',
   creative: 'bg-purple-600 text-white',
   precise: 'bg-blue-600 text-white',
-  helpful: 'bg-green-600 text-white'
+  helpful: 'bg-green-600 text-white',
+  verbose: 'bg-amber-600 text-white'
 };
 
 // Define knowledge focus areas
@@ -230,7 +232,7 @@ export function MessageInput({
     });
   };
 
-  const changePromptStyle = (style: 'balanced' | 'creative' | 'precise' | 'helpful') => {
+  const changePromptStyle = (style: 'balanced' | 'creative' | 'precise' | 'helpful' | 'verbose') => {
     setAccessibility({
       ...accessibility,
       promptStyle: style

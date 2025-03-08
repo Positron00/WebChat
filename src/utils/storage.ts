@@ -14,7 +14,7 @@ export interface AccessibilitySettings {
   reducedMotion: boolean;
   highContrast: boolean;
   fontSize: 'small' | 'normal' | 'large';
-  promptStyle: 'balanced' | 'creative' | 'precise' | 'helpful';
+  promptStyle: 'balanced' | 'creative' | 'precise' | 'helpful' | 'verbose';
   knowledgeFocus: 'general' | 'medical' | 'legal' | 'physics' | 'chemistry' | 'technology' | 'business' | 'history';
 }
 

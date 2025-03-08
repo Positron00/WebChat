@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.1] - 2024-03-06
+
+### Added
+- New "Verbose" prompt style option
+  - Added as a fifth style option alongside Balanced, Creative, Precise, and Helpful
+  - Created new thorough system prompt focused on comprehensive responses
+  - Added amber color indicator for the Verbose style in the UI
+  - Extended type definitions to include the new prompt style
+  - Updated all related components to support the new option
+
+### Changed
+- Reverted previous changes that renamed "Helpful" to "Verbose"
+  - Restored the original "Helpful" style and its green color indicator
+  - Kept all existing functionality for the Helpful style
+  - Added "Verbose" as a completely separate new option
+
 ## [1.11.0] - 2024-03-06
 
 ### Documentation
