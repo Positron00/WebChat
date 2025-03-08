@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.6] - 2024-03-07
+
+### Changed
+- Doubled horizontal padding inside message bubbles
+  - Increased user message horizontal padding from 8px to 16px
+  - Expanded assistant message horizontal padding from 12px to 24px
+  - Maintained existing vertical padding (8px for user, 12px for assistant)
+  - Improved readability with better text margins
+  - Enhanced visual separation between text and bubble edges
+  - Created better balance between content density and readability
+  - Added more breathing room for message content
+
 ## [1.13.5] - 2024-03-07
 
 ### Changed

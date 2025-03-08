@@ -51,8 +51,8 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
   // Apply high contrast theme if enabled
   const getMessageClassName = (role: string) => {
     const baseClass = role === 'user' 
-      ? 'p-2 rounded-lg break-words max-w-[95%] text-center mx-auto'
-      : 'p-3 rounded-lg break-words max-w-[95%] text-left mx-auto'; // Still slightly more padding for assistant messages
+      ? 'py-2 px-4 rounded-lg break-words max-w-[95%] text-center mx-auto'
+      : 'py-3 px-6 rounded-lg break-words max-w-[95%] text-left mx-auto'; // Still slightly more padding for assistant messages
     
     // Use high contrast setting to determine colors
     const colorClass = accessibility.highContrast
