@@ -51,8 +51,8 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
   // Apply high contrast theme if enabled
   const getMessageClassName = (role: string) => {
     const baseClass = role === 'user' 
-      ? 'p-3 rounded-lg break-words max-w-[85%] text-center mx-auto'
-      : 'p-4 rounded-lg break-words max-w-[85%] text-left mx-auto'; // Still slightly more padding for assistant messages
+      ? 'p-3 rounded-lg break-words max-w-[90%] text-center mx-auto'
+      : 'p-4 rounded-lg break-words max-w-[90%] text-left mx-auto'; // Still slightly more padding for assistant messages
     
     // Use high contrast setting to determine colors
     const colorClass = accessibility.highContrast
@@ -65,7 +65,7 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
   return (
     <div className="w-full text-center mb-4">
       <div 
-        className="w-full flex-1 min-h-[300px] max-h-[625px] bg-gray-900 text-white rounded-lg border border-gray-700 overflow-y-auto p-2 dark:bg-gray-900 dark:text-white dark:border-gray-700"
+        className="w-full flex-1 min-h-[300px] max-h-[625px] bg-gray-900 text-white rounded-lg border border-gray-700 overflow-y-auto px-1 py-2 dark:bg-gray-900 dark:text-white dark:border-gray-700"
         style={{ backgroundColor: '#111827', color: 'white', borderColor: 'rgba(55, 65, 81, 0.5)' }}
         role="log"
         aria-live="polite"
