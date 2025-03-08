@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.13] - 2024-03-09
+
+### Added
+- Enhanced error diagnostics
+  - Added "Run Diagnostics" button that appears when API errors occur
+  - Improved ping endpoint with detailed API configuration information
+  - Added direct API test to help identify specific failure points
+  - Included system diagnostics like network status and browser information
+  - Implemented comprehensive logging in browser console for troubleshooting
+
+## [1.14.12] - 2024-03-09
+
+### Changed
+- Smarter "Introduction" heading insertion
+  - No longer automatically adds "Introduction" heading to short or simple responses
+  - Only adds Introduction section for longer, more structured content (>250 characters)
+  - Checks for existing headings, numbered lists, or multiple paragraphs before adding
+  - Prevents duplicate Introduction headings in AI-generated content
+  - Improved overall readability for both simple and complex responses
+
+## [1.14.11] - 2024-03-09
+
+### Changed
+- Improved Source Canvas display behavior
+  - Changed "Show Canvas" toggle to default to hidden for a cleaner initial UI
+  - Source Canvas now only displays when both "Show Canvas" is toggled on AND "Cite Sources" is enabled
+  - Toggle button for Source Canvas only appears when citations are enabled
+  - Enhanced responsive layout to adjust based on combined canvas visibility conditions
+  - Better integration between citation settings and UI display
+
 ## [1.14.10] - 2024-03-09
 
 ### Fixed

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useChat } from '@/contexts/ChatContext';
+import { useApp } from '@/contexts/AppContext';
 import { MessageInput } from './chat/MessageInput';
 import { MessageList } from './chat/MessageList';
 import { SourceCanvas } from './chat/SourceCanvas';
@@ -9,17 +10,21 @@ import { XMarkIcon, PaperClipIcon, InformationCircleIcon } from '@heroicons/reac
 
 export default function Chat() {
   const { state, sendMessage, clearMessages } = useChat();
+  const { accessibility } = useApp();
   const [input, setInput] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
   const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
-  const [showSources, setShowSources] = useState(true);
+  const [showSources, setShowSources] = useState(false);
   
   // Find the latest assistant message with sources
   const latestAssistantMessageWithSources = [...state.messages]
     .reverse()
     .find(msg => msg.role === 'assistant' && msg.sources && msg.sources.length > 0);
+
+  // Hide Sources toggle button when citeSources is disabled
+  const showSourcesButton = accessibility.citeSources;
 
   // Create/clear preview URL when imageFile changes
   useEffect(() => {
@@ -75,20 +80,22 @@ export default function Chat() {
     <div className="w-full flex flex-col items-center">
       {/* Sources Toggle Button */}
       <div className="w-full max-w-[95%] mx-auto flex justify-end mb-2">
-        <button
-          onClick={toggleSourcesPanel}
-          className="flex items-center text-sm text-gray-300 hover:text-white p-1 rounded"
-          aria-label={showSources ? "Hide canvas" : "Show canvas"}
-        >
-          <InformationCircleIcon className="w-5 h-5 mr-1" />
-          {showSources ? "Hide Canvas" : "Show Canvas"}
-        </button>
+        {showSourcesButton && (
+          <button
+            onClick={toggleSourcesPanel}
+            className="flex items-center text-sm text-gray-300 hover:text-white p-1 rounded"
+            aria-label={showSources ? "Hide canvas" : "Show canvas"}
+          >
+            <InformationCircleIcon className="w-5 h-5 mr-1" />
+            {showSources ? "Hide Canvas" : "Show Canvas"}
+          </button>
+        )}
       </div>
       
       {/* Main Chat Content with Responsive Layout */}
       <div className="w-full max-w-[95%] mx-auto flex flex-col lg:flex-row gap-4">
         {/* Response Area - Now in a flex container */}
-        <div className={`${showSources ? 'lg:w-[68%]' : 'w-full'} transition-all duration-300`}>
+        <div className={`${(showSources && accessibility.citeSources) ? 'lg:w-[68%]' : 'w-full'} transition-all duration-300`}>
           <MessageList
             messages={state.messages}
             isLoading={state.isLoading}
@@ -108,7 +115,7 @@ export default function Chat() {
         </div>
         
         {/* Source Canvas - Conditional Display */}
-        {showSources && (
+        {showSources && accessibility.citeSources && (
           <div className="lg:w-[32%] min-h-[300px] max-h-[625px] hidden lg:block">
             <SourceCanvas 
               sources={latestAssistantMessageWithSources?.sources || []}

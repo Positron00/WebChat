@@ -87,6 +87,12 @@ const addCitationReferences = (content: string, sourcesCount: number): string =>
 
 // Enhanced message formatting for article-like appearance
 const formatArticleContent = (content: string): string => {
+  // Check if this is a longer, more structured response that needs an introduction
+  const needsIntroduction = content.length > 250 && 
+                          (content.includes('# ') || content.includes('## ') || 
+                           content.includes('1. ') || content.includes('2. ') ||
+                           content.split('\n\n').length > 3);
+
   // Process markdown to improve article structure
   return content
     // Ensure headings are properly formatted
@@ -98,8 +104,17 @@ const formatArticleContent = (content: string): string => {
     .replace(/([*\-•].*)\n([*\-•])/g, '$1\n\n$2')
     // Ensure paragraphs have proper spacing
     .replace(/([^\s])\n([^\s])/g, '$1\n\n$2')
-    // Add introduction section if not present
-    .replace(/^(?!#)(.+?)(?:\n\n|\n(?=#))/m, '## Introduction\n\n$1\n\n')
+    // Add introduction section only if needed and not already present
+    .replace(/^(?!#)(.+?)(?:\n\n|\n(?=#))/m, (match, p1) => {
+      // Only add Introduction if needed and if it doesn't already contain "introduction"
+      if (needsIntroduction && 
+          !content.toLowerCase().includes('# introduction') && 
+          !content.toLowerCase().includes('## introduction') &&
+          !p1.toLowerCase().includes('introduction')) {
+        return `## Introduction\n\n${p1}\n\n`;
+      }
+      return match;
+    })
     // Add conclusion if there isn't one and content is long enough
     .replace(/(.+)$/m, (match) => {
       if (content.length > 200 && !content.includes('# Conclusion') && !content.includes('## Conclusion')) {
@@ -287,12 +302,68 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
           </div>
         )}
         {error && (
-          <div 
-            className="text-center text-red-400 p-2 bg-red-900/50 rounded w-full"
-            role="alert"
-            aria-live="assertive"
-          >
-            {error}
+          <div className="flex flex-col items-center">
+            <div 
+              className="text-center text-red-400 p-2 bg-red-900/50 rounded w-full mb-2"
+              role="alert"
+              aria-live="assertive"
+            >
+              {error}
+            </div>
+            <button
+              onClick={() => {
+                console.log("Diagnostic information:");
+                console.log("- Navigator online:", navigator.onLine);
+                console.log("- User Agent:", navigator.userAgent);
+                console.log("- Current error:", error);
+                
+                // Check local storage for API key (don't log the actual key)
+                const hasApiKey = localStorage.getItem('TOGETHER_API_KEY') !== null;
+                console.log("- API key present in localStorage:", hasApiKey);
+                
+                // Check if we can reach the API ping endpoint
+                fetch('/api/ping')
+                  .then(response => {
+                    console.log("- API ping response:", response.status, response.statusText);
+                    return response.text();
+                  })
+                  .then(text => console.log("- API ping response body:", text))
+                  .catch(err => console.log("- API ping error:", err));
+                
+                // Try a direct test of chat API to isolate the issue
+                fetch('/api/chat', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    messages: [{ role: 'user', content: 'Hello! This is a diagnostic test.' }],
+                    promptStyle: 'balanced',
+                    knowledgeFocus: 'general',
+                    citeSources: false
+                  })
+                })
+                .then(response => {
+                  console.log("- Direct API test response status:", response.status, response.statusText);
+                  console.log("- Direct API test response headers:", Object.fromEntries([...response.headers.entries()]));
+                  if (!response.ok) return response.text().then(text => { throw new Error(text) });
+                  return response.json();
+                })
+                .then(data => console.log("- Direct API test successful:", data))
+                .catch(err => console.log("- Direct API test failed:", err.toString()));
+                
+                // Try to get logs from console
+                try {
+                  // Access recent console logs
+                  console.log("- Check browser console for all recent error logs");
+                } catch (err) {
+                  console.log("- Error accessing logs:", err);
+                }
+                
+                alert("Diagnostic information has been logged to the console. Please open the browser developer tools to view it.");
+              }}
+              className="text-xs bg-blue-800 hover:bg-blue-700 text-white py-1 px-2 rounded transition-colors"
+            >
+              Run Diagnostics
+            </button>
           </div>
         )}
         <div ref={messagesEndRef} />
