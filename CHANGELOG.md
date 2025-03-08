@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.16] - 2024-03-10
+
+### Changed
+- Renamed "Darker Background" setting to "High Contrast"
+  - Updated label in settings dropdown for better clarity
+  - Made high contrast background colors even darker for better accessibility
+  - Enhanced the contrast ratio between text and background
+  - Improved accessibility for users with visual impairments
+
+### Fixed
+- "Darker Background" toggle not changing message contrast
+  - Modified style application to prioritize high contrast setting over custom colors
+  - Ensured toggle properly changes background colors for both user and assistant messages
+  - Fixed interaction between custom color settings and high contrast mode
+  - Restored expected behavior of the contrast toggle
+
 ## [1.14.15] - 2024-03-10
 
 ### Added

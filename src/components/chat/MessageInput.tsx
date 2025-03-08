@@ -556,7 +556,7 @@ export function MessageInput({
                   <h4 className="text-white text-sm font-medium mb-2">Appearance</h4>
                   <div className="flex items-center justify-between">
                     <label htmlFor="high-contrast-toggle" className="text-gray-300 text-xs">
-                      Darker Background
+                      High Contrast
                     </label>
                     <button
                       id="high-contrast-toggle"
@@ -565,7 +565,7 @@ export function MessageInput({
                         accessibility.highContrast ? 'bg-blue-600' : 'bg-gray-600'
                       }`}
                       aria-pressed={accessibility.highContrast}
-                      aria-label="Toggle darker background mode"
+                      aria-label="Toggle high contrast mode"
                     >
                       <span
                         className={`${

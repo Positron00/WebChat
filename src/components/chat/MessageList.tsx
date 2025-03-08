@@ -168,6 +168,22 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
 
   // Get styles for messages based on accessibility settings
   const getMessageStyles = (role: string) => {
+    // If high contrast is enabled, use those colors instead of custom colors
+    if (accessibility.highContrast) {
+      if (role === 'user') {
+        return { 
+          backgroundColor: '#0c1944', // Darker than bg-blue-950
+          color: '#FFFFFF'
+        };
+      } else {
+        return { 
+          backgroundColor: '#111827', // Darker than bg-gray-800
+          color: '#FFFFFF'
+        };
+      }
+    }
+    
+    // Otherwise use custom colors
     if (role === 'user') {
       return { 
         backgroundColor: accessibility.queryBackgroundColor,
