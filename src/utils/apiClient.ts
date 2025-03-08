@@ -237,9 +237,9 @@ export class ApiClient {
     );
   }
 
-  async sendChatMessage(messages: ChatMessage[], image?: string | null, promptStyle?: string, knowledgeFocus?: string): Promise<ChatCompletionResponse> {
+  async sendChatMessage(messages: ChatMessage[], image?: string | null, promptStyle?: string, knowledgeFocus?: string, citeSources?: boolean): Promise<ChatCompletionResponse> {
     const requestId = this.generateRequestId();
-    console.log(`[${requestId}] Sending chat message with ${messages.length} messages${image ? ' and image' : ''}${promptStyle ? `, prompt style: ${promptStyle}` : ''}${knowledgeFocus ? `, knowledge focus: ${knowledgeFocus}` : ''}`);
+    console.log(`[${requestId}] Sending chat message with ${messages.length} messages${image ? ' and image' : ''}${promptStyle ? `, prompt style: ${promptStyle}` : ''}${knowledgeFocus ? `, knowledge focus: ${knowledgeFocus}` : ''}${citeSources !== undefined ? `, cite sources: ${citeSources}` : ''}`);
 
     try {
       return await this.fetchWithRetry<ChatCompletionResponse>(
@@ -255,6 +255,7 @@ export class ApiClient {
             image,
             promptStyle,
             knowledgeFocus,
+            citeSources,
             model: 'meta-llama/Llama-3.3-70b-instruct-turbo-free',
             max_tokens: CHAT_SETTINGS.maxTokens,
             temperature: CHAT_SETTINGS.temperature,

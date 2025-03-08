@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.7] - 2024-03-08
+
+### Added
+- New "Cite Sources" toggle in settings
+  - Added user control for enabling/disabling source citations in AI responses
+  - Created toggle switch in the settings dropdown with clear labeling
+  - Set to enabled by default for academic-style citations
+  - Implemented dynamic system prompt modification to include/exclude citation instructions
+  - Extended accessibility settings with citeSources flag
+  - Added proper API integration for toggling citation behavior
+
+### Changed
+- Enhanced settings dropdown organization
+  - Added dedicated "Sources" section in settings panel
+  - Improved toggle styling and descriptive text
+  - Better separation between appearance settings and content settings
+
 ## [1.14.6] - 2024-03-08
 
 ### Added

@@ -21,7 +21,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     highContrast: false,
     fontSize: 'normal',
     promptStyle: 'balanced',
-    knowledgeFocus: 'general'
+    knowledgeFocus: 'general',
+    citeSources: true
   });
   const [isOffline, setIsOffline] = useState(false);
 

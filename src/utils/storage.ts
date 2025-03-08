@@ -16,6 +16,7 @@ export interface AccessibilitySettings {
   fontSize: 'small' | 'normal' | 'large';
   promptStyle: 'balanced' | 'creative' | 'precise' | 'helpful' | 'verbose' | 'concise';
   knowledgeFocus: 'general' | 'medical' | 'legal' | 'science' | 'technology' | 'business' | 'history' | 'nature';
+  citeSources: boolean;
 }
 
 const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
@@ -23,7 +24,8 @@ const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
   highContrast: false,
   fontSize: 'normal',
   promptStyle: 'balanced',
-  knowledgeFocus: 'general'
+  knowledgeFocus: 'general',
+  citeSources: true
 };
 
 export type ThemePreference = 'light' | 'dark' | 'system';

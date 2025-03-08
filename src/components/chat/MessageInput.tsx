@@ -235,6 +235,13 @@ export function MessageInput({
     });
   };
 
+  const toggleCiteSources = () => {
+    setAccessibility({
+      ...accessibility,
+      citeSources: !accessibility.citeSources
+    });
+  };
+
   const changePromptStyle = (style: 'balanced' | 'creative' | 'precise' | 'helpful' | 'verbose' | 'concise') => {
     setAccessibility({
       ...accessibility,
@@ -528,7 +535,7 @@ export function MessageInput({
             {showSettings && (
               <div className="absolute bottom-8 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-10">
                 {/* High Contrast Setting */}
-                <div className="p-2">
+                <div className="p-2 border-b border-gray-700">
                   <h4 className="text-white text-sm font-medium mb-2">Appearance</h4>
                   <div className="flex items-center justify-between">
                     <label htmlFor="high-contrast-toggle" className="text-gray-300 text-xs">
@@ -552,6 +559,34 @@ export function MessageInput({
                   </div>
                   <p className="text-gray-400 text-xs mt-1">
                     Changes the background color of message bubbles for better readability
+                  </p>
+                </div>
+                
+                {/* Cite Sources Setting */}
+                <div className="p-2">
+                  <h4 className="text-white text-sm font-medium mb-2">Sources</h4>
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="cite-sources-toggle" className="text-gray-300 text-xs">
+                      Cite Sources
+                    </label>
+                    <button
+                      id="cite-sources-toggle"
+                      onClick={toggleCiteSources}
+                      className={`relative inline-flex h-5 w-10 items-center rounded-full ${
+                        accessibility.citeSources ? 'bg-blue-600' : 'bg-gray-600'
+                      }`}
+                      aria-pressed={accessibility.citeSources}
+                      aria-label="Toggle source citations"
+                    >
+                      <span
+                        className={`${
+                          accessibility.citeSources ? 'translate-x-5' : 'translate-x-1'
+                        } inline-block h-3 w-3 transform rounded-full bg-white transition`}
+                      />
+                    </button>
+                  </div>
+                  <p className="text-gray-400 text-xs mt-1">
+                    Include academic-style source citations in AI responses
                   </p>
                 </div>
               </div>

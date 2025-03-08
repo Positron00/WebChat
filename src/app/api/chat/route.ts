@@ -35,9 +35,10 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { 
       messages, 
-      image, 
+      image = null, 
       promptStyle = 'balanced',
-      knowledgeFocus = 'general'
+      knowledgeFocus = 'general',
+      citeSources = true
     } = body;
 
     if (!validateRequest(messages)) {
@@ -48,7 +49,12 @@ export async function POST(req: Request) {
     const basePrompt = SYSTEM_PROMPTS[promptStyle as keyof typeof SYSTEM_PROMPTS] || SYSTEM_PROMPT;
     
     // Get the knowledge focus prompt
-    const knowledgePrompt = KNOWLEDGE_PROMPTS[knowledgeFocus as keyof typeof KNOWLEDGE_PROMPTS] || KNOWLEDGE_PROMPTS.general;
+    let knowledgePrompt = KNOWLEDGE_PROMPTS[knowledgeFocus as keyof typeof KNOWLEDGE_PROMPTS] || KNOWLEDGE_PROMPTS.general;
+    
+    // If citeSources is set to false, remove citation instructions from the knowledge prompt
+    if (!citeSources) {
+      knowledgePrompt = knowledgePrompt.replace(/- Include sources of information as citations in your response similar to academic papers\n?/g, '');
+    }
     
     // Combine the prompts
     const systemPrompt = `${basePrompt}\n\n${knowledgePrompt}`;

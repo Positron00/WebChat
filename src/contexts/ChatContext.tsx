@@ -180,7 +180,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
         //   imageUrl,
         //   settings: {
         //     promptStyle: accessibility.promptStyle,
-        //     knowledgeFocus: accessibility.knowledgeFocus
+        //     knowledgeFocus: accessibility.knowledgeFocus,
+        //     citeSources: accessibility.citeSources
         //   }
         // });
 
@@ -226,7 +227,7 @@ In conclusion, the evidence points to several key insights that help us better u
         }));
       }
     },
-    [state.messages, accessibility.promptStyle, accessibility.knowledgeFocus]
+    [state.messages, accessibility.promptStyle, accessibility.knowledgeFocus, accessibility.citeSources]
   );
 
   const clearMessages = useCallback(() => {
