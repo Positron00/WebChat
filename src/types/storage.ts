@@ -8,7 +8,7 @@ export interface AccessibilitySettings {
   reducedMotion: boolean;
   highContrast: boolean;
   fontSize: 'small' | 'normal' | 'large';
-  promptStyle: 'balanced' | 'creative' | 'precise' | 'helpful' | 'verbose';
+  promptStyle: 'balanced' | 'creative' | 'precise' | 'helpful' | 'verbose' | 'concise';
   knowledgeFocus: 'general' | 'medical' | 'legal' | 'physics' | 'chemistry' | 'technology' | 'business' | 'history';
 }
 

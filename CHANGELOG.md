@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.2] - 2024-03-06
+
+### Added
+- New "Concise" prompt style option
+  - Added as a sixth style option for generating shorter responses
+  - Created new system prompt focused on brevity and directness
+  - Added rose/pink color indicator for the Concise style in the UI
+  - Extended type definitions to include the new prompt style
+  - Designed for users who prefer minimal, straight-to-the-point answers
+  - Programmed to limit responses to 3 sentences when possible
+
 ## [1.11.1] - 2024-03-06
 
 ### Added
