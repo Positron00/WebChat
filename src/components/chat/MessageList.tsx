@@ -10,6 +10,21 @@ interface MessageListProps {
   error?: string;
 }
 
+// Format message content with double line breaks between sections
+const formatMessageContent = (content: string): string => {
+  // Replace single line breaks between paragraphs with double line breaks
+  // This regex matches a newline character that has a non-whitespace character before and after it
+  const formattedContent = content.replace(/([^\s])\n([^\s])/g, '$1\n\n$2');
+  
+  // Also replace single line breaks after headings (lines ending with : or #)
+  const withFormattedHeadings = formattedContent.replace(/([:])[ \t]*\n/g, '$1\n\n');
+  
+  // Replace single line breaks after bullet points
+  const withFormattedLists = withFormattedHeadings.replace(/([*\-•].*)\n([*\-•])/g, '$1\n\n$2');
+  
+  return withFormattedLists;
+};
+
 export function MessageList({ messages, isLoading, error }: MessageListProps) {
   const { accessibility } = useApp();
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -83,7 +98,7 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
                         role="article"
                         aria-label="assistant's message"
                       >
-                        {assistantMessage.content}
+                        {formatMessageContent(assistantMessage.content)}
                       </div>
                     </div>
                   )}

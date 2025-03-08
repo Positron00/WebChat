@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.3] - 2024-03-06
+
+### Changed
+- Improved message formatting in response field
+  - Added double line breaks between sections for better readability
+  - Enhanced spacing after headings and before new sections
+  - Improved formatting for lists and bullet points
+  - Made long responses easier to scan with clear section separation
+  - Added intelligent whitespace management for better text layout
+  - Maintained compatibility with existing message content
+
 ## [1.11.2] - 2024-03-06
 
 ### Added
