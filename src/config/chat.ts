@@ -117,7 +117,18 @@ export const KNOWLEDGE_PROMPTS = {
 - Acknowledge the complexity of historical interpretation
 - Avoid presentism (judging past events by present standards)
 - Differentiate between historical facts and interpretations
-- Recognize that historical understanding evolves with new research`
+- Recognize that historical understanding evolves with new research`,
+
+  nature: `When answering questions about nature:
+- Use accurate ecological and environmental terminology
+- Explain natural processes and ecosystems with appropriate detail
+- Reference established biological and ecological principles
+- Provide clear explanations of flora, fauna, and their relationships
+- Include relevant information about conservation status when discussing species
+- Balance scientific accuracy with accessible explanations
+- Acknowledge regional variations in ecosystems and biodiversity
+- Emphasize the interconnectedness of natural systems when relevant
+- Include information about environmental conservation when appropriate`
 };
 
 // Default system prompt (for backward compatibility)

@@ -15,7 +15,7 @@ export interface AccessibilitySettings {
   highContrast: boolean;
   fontSize: 'small' | 'normal' | 'large';
   promptStyle: 'balanced' | 'creative' | 'precise' | 'helpful' | 'verbose' | 'concise';
-  knowledgeFocus: 'general' | 'medical' | 'legal' | 'science' | 'technology' | 'business' | 'history';
+  knowledgeFocus: 'general' | 'medical' | 'legal' | 'science' | 'technology' | 'business' | 'history' | 'nature';
 }
 
 const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {

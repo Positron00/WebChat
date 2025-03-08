@@ -48,7 +48,8 @@ const KNOWLEDGE_FOCUS = {
   science: 'Science',
   technology: 'Technology',
   business: 'Business',
-  history: 'History'
+  history: 'History',
+  nature: 'Nature'
 };
 
 // Define colors for knowledge focus areas
@@ -59,7 +60,8 @@ const KNOWLEDGE_FOCUS_COLORS = {
   science: 'bg-teal-700 text-white',
   technology: 'bg-cyan-700 text-white',
   business: 'bg-amber-700 text-white',
-  history: 'bg-orange-700 text-white'
+  history: 'bg-orange-700 text-white',
+  nature: 'bg-green-600 text-white'
 };
 
 // Define Speech Recognition type for TypeScript
@@ -239,7 +241,7 @@ export function MessageInput({
     });
   };
 
-  const changeKnowledgeFocus = (focus: 'general' | 'medical' | 'legal' | 'science' | 'technology' | 'business' | 'history') => {
+  const changeKnowledgeFocus = (focus: 'general' | 'medical' | 'legal' | 'science' | 'technology' | 'business' | 'history' | 'nature') => {
     setAccessibility({
       ...accessibility,
       knowledgeFocus: focus
