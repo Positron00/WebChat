@@ -22,7 +22,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     fontSize: 'normal',
     promptStyle: 'balanced',
     knowledgeFocus: 'general',
-    citeSources: true
+    citeSources: false
   });
   const [isOffline, setIsOffline] = useState(false);
 

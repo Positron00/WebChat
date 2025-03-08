@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       image = null, 
       promptStyle = 'balanced',
       knowledgeFocus = 'general',
-      citeSources = true
+      citeSources = false
     } = body;
 
     if (!validateRequest(messages)) {
