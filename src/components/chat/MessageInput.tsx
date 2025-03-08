@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon, Cog6ToothIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { MicrophoneIcon, PaperClipIcon, ComputerDesktopIcon, SparklesIcon, PaperAirplaneIcon, Cog6ToothIcon, XMarkIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { useApp } from '@/contexts/AppContext';
 import path from 'path';
 import { saveAs } from 'file-saver';
@@ -113,6 +113,7 @@ export function MessageInput({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [showFocusDropdown, setShowFocusDropdown] = useState(false);
+  const [showStyleDropdown, setShowStyleDropdown] = useState(false);
   const [isCapturingScreen, setIsCapturingScreen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [speechRecognition, setSpeechRecognition] = useState<SpeechRecognition | null>(null);
@@ -425,6 +426,51 @@ export function MessageInput({
         
         {/* Right side buttons */}
         <div className="flex items-center gap-2">
+          {/* Style button and dropdown */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowStyleDropdown(!showStyleDropdown)}
+              className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+              aria-expanded={showStyleDropdown}
+              aria-haspopup="true"
+              aria-label="AI Style"
+            >
+              <PencilSquareIcon className="w-3 h-3 text-gray-300" />
+              <span className="text-xs text-gray-300">Style</span>
+            </button>
+            
+            {/* Style Dropdown */}
+            {showStyleDropdown && (
+              <div className="absolute bottom-8 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-10">
+                <h4 className="text-white text-sm font-medium mb-2">AI Response Style</h4>
+                <div className="space-y-2">
+                  {Object.entries(PROMPT_STYLES).map(([style, label]) => (
+                    <div key={style} className="flex items-center">
+                      <input
+                        type="radio"
+                        id={`style-dropdown-${style}`}
+                        name="promptStyleDropdown"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        checked={accessibility.promptStyle === style}
+                        onChange={() => {
+                          changePromptStyle(style as any);
+                          setShowStyleDropdown(false);
+                        }}
+                      />
+                      <label htmlFor={`style-dropdown-${style}`} className="ml-2 text-xs font-medium text-gray-300">
+                        {label}
+                      </label>
+                    </div>
+                  ))}
+                  <p className="text-gray-400 text-xs mt-2">
+                    Select how you want the AI to respond to your messages
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+          
           {/* Focus button and dropdown */}
           <div className="relative">
             <button
@@ -482,7 +528,7 @@ export function MessageInput({
             {showSettings && (
               <div className="absolute bottom-8 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-10">
                 {/* High Contrast Setting */}
-                <div className="p-2 border-b border-gray-700">
+                <div className="p-2">
                   <h4 className="text-white text-sm font-medium mb-2">Appearance</h4>
                   <div className="flex items-center justify-between">
                     <label htmlFor="high-contrast-toggle" className="text-gray-300 text-xs">
@@ -507,31 +553,6 @@ export function MessageInput({
                   <p className="text-gray-400 text-xs mt-1">
                     Changes the background color of message bubbles for better readability
                   </p>
-                </div>
-                
-                {/* Prompt Style Setting */}
-                <div className="p-2">
-                  <h4 className="text-white text-sm font-medium mb-2">AI Response Style</h4>
-                  <div className="space-y-2">
-                    {Object.entries(PROMPT_STYLES).map(([style, label]) => (
-                      <div key={style} className="flex items-center">
-                        <input
-                          type="radio"
-                          id={`style-${style}`}
-                          name="promptStyle"
-                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                          checked={accessibility.promptStyle === style}
-                          onChange={() => changePromptStyle(style as any)}
-                        />
-                        <label htmlFor={`style-${style}`} className="ml-2 text-xs font-medium text-gray-300">
-                          {label}
-                        </label>
-                      </div>
-                    ))}
-                    <p className="text-gray-400 text-xs mt-2">
-                      Select how you want the AI to respond to your messages
-                    </p>
-                  </div>
                 </div>
               </div>
             )}
