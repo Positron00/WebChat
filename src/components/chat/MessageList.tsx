@@ -65,7 +65,7 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
   return (
     <div className="w-full text-center mb-4">
       <div 
-        className="w-full flex-1 min-h-[300px] max-h-[625px] bg-gray-900 text-white rounded-lg border border-gray-700 overflow-y-auto px-[2px] py-2 dark:bg-gray-900 dark:text-white dark:border-gray-700"
+        className="w-full flex-1 min-h-[300px] max-h-[625px] bg-gray-900 text-white rounded-lg border border-gray-700 overflow-y-auto px-[2px] py-1 dark:bg-gray-900 dark:text-white dark:border-gray-700"
         style={{ backgroundColor: '#111827', color: 'white', borderColor: 'rgba(55, 65, 81, 0.5)' }}
         role="log"
         aria-live="polite"
@@ -84,10 +84,10 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
               const userMessage = messages[index * 2];
               const assistantMessage = messages[index * 2 + 1];
               return (
-                <div key={index} className="mb-8 pb-8 border-b border-gray-700/50 last:border-b-0 last:mb-0 last:pb-0" 
+                <div key={index} className="mb-4 pb-4 border-b border-gray-700/50 last:border-b-0 last:mb-0 last:pb-0" 
                   style={{ borderColor: 'rgba(55, 65, 81, 0.5)' }}>
                   {/* User message */}
-                  <div className="mb-4">
+                  <div className="mb-2">
                     <div
                       className={getMessageClassName('user')}
                       role="note"
@@ -107,17 +107,17 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
                         >
                           <ReactMarkdown components={{
                             // Add proper spacing between paragraphs
-                            p: ({node, ...props}) => <p className="text-left mb-3" {...props} />,
+                            p: ({node, ...props}) => <p className="text-left mb-1.5" {...props} />,
                             // Add spacing after headings
-                            h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-3 mt-4" {...props} />,
-                            h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-2 mt-3" {...props} />,
-                            h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-2 mt-3" {...props} />,
+                            h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-1.5 mt-2" {...props} />,
+                            h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-1 mt-1.5" {...props} />,
+                            h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-1 mt-1.5" {...props} />,
                             // Improve list spacing
-                            ul: ({node, ...props}) => <ul className="text-left mb-3 ml-5 list-disc" {...props} />,
-                            ol: ({node, ...props}) => <ol className="text-left mb-3 ml-5 list-decimal" {...props} />,
-                            li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                            ul: ({node, ...props}) => <ul className="text-left mb-1.5 ml-5 list-disc" {...props} />,
+                            ol: ({node, ...props}) => <ol className="text-left mb-1.5 ml-5 list-decimal" {...props} />,
+                            li: ({node, ...props}) => <li className="mb-0.5" {...props} />,
                             // Add spacing for other elements
-                            blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-3 italic mb-3" {...props} />,
+                            blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-3 italic mb-1.5" {...props} />,
                             strong: ({node, ...props}) => <strong className="font-bold" {...props} />
                           }}>
                             {formatMessageContent(assistantMessage.content)}

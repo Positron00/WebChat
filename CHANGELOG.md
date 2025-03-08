@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.5] - 2024-03-07
+
+### Changed
+- Halved vertical margins throughout the content container
+  - Reduced top/bottom container padding from 8px to 4px
+  - Decreased spacing between message pairs from 32px to 16px
+  - Reduced gap between user and assistant messages from 16px to 8px
+  - Halved all markdown element vertical margins
+  - Decreased paragraph spacing from 12px to 6px
+  - Reduced heading margins by 50%
+  - Minimized list and blockquote spacing
+  - Created ultra-compact layout with maximum content density
+
 ## [1.13.4] - 2024-03-07
 
 ### Changed
