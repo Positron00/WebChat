@@ -25,7 +25,7 @@ const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
   fontSize: 'normal',
   promptStyle: 'balanced',
   knowledgeFocus: 'general',
-  citeSources: false
+  citeSources: true
 };
 
 export type ThemePreference = 'light' | 'dark' | 'system';

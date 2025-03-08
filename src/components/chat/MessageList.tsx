@@ -196,8 +196,8 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
           {articleContent}
         </ReactMarkdown>
         
-        {/* Source badge */}
-        {hasSources && (
+        {/* Source badge - only show if hasSources AND citeSources is enabled */}
+        {hasSources && accessibility.citeSources && (
           <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
             <InformationCircleIcon className="w-3 h-3 mr-1" />
             <span>Cited Sources</span>

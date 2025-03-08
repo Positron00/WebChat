@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.10] - 2024-03-09
+
+### Fixed
+- "Cite Sources" toggle functionality
+  - Fixed the "Cited Sources" badge to respect the current citeSources setting
+  - Standardized default value of citeSources to true across all components
+  - Updated API route to maintain consistent defaults
+  - Enhanced logging for better debugging of citation control flow
+  - Fixed disconnect between UI badge and accessibility settings
+
 ## [1.14.9] - 2024-03-08
 
 ### Added

@@ -79,6 +79,11 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     isLoading: false,
   }));
 
+  // Debug logging for accessibility settings
+  useEffect(() => {
+    console.log('Accessibility settings in ChatContext:', accessibility);
+  }, [accessibility]);
+
   // Load messages from storage on client side
   useEffect(() => {
     try {
@@ -124,6 +129,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       if (!message.trim() && !imageFile) return;
 
       try {
+        console.log('Sending message with citeSources set to:', accessibility.citeSources);
+        
         // Check if we can make this request
         if (rateLimiter.isRateLimited()) {
           const timeUntilNext = rateLimiter.getTimeUntilNextAllowed();
@@ -173,6 +180,10 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
         // Send message to API
         let assistantMessage: ChatMessage;
 
+        // Debug logging
+        console.log('Decision point - citeSources value:', accessibility.citeSources);
+        console.log('Will make', !accessibility.citeSources ? 'real API call' : 'mock call with sources');
+
         if (!accessibility.citeSources) {
           // Make an actual API call to TogetherAI when citeSources is false
           try {
@@ -201,6 +212,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
               responseLength: assistantMessage.content.length,
               sourceCount: 0
             });
+            console.log('CREATED MESSAGE WITHOUT SOURCES due to citeSources=false');
           } catch (error) {
             logger.error('Error in real API call', { requestId, error });
             throw error;
@@ -233,6 +245,7 @@ In conclusion, the evidence points to several key insights that help us better u
             responseLength: assistantMessage.content.length,
             sourceCount: assistantMessage.sources?.length || 0
           });
+          console.log('CREATED MESSAGE WITH SOURCES due to citeSources=true');
         }
 
         // Update state with the new message
