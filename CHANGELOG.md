@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.2] - 2024-03-07
+
+### Changed
+- Reduced margins around content in response container
+  - Decreased outer container padding from 16px to 8px
+  - Reduced message bubble padding for a more compact appearance
+  - Decreased spacing between message pairs for better content density
+  - Optimized markdown element spacing while maintaining readability
+  - Adjusted vertical spacing between user and assistant messages
+  - Increased maximum message width from 80% to 85% for better space utilization
+  - Created a more streamlined visual experience with thinner borders
+
 ## [1.13.1] - 2024-03-07
 
 ### Changed
