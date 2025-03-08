@@ -368,46 +368,8 @@ export function MessageInput({
 
       {/* Toolbar */}
       <div className="flex justify-between items-center mt-1">
+        {/* Left side buttons */}
         <div className="flex items-center gap-2">
-          {/* Focus button and dropdown */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setShowFocusDropdown(!showFocusDropdown)}
-              className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
-            >
-              <SparklesIcon className="w-3 h-3 text-gray-300" />
-              <span className="text-xs text-gray-300">Focus</span>
-            </button>
-            
-            {/* Focus Dropdown */}
-            {showFocusDropdown && (
-              <div className="absolute bottom-8 left-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-10">
-                <h4 className="text-white text-sm font-medium mb-2">Knowledge Focus</h4>
-                <div className="space-y-2">
-                  {Object.entries(KNOWLEDGE_FOCUS).map(([focus, label]) => (
-                    <div key={focus} className="flex items-center">
-                      <input
-                        type="radio"
-                        id={`focus-${focus}`}
-                        name="knowledgeFocus"
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                        checked={accessibility.knowledgeFocus === focus}
-                        onChange={() => changeKnowledgeFocus(focus as any)}
-                      />
-                      <label htmlFor={`focus-${focus}`} className="ml-2 text-xs font-medium text-gray-300">
-                        {label}
-                      </label>
-                    </div>
-                  ))}
-                  <p className="text-gray-400 text-xs mt-2">
-                    Select a knowledge domain for AI responses
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
@@ -444,6 +406,64 @@ export function MessageInput({
             </span>
           </button>
           
+          {/* Prompt Style Pill */}
+          <div 
+            className={`px-2 py-0.5 rounded-full text-xs ${PROMPT_STYLE_COLORS[accessibility.promptStyle]}`}
+            aria-label={`Current AI style: ${PROMPT_STYLES[accessibility.promptStyle]}`}
+          >
+            {PROMPT_STYLES[accessibility.promptStyle]}
+          </div>
+          
+          {/* Knowledge Focus Pill */}
+          <div 
+            className={`px-2 py-0.5 rounded-full text-xs ${KNOWLEDGE_FOCUS_COLORS[accessibility.knowledgeFocus]}`}
+            aria-label={`Knowledge focus: ${KNOWLEDGE_FOCUS[accessibility.knowledgeFocus]}`}
+          >
+            {KNOWLEDGE_FOCUS[accessibility.knowledgeFocus]}
+          </div>
+        </div>
+        
+        {/* Right side buttons */}
+        <div className="flex items-center gap-2">
+          {/* Focus button and dropdown */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowFocusDropdown(!showFocusDropdown)}
+              className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+            >
+              <SparklesIcon className="w-3 h-3 text-gray-300" />
+              <span className="text-xs text-gray-300">Focus</span>
+            </button>
+            
+            {/* Focus Dropdown */}
+            {showFocusDropdown && (
+              <div className="absolute bottom-8 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-10">
+                <h4 className="text-white text-sm font-medium mb-2">Knowledge Focus</h4>
+                <div className="space-y-2">
+                  {Object.entries(KNOWLEDGE_FOCUS).map(([focus, label]) => (
+                    <div key={focus} className="flex items-center">
+                      <input
+                        type="radio"
+                        id={`focus-${focus}`}
+                        name="knowledgeFocus"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        checked={accessibility.knowledgeFocus === focus}
+                        onChange={() => changeKnowledgeFocus(focus as any)}
+                      />
+                      <label htmlFor={`focus-${focus}`} className="ml-2 text-xs font-medium text-gray-300">
+                        {label}
+                      </label>
+                    </div>
+                  ))}
+                  <p className="text-gray-400 text-xs mt-2">
+                    Select a knowledge domain for AI responses
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+          
           {/* Settings Button */}
           <div className="relative">
             <button
@@ -460,7 +480,7 @@ export function MessageInput({
             
             {/* Settings Dropdown */}
             {showSettings && (
-              <div className="absolute bottom-8 left-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-10">
+              <div className="absolute bottom-8 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-10">
                 {/* High Contrast Setting */}
                 <div className="p-2 border-b border-gray-700">
                   <h4 className="text-white text-sm font-medium mb-2">Appearance</h4>
@@ -517,33 +537,17 @@ export function MessageInput({
             )}
           </div>
           
-          {/* Prompt Style Pill */}
-          <div 
-            className={`px-2 py-0.5 rounded-full text-xs ${PROMPT_STYLE_COLORS[accessibility.promptStyle]}`}
-            aria-label={`Current AI style: ${PROMPT_STYLES[accessibility.promptStyle]}`}
-          >
-            {PROMPT_STYLES[accessibility.promptStyle]}
-          </div>
-          
-          {/* Knowledge Focus Pill */}
-          <div 
-            className={`px-2 py-0.5 rounded-full text-xs ${KNOWLEDGE_FOCUS_COLORS[accessibility.knowledgeFocus]}`}
-            aria-label={`Knowledge focus: ${KNOWLEDGE_FOCUS[accessibility.knowledgeFocus]}`}
-          >
-            {KNOWLEDGE_FOCUS[accessibility.knowledgeFocus]}
-          </div>
+          {onNewChat && (
+            <button
+              type="button"
+              onClick={onNewChat}
+              className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
+              aria-label="Start a new chat"
+            >
+              <span className="text-xs text-gray-300">New Chat</span>
+            </button>
+          )}
         </div>
-        
-        {onNewChat && (
-          <button
-            type="button"
-            onClick={onNewChat}
-            className="p-1 hover:bg-white/5 rounded transition-colors flex items-center gap-0.5 text-[10px]"
-            aria-label="Start a new chat"
-          >
-            <span className="text-xs text-gray-300">New Chat</span>
-          </button>
-        )}
       </div>
 
       {/* Hidden File Input */}

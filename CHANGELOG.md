@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.0] - 2024-03-06
+
+### Changed
+- Improved toolbar layout for better user experience
+  - Moved "Focus" and "Settings" buttons to the right side of the toolbar
+  - Positioned these controls next to the "New Chat" button
+  - Created more balanced visual distribution of UI elements
+  - Grouped related functionality together for better usability
+  - Adjusted dropdown positioning to open from right edge
+  - Maintained consistent styling and behavior for all toolbar elements
+
 ## [1.11.6] - 2024-03-06
 
 ### Changed
