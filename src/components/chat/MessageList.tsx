@@ -18,15 +18,17 @@ const formatMessageContent = (content: string): string => {
   // Process markdown to improve spacing
   return content
     // Add double line breaks between numbered lists
-    .replace(/(\d+\.\s.*?)\n(\d+\.)/g, '$1\n\n$2')
+    .replace(/(\d+\.\s.*?)\n(\d+\.)/g, '$1\n\n\n$2')
     // Add double line breaks after section headings 
-    .replace(/(.*:)\s*\n/g, '$1\n\n')
+    .replace(/(.*:)\s*\n/g, '$1\n\n\n')
     // Add double line breaks between bullet points
-    .replace(/([*\-•].*)\n([*\-•])/g, '$1\n\n$2')
+    .replace(/([*\-•].*)\n([*\-•])/g, '$1\n\n\n$2')
     // Replace single line breaks between paragraphs with double line breaks
-    .replace(/([^\s])\n([^\s])/g, '$1\n\n$2')
-    // Make sure we don't have more than two consecutive newlines
-    .replace(/\n{3,}/g, '\n\n');
+    .replace(/([^\s])\n([^\s])/g, '$1\n\n\n$2')
+    // Ensure consistent paragraph breaks (make double breaks the minimum)
+    .replace(/\n\n/g, '\n\n\n')
+    // Make sure we don't have more than three consecutive newlines
+    .replace(/\n{4,}/g, '\n\n\n');
 };
 
 export function MessageList({ messages, isLoading, error }: MessageListProps) {
@@ -107,17 +109,17 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
                         >
                           <ReactMarkdown components={{
                             // Add proper spacing between paragraphs
-                            p: ({node, ...props}) => <p className="text-left mb-1.5" {...props} />,
+                            p: ({node, ...props}) => <p className="text-left mb-4" {...props} />,
                             // Add spacing after headings
-                            h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-1.5 mt-2" {...props} />,
-                            h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-1 mt-1.5" {...props} />,
-                            h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-1 mt-1.5" {...props} />,
+                            h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-4 mt-6" {...props} />,
+                            h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-3 mt-5" {...props} />,
+                            h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-4" {...props} />,
                             // Improve list spacing
-                            ul: ({node, ...props}) => <ul className="text-left mb-1.5 ml-5 list-disc" {...props} />,
-                            ol: ({node, ...props}) => <ol className="text-left mb-1.5 ml-5 list-decimal" {...props} />,
-                            li: ({node, ...props}) => <li className="mb-0.5" {...props} />,
+                            ul: ({node, ...props}) => <ul className="text-left mb-4 ml-5 list-disc" {...props} />,
+                            ol: ({node, ...props}) => <ol className="text-left mb-4 ml-5 list-decimal" {...props} />,
+                            li: ({node, ...props}) => <li className="mb-1" {...props} />,
                             // Add spacing for other elements
-                            blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-3 italic mb-1.5" {...props} />,
+                            blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-gray-400 pl-3 italic mb-4" {...props} />,
                             strong: ({node, ...props}) => <strong className="font-bold" {...props} />
                           }}>
                             {formatMessageContent(assistantMessage.content)}

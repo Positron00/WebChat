@@ -1375,3 +1375,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tailwind CSS
 - React 18
 - Together AI API integration
+
+## [1.13.7] - 2024-03-07
+
+### Changed
+- Enhanced section spacing in response content
+  - Added triple line breaks between content sections
+  - Increased paragraph bottom margin from 6px to 16px
+  - Restored original heading spacing with proper vertical rhythm
+  - Expanded list margins from 6px to 16px for better separation
+  - Improved blockquote spacing for clearer content organization
+  - Optimized spacing between list items for better readability
+  - Enhanced text processing to ensure consistent section breaks
+  - Balanced content density with proper visual separation
