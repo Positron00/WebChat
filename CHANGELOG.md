@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.4] - 2024-03-07
+
+### Changed
+- Minimized horizontal margins to bare minimum
+  - Further reduced horizontal padding from 4px to 2px
+  - Kept vertical padding unchanged at 8px for readability
+  - Increased maximum message width from 90% to 95%
+  - Decreased message bubble padding for ultra-compact layout
+  - Reduced user message padding from 12px to 8px
+  - Reduced assistant message padding from 16px to 12px
+  - Created almost borderless appearance for maximum content space
+
 ## [1.13.3] - 2024-03-07
 
 ### Changed
