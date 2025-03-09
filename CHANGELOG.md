@@ -5,17 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.15.4] - 2024-03-10
+## [1.15.7] - 2024-03-08
+
+### Changed
+- Removed blue background from the logo icon
+  - Created new transparent version of the neural network icon
+  - Updated background color to match the browser window (#1C1C1C)
+  - Improved visual integration with the dark theme
+  - Enhanced overall appearance with seamless background transition
+
+## [1.15.6] - 2024-03-08
+
+### Changed
+- Increased logo size by 3x (from 48px to 144px) for better visibility and impact
+- Maintained transparent background for proper integration with the dark theme
+
+## [1.15.5] - 2024-03-08
+
+### Changed
+- Updated the app logo to use the new custom-designed icon
+- Increased logo size for better visibility
+
+## [1.15.4] - 2024-03-08
 
 ### Fixed
-- Improved tagline typography for better readability
-  - Increased letter spacing from tight to wide for better character distinction
-  - Added vertical padding (py-2) to prevent text being cut off at the bottom
-  - Adjusted line height to "relaxed" for improved text rendering
-  - Enhanced overall text appearance with more breathing room between characters
-  - Fixed alignment issues with adjacent copyright symbol
+- Fixed tagline typography issues:
+  - Improved letter spacing for better readability
+  - Added vertical padding to prevent text cutoff
+  - Adjusted line height for better text display
+  - Enhanced overall text appearance
+  - Fixed alignment with copyright symbol
 
-## [1.15.3] - 2024-03-10
+## [1.15.3] - 2024-03-08
 
 ### Changed
 - Enhanced tagline design for more visual impact
@@ -27,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated Tailwind configuration to support custom font families
   - Enhanced overall branding with more professional typography
 
-## [1.15.2] - 2024-03-10
+## [1.15.2] - 2024-03-08
 
 ### Changed
 - Enhanced message container height responsiveness
@@ -38,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved responsiveness on different screen sizes
   - Better utilization of available vertical space in the browser window
 
-## [1.15.1] - 2024-03-10
+## [1.15.1] - 2024-03-08
 
 ### Documentation
 - Updated architecture documentation with latest features
@@ -158,7 +179,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         class ApiRoutes,TogetherAI backend
     ```
 
-## [1.15.0] - 2024-03-10
+## [1.15.0] - 2024-03-08
 
 ### Added
 - Code Canvas for displaying code blocks
@@ -170,7 +191,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced code display with syntax formatting and proper spacing
   - Preserved existing Source Canvas functionality when citations are present instead of code
 
-## [1.14.16] - 2024-03-10
+## [1.14.16] - 2024-03-08
 
 ### Changed
 - Renamed "Darker Background" setting to "High Contrast"
@@ -186,7 +207,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed interaction between custom color settings and high contrast mode
   - Restored expected behavior of the contrast toggle
 
-## [1.14.15] - 2024-03-10
+## [1.14.15] - 2024-03-08
 
 ### Added
 - Color customization through Advanced settings
@@ -207,7 +228,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Ensured consistent default values between storage utility and context provider
   - Fixed build process by resolving type compatibility issues
 
-## [1.14.14] - 2024-03-10
+## [1.14.14] - 2024-03-08
 
 ### Changed
 - Enhanced UI layout and visibility
@@ -216,7 +237,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better readability for AI responses with expanded display area
   - Optimized overall chat interface proportions for modern wide screens
 
-## [1.14.13] - 2024-03-09
+## [1.14.13] - 2024-03-08
 
 ### Added
 - Enhanced error diagnostics
@@ -226,7 +247,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Included system diagnostics like network status and browser information
   - Implemented comprehensive logging in browser console for troubleshooting
 
-## [1.14.12] - 2024-03-09
+## [1.14.12] - 2024-03-08
 
 ### Changed
 - Smarter "Introduction" heading insertion
@@ -236,7 +257,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Prevents duplicate Introduction headings in AI-generated content
   - Improved overall readability for both simple and complex responses
 
-## [1.14.11] - 2024-03-09
+## [1.14.11] - 2024-03-08
 
 ### Changed
 - Improved Source Canvas display behavior
@@ -246,7 +267,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced responsive layout to adjust based on combined canvas visibility conditions
   - Better integration between citation settings and UI display
 
-## [1.14.10] - 2024-03-09
+## [1.14.10] - 2024-03-08
 
 ### Fixed
 - "Cite Sources" toggle functionality

@@ -9,10 +9,10 @@ export default function Home() {
         {/* Logo and Tagline */}
         <div className="flex flex-col items-center gap-4">
           <Image
-            src="/logo.svg"
-            alt="Logo"
-            width={32}
-            height={32}
+            src="/icons/icon-512-transparent.svg"
+            alt="WebChat Logo"
+            width={144}
+            height={144}
             className="text-[#00FFE0]"
           />
           
