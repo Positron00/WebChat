@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.15.4] - 2024-03-10
+
+### Fixed
+- Improved tagline typography for better readability
+  - Increased letter spacing from tight to wide for better character distinction
+  - Added vertical padding (py-2) to prevent text being cut off at the bottom
+  - Adjusted line height to "relaxed" for improved text rendering
+  - Enhanced overall text appearance with more breathing room between characters
+  - Fixed alignment issues with adjacent copyright symbol
+
+## [1.15.3] - 2024-03-10
+
+### Changed
+- Enhanced tagline design for more visual impact
+  - Added elegant Playfair Display font for the tagline
+  - Applied bold weight and tighter letter spacing for modern appeal
+  - Created gradient text effect with blue to teal color transition
+  - Added standard copyright symbol (©) in matching teal color
+  - Implemented proper font configuration with Next.js font system
+  - Updated Tailwind configuration to support custom font families
+  - Enhanced overall branding with more professional typography
+
 ## [1.15.2] - 2024-03-10
 
 ### Changed

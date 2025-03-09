@@ -16,9 +16,12 @@ export default function Home() {
             className="text-[#00FFE0]"
           />
           
-          <h1 className="text-4xl font-light">
-            Intelligence at your fingertips
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-4xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-teal-300 font-playfair py-2 leading-relaxed">
+              Intelligence at your fingertips
+            </h1>
+            <span className="text-lg text-teal-300">©</span>
+          </div>
         </div>
 
         {/* Chat Interface */}

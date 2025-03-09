@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/contexts/AppContext";
 import { ChatProvider } from "@/contexts/ChatContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
+const playfair = Playfair_Display({ 
+  subsets: ["latin"],
+  weight: "600",  // Semi-bold weight
+  variable: '--font-playfair'
+});
 
 export const metadata: Metadata = {
   title: "AI Chatbot with Llama 3.3",
@@ -18,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className={inter.className}>
         <AppProvider>
           <ChatProvider>
