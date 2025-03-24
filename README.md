@@ -2,6 +2,8 @@
 
 A modern, full-stack chatbot application built with Next.js and Together AI's Llama 3.3 70B Instruct Turbo model. The chatbot supports both text and image inputs, providing a seamless conversational experience.
 
+**Current Version:** 1.15.8 (Last Updated: 2025-03-23)
+
 ## Features
 
 - 💬 Real-time chat interface

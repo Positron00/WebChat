@@ -111,10 +111,13 @@ const addCitationReferences = (content: string, sourcesCount: number): string =>
 // Enhanced message formatting for article-like appearance
 const formatArticleContent = (content: string): string => {
   // Check if this is a longer, more structured response that needs an introduction
-  const needsIntroduction = content.length > 250 && 
+  const hasMultipleSections = 
+    (content.match(/^#+\s.*?$/gm) || []).length > 1 || // Has multiple headings
+    content.split('\n\n').length > 3; // Or multiple paragraphs
+    
+  const needsIntroduction = content.length > 250 && hasMultipleSections && 
                           (content.includes('# ') || content.includes('## ') || 
-                           content.includes('1. ') || content.includes('2. ') ||
-                           content.split('\n\n').length > 3);
+                           content.includes('1. ') || content.includes('2. '));
 
   // Process markdown to improve article structure
   return content
@@ -128,9 +131,11 @@ const formatArticleContent = (content: string): string => {
     // Ensure paragraphs have proper spacing
     .replace(/([^\s])\n([^\s])/g, '$1\n\n$2')
     // Add introduction section only if needed and not already present
+    // and only if there are multiple sections
     .replace(/^(?!#)(.+?)(?:\n\n|\n(?=#))/m, (match, p1) => {
-      // Only add Introduction if needed and if it doesn't already contain "introduction"
+      // Only add Introduction if needed, multiple sections exist, and if it doesn't already contain "introduction"
       if (needsIntroduction && 
+          hasMultipleSections &&
           !content.toLowerCase().includes('# introduction') && 
           !content.toLowerCase().includes('## introduction') &&
           !p1.toLowerCase().includes('introduction')) {
@@ -140,7 +145,7 @@ const formatArticleContent = (content: string): string => {
     })
     // Add conclusion if there isn't one and content is long enough
     .replace(/(.+)$/m, (match) => {
-      if (content.length > 200 && !content.includes('# Conclusion') && !content.includes('## Conclusion')) {
+      if (content.length > 200 && hasMultipleSections && !content.includes('# Conclusion') && !content.includes('## Conclusion')) {
         // Find the last paragraph that might be a conclusion
         const lastParagraphs = content.split('\n\n').slice(-2);
         if (lastParagraphs.some((p: string) => p.toLowerCase().includes('conclusion') || 
@@ -185,7 +190,7 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
       return `${baseClass} ${colorClass}`;
     } else {
       // Special styling for assistant messages to make them look like articles
-      return 'py-6 px-8 rounded-lg break-words max-w-[95%] mx-auto font-serif text-left border-l-4 border-blue-500 article-content';
+      return 'py-6 px-8 rounded-lg break-words max-w-[95%] mx-auto font-serif text-left border-l-4 border-blue-500 article-content text-base';
     }
   };
 
@@ -227,7 +232,7 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
     const articleContent = formatArticleContent(content);
     
     return (
-      <div className="article-container relative">
+      <div className="article-container relative text-base">
         {/* Article header with icon */}
         <div className="flex items-center mb-4 text-blue-400">
           <NewspaperIcon className="w-5 h-5 mr-2" />
@@ -236,25 +241,25 @@ export function MessageList({ messages, isLoading, error }: MessageListProps) {
         {/* Article content with enhanced typography */}
         <ReactMarkdown components={{
           // Enhanced paragraph styling
-          p: ({node, ...props}) => <p className="text-left mb-4 leading-relaxed" {...props} />,
-          // Improved heading hierarchy
-          h1: ({node, ...props}) => <h1 className="text-center font-bold text-2xl mb-6 mt-2 text-blue-300" {...props} />,
-          h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-4 mt-6 text-blue-400 border-b border-gray-700 pb-1" {...props} />,
-          h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-5 text-blue-500" {...props} />,
-          h4: ({node, ...props}) => <h4 className="text-left font-bold text-base mb-2 mt-4 text-blue-600" {...props} />,
-          // Enhanced list styling
-          ul: ({node, ...props}) => <ul className="text-left mb-4 ml-6 list-disc" {...props} />,
-          ol: ({node, ...props}) => <ol className="text-left mb-4 ml-6 list-decimal" {...props} />,
-          li: ({node, ...props}) => <li className="mb-2 leading-relaxed" {...props} />,
+          p: ({node, ...props}) => <p className="text-left mb-4 leading-relaxed text-base" {...props} />,
+          // Improved heading hierarchy with more consistent sizing
+          h1: ({node, ...props}) => <h1 className="text-left font-bold text-2xl mb-5 mt-4 text-blue-300 border-b border-gray-700 pb-2" {...props} />,
+          h2: ({node, ...props}) => <h2 className="text-left font-bold text-xl mb-4 mt-5 text-blue-400 border-b border-gray-700 pb-1" {...props} />,
+          h3: ({node, ...props}) => <h3 className="text-left font-bold text-lg mb-3 mt-4 text-blue-500" {...props} />,
+          h4: ({node, ...props}) => <h4 className="text-left font-bold text-base mb-3 mt-3 text-blue-600" {...props} />,
+          // Enhanced list styling with consistent text size
+          ul: ({node, ...props}) => <ul className="text-left mb-4 ml-6 list-disc text-base" {...props} />,
+          ol: ({node, ...props}) => <ol className="text-left mb-4 ml-6 list-decimal text-base" {...props} />,
+          li: ({node, ...props}) => <li className="mb-2 leading-relaxed text-base" {...props} />,
           // Better blockquote styling
-          blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-blue-500 pl-4 italic mb-4 text-gray-300 bg-gray-700/30 py-2 pr-2 rounded-r" {...props} />,
+          blockquote: ({node, ...props}) => <blockquote className="text-left border-l-4 border-blue-500 pl-4 italic mb-4 text-gray-300 bg-gray-700/30 py-2 pr-2 rounded-r text-base" {...props} />,
           // Enhanced emphasis
-          strong: ({node, ...props}) => <strong className="font-bold text-blue-200" {...props} />,
-          em: ({node, ...props}) => <em className="italic text-gray-300" {...props} />,
+          strong: ({node, ...props}) => <strong className="font-bold text-blue-200 text-base" {...props} />,
+          em: ({node, ...props}) => <em className="italic text-gray-300 text-base" {...props} />,
           // Add proper table styling
-          table: ({node, ...props}) => <table className="w-full mb-4 border-collapse border border-gray-700" {...props} />,
-          th: ({node, ...props}) => <th className="border border-gray-700 p-2 bg-gray-700 text-left" {...props} />,
-          td: ({node, ...props}) => <td className="border border-gray-700 p-2" {...props} />,
+          table: ({node, ...props}) => <table className="w-full mb-4 border-collapse border border-gray-700 text-base" {...props} />,
+          th: ({node, ...props}) => <th className="border border-gray-700 p-2 bg-gray-700 text-left text-base" {...props} />,
+          td: ({node, ...props}) => <td className="border border-gray-700 p-2 text-base" {...props} />,
           // Code formatting without inline prop
           code: ({node, className, ...props}) => {
             const isInline = !className || !className.includes('language-');

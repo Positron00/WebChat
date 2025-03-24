@@ -5,7 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.15.7] - 2024-03-08
+## [1.15.8] - 2025-03-23
+
+### Fixed
+- Improved font consistency in response texts
+  - Standardized all text elements to use the same base font size
+  - Updated heading hierarchy with consistent sizing and spacing
+  - Added consistent padding and margin for better readability
+  - Improved visual hierarchy between headings and paragraphs
+  - Fixed inconsistent sizing in lists, blockquotes, and code blocks
+  - Enhanced overall article-style formatting
+
+### Changed
+- Enhanced article formatting logic
+  - Only add "Introduction" section when there are multiple sections
+  - Improved detection of content structure to determine when headers are needed
+  - Refined spacing between different content elements
+
+## [1.15.7] - 2025-03-08
 
 ### Changed
 - Removed blue background from the logo icon
@@ -14,19 +31,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved visual integration with the dark theme
   - Enhanced overall appearance with seamless background transition
 
-## [1.15.6] - 2024-03-08
+## [1.15.6] - 2025-03-08
 
 ### Changed
 - Increased logo size by 3x (from 48px to 144px) for better visibility and impact
 - Maintained transparent background for proper integration with the dark theme
 
-## [1.15.5] - 2024-03-08
+## [1.15.5] - 2025-03-08
 
 ### Changed
 - Updated the app logo to use the new custom-designed icon
 - Increased logo size for better visibility
 
-## [1.15.4] - 2024-03-08
+## [1.15.4] - 2025-03-08
 
 ### Fixed
 - Fixed tagline typography issues:
@@ -36,7 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced overall text appearance
   - Fixed alignment with copyright symbol
 
-## [1.15.3] - 2024-03-08
+## [1.15.3] - 2025-03-08
 
 ### Changed
 - Enhanced tagline design for more visual impact
@@ -48,7 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated Tailwind configuration to support custom font families
   - Enhanced overall branding with more professional typography
 
-## [1.15.2] - 2024-03-08
+## [1.15.2] - 2025-03-08
 
 ### Changed
 - Enhanced message container height responsiveness
@@ -59,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved responsiveness on different screen sizes
   - Better utilization of available vertical space in the browser window
 
-## [1.15.1] - 2024-03-08
+## [1.15.1] - 2025-03-08
 
 ### Documentation
 - Updated architecture documentation with latest features
@@ -179,7 +196,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         class ApiRoutes,TogetherAI backend
     ```
 
-## [1.15.0] - 2024-03-08
+## [1.15.0] - 2025-03-08
 
 ### Added
 - Code Canvas for displaying code blocks
@@ -191,7 +208,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced code display with syntax formatting and proper spacing
   - Preserved existing Source Canvas functionality when citations are present instead of code
 
-## [1.14.16] - 2024-03-08
+## [1.14.16] - 2025-03-08
 
 ### Changed
 - Renamed "Darker Background" setting to "High Contrast"
@@ -207,7 +224,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed interaction between custom color settings and high contrast mode
   - Restored expected behavior of the contrast toggle
 
-## [1.14.15] - 2024-03-08
+## [1.14.15] - 2025-03-08
 
 ### Added
 - Color customization through Advanced settings
@@ -228,7 +245,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Ensured consistent default values between storage utility and context provider
   - Fixed build process by resolving type compatibility issues
 
-## [1.14.14] - 2024-03-08
+## [1.14.14] - 2025-03-08
 
 ### Changed
 - Enhanced UI layout and visibility
@@ -237,7 +254,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better readability for AI responses with expanded display area
   - Optimized overall chat interface proportions for modern wide screens
 
-## [1.14.13] - 2024-03-08
+## [1.14.13] - 2025-03-08
 
 ### Added
 - Enhanced error diagnostics
@@ -247,7 +264,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Included system diagnostics like network status and browser information
   - Implemented comprehensive logging in browser console for troubleshooting
 
-## [1.14.12] - 2024-03-08
+## [1.14.12] - 2025-03-08
 
 ### Changed
 - Smarter "Introduction" heading insertion
@@ -257,7 +274,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Prevents duplicate Introduction headings in AI-generated content
   - Improved overall readability for both simple and complex responses
 
-## [1.14.11] - 2024-03-08
+## [1.14.11] - 2025-03-08
 
 ### Changed
 - Improved Source Canvas display behavior
@@ -267,7 +284,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced responsive layout to adjust based on combined canvas visibility conditions
   - Better integration between citation settings and UI display
 
-## [1.14.10] - 2024-03-08
+## [1.14.10] - 2025-03-08
 
 ### Fixed
 - "Cite Sources" toggle functionality
@@ -277,7 +294,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced logging for better debugging of citation control flow
   - Fixed disconnect between UI badge and accessibility settings
 
-## [1.14.9] - 2024-03-08
+## [1.14.9] - 2025-03-08
 
 ### Added
 - Real API integration when citations are disabled
@@ -294,7 +311,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved user experience with clearer source/no-source modes
   - Added proper logging for API request decisions
 
-## [1.14.8] - 2024-03-08
+## [1.14.8] - 2025-03-08
 
 ### Changed
 - Removed the "Article" text from the response header
@@ -303,7 +320,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Maintained all article formatting and styling
   - Improved visual design with less redundant text
 
-## [1.14.7] - 2024-03-08
+## [1.14.7] - 2025-03-08
 
 ### Added
 - New "Cite Sources" toggle in settings
@@ -320,7 +337,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved toggle styling and descriptive text
   - Better separation between appearance settings and content settings
 
-## [1.14.6] - 2024-03-08
+## [1.14.6] - 2025-03-08
 
 ### Added
 - New dedicated "Style" button in the toolbar next to the "Focus" button
@@ -330,7 +347,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved UI organization by grouping related controls - Style and Focus buttons are now adjacent
 - Simplified settings panel by moving style options to the toolbar for easier access
 
-## [1.14.5] - 2024-03-08
+## [1.14.5] - 2025-03-08
 
 ### Added
 - Enhanced article formatting for responses
@@ -344,7 +361,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added visual accents like colored headings and blue border
   - Maintained source citation system with badge indicator
 
-## [1.14.4] - 2024-03-08
+## [1.14.4] - 2025-03-08
 
 ### Changed
 - Significantly expanded chat interface width
@@ -355,7 +372,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Further improved space utilization for modern high-resolution displays
   - Maintained proportional layout with source canvas
 
-## [1.14.3] - 2024-03-08
+## [1.14.3] - 2025-03-08
 
 ### Changed
 - Modified chat interface to use percentage-based width
@@ -366,7 +383,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better alignment with modern responsive design principles
   - Ensured consistent user experience across various device widths
 
-## [1.14.2] - 2024-03-08
+## [1.14.2] - 2025-03-08
 
 ### Changed
 - Enhanced source display with visual tile interface
@@ -379,13 +396,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved empty state with helpful placeholder
   - Enhanced relevance indicators with percentage badges
 
-## [1.14.1] - 2024-03-08
+## [1.14.1] - 2025-03-08
 
 ### Added
 - Academic publication-style formatting with citation references
 - Included in Knowledge Focus prompts: "Include sources of information as citations in your response similar to academic papers"
 
-## [1.14.0] - 2024-03-08
+## [1.14.0] - 2025-03-08
 
 ### Added
 - Academic publication-style formatting with citation references
@@ -398,7 +415,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved AI responses to resemble scholarly publications
   - Enhanced visual presentation with superscript citation numbers
 
-## [1.13.7] - 2024-03-08
+## [1.13.7] - 2025-03-08
 
 ### Changed
 - Enhanced section spacing in response content
@@ -411,7 +428,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced text processing to ensure consistent section breaks
   - Balanced content density with proper visual separation
 
-## [1.13.6] - 2024-03-08
+## [1.13.6] - 2025-03-08
 
 ### Changed
 - Doubled horizontal padding inside message bubbles
@@ -423,7 +440,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Created better balance between content density and readability
   - Added more breathing room for message content
 
-## [1.13.5] - 2024-03-08
+## [1.13.5] - 2025-03-08
 
 ### Changed
 - Halved vertical margins throughout the content container
@@ -436,7 +453,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Minimized list and blockquote spacing
   - Created ultra-compact layout with maximum content density
 
-## [1.13.4] - 2024-03-08
+## [1.13.4] - 2025-03-08
 
 ### Changed
 - Minimized horizontal margins to bare minimum
@@ -448,7 +465,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Reduced assistant message padding from 16px to 12px
   - Created almost borderless appearance for maximum content space
 
-## [1.13.3] - 2024-03-08
+## [1.13.3] - 2025-03-08
 
 ### Changed
 - Further reduced horizontal margins in content container
@@ -460,7 +477,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced content density while preserving readability
   - Maximized available screen real estate for conversations
 
-## [1.13.2] - 2024-03-08
+## [1.13.2] - 2025-03-08
 
 ### Changed
 - Reduced margins around content in response container
@@ -472,7 +489,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Increased maximum message width from 80% to 85% for better space utilization
   - Created a more streamlined visual experience with thinner borders
 
-## [1.13.1] - 2024-03-08
+## [1.13.1] - 2025-03-08
 
 ### Changed
 - Increased response and query fields width by 20%
@@ -483,7 +500,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Optimized container sizes for different screen resolutions
   - Maintained responsive behavior across all device sizes
 
-## [1.13.0] - 2024-03-08
+## [1.13.0] - 2025-03-08
 
 ### Added
 - Source canvas with information tiles
@@ -506,7 +523,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added flexible layout that adapts when source panel is toggled
   - Maintained visual consistency with the application's design language
 
-## [1.12.2] - 2024-03-08
+## [1.12.2] - 2025-03-08
 
 ### Added
 - New "Nature" knowledge focus option
@@ -517,7 +534,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhances AI responses for questions about flora, fauna, and ecosystems
   - Includes specialized knowledge about environmental conservation
 
-## [1.12.1] - 2024-03-08
+## [1.12.1] - 2025-03-08
 
 ### Changed
 - Combined "Physics" and "Chemistry" knowledge focus areas into a single "Science" category
@@ -527,7 +544,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Applied a new teal color for the Science knowledge focus indicator
   - Improved knowledge prompt with comprehensive scientific guidance
 
-## [1.12.0] - 2024-03-07
+## [1.12.0] - 2025-03-07
 
 ### Changed
 - Improved toolbar layout for better user experience
@@ -538,7 +555,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Adjusted dropdown positioning to open from right edge
   - Maintained consistent styling and behavior for all toolbar elements
 
-## [1.11.6] - 2024-03-07
+## [1.11.6] - 2025-03-07
 
 ### Changed
 - Enhanced spacing in formatted message content
@@ -549,7 +566,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added consistent spacing for blockquotes and other markdown elements
   - Made text consistently left-aligned for better readability
 
-## [1.11.5] - 2024-03-07
+## [1.11.5] - 2025-03-07
 
 ### Added
 - Markdown rendering for message content
@@ -560,7 +577,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Left-aligned text within message bubbles for better readability
   - Created a more polished and professional response display
 
-## [1.11.4] - 2024-03-07
+## [1.11.4] - 2025-03-07
 
 ### Fixed
 - Enhanced message formatting in response field
@@ -571,7 +588,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented React Fragment-based rendering for consistent spacing
   - Prevented excessive line breaks by limiting consecutive newlines
 
-## [1.11.3] - 2024-03-07
+## [1.11.3] - 2025-03-07
 
 ### Changed
 - Improved message formatting in response field
@@ -582,7 +599,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added intelligent whitespace management for better text layout
   - Maintained compatibility with existing message content
 
-## [1.11.2] - 2024-03-07
+## [1.11.2] - 2025-03-07
 
 ### Added
 - New "Concise" prompt style option
@@ -593,7 +610,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Designed for users who prefer minimal, straight-to-the-point answers
   - Programmed to limit responses to 3 sentences when possible
 
-## [1.11.1] - 2024-03-07
+## [1.11.1] - 2025-03-07
 
 ### Added
 - New "Verbose" prompt style option
@@ -609,7 +626,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Kept all existing functionality for the Helpful style
   - Added "Verbose" as a completely separate new option
 
-## [1.11.0] - 2024-03-06
+## [1.11.0] - 2025-03-06
 
 ### Documentation
 - Complete current architecture documentation
@@ -751,7 +768,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         class APIRoutes,ChatRoute,TogetherAI api
     ```
 
-## [1.10.1] - 2024-03-06
+## [1.10.1] - 2025-03-06
 
 ### Changed
 - Enhanced PWA icons with animated 3D design
@@ -763,7 +780,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Maintained teal/aqua brand color scheme
   - Generated optimized PNG versions for PWA installation
 
-## [1.10.0] - 2024-03-06
+## [1.10.0] - 2025-03-06
 
 ### Fixed
 - PWA icon loading errors
@@ -773,7 +790,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed 404 errors in browser console related to missing icons
   - Improved PWA installation experience with proper icons
 
-## [1.9.2] - 2024-02-22
+## [1.9.2] - 2025-02-22
 
 ### Fixed
 - Persistent voice input transcription issues
@@ -786,7 +803,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced cleanup processes to prevent memory leaks
   - Added proper logging throughout speech recognition lifecycle
 
-## [1.9.1] - 2024-02-22
+## [1.9.1] - 2025-02-22
 
 ### Fixed
 - Voice input not transcribing text to input field
@@ -799,7 +816,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved whitespace handling when appending new transcripts
   - Added more robust error detection and recovery
 
-## [1.9.0] - 2024-02-22
+## [1.9.0] - 2025-02-22
 
 ### Added
 - Voice input functionality through computer microphone
@@ -812,7 +829,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Included proper cleanup of speech recognition resources
   - Enhanced accessibility with appropriate ARIA labels
 
-## [1.8.5] - 2024-02-22
+## [1.8.5] - 2025-02-22
 
 ### Added
 - Mini-preview for attached screenshots in input field
@@ -823,7 +840,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced user experience by providing clear indication of attachment status
   - Maintained consistent button styling and interaction patterns
 
-## [1.8.4] - 2024-02-22
+## [1.8.4] - 2025-02-22
 
 ### Added
 - Explicit screenshot attachment control
@@ -834,7 +851,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added visual confirmation with prominent button in modal footer
   - Enhanced workflow for screenshot sharing in conversations
 
-## [1.8.3] - 2024-02-22
+## [1.8.3] - 2025-02-22
 
 ### Changed
 - Enhanced screenshot preview UI
@@ -846,7 +863,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced scrolling behavior for very large screenshots
   - Improved responsive design for all screen sizes
 
-## [1.8.2] - 2024-02-22
+## [1.8.2] - 2025-02-22
 
 ### Changed
 - Redesigned screenshot preview experience
@@ -858,7 +875,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added clear screenshot functionality directly from toolbar
   - Optimized layout for better use of screen space
 
-## [1.8.1] - 2024-02-22
+## [1.8.1] - 2025-02-22
 
 ### Enhanced
 - Improved screenshot functionality
@@ -868,7 +885,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better memory management for screenshot object URLs
   - Added visual feedback for clearer user interaction
 
-## [1.8.0] - 2024-02-22
+## [1.8.0] - 2025-02-22
 
 ### Added
 - Screen capture functionality
@@ -882,7 +899,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added ability to dismiss the thumbnail with a hover-reveal close button
   - Implemented proper thumbnail cleanup when removed or component unmounts
 
-## [1.7.1] - 2024-02-22
+## [1.7.1] - 2025-02-22
 
 ### Changed
 - Made the "General" knowledge focus area visible in the UI
@@ -892,7 +909,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced user awareness of the current knowledge focus setting
   - Maintained gray color scheme for the "General" pill
 
-## [1.7.0] - 2024-02-22
+## [1.7.0] - 2025-02-22
 
 ### Added
 - Knowledge domain focus feature
@@ -911,7 +928,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Created logical combination of prompt style and knowledge focus
   - Improved system prompts with domain-specific knowledge guidance
 
-## [1.6.2] - 2024-02-22
+## [1.6.2] - 2025-02-22
 
 ### Added
 - Prompt style pill indicator in toolbar
@@ -921,7 +938,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhances visibility of the active prompt style without needing to open settings
   - Provides visual feedback about the current AI response mode
 
-## [1.6.1] - 2024-02-22
+## [1.6.1] - 2025-02-22
 
 ### Fixed
 - Ensured consistent interface definitions across the codebase
@@ -931,7 +948,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Ensured system prompts remain hidden from UI while allowing style selection
   - Fixed potential type errors when accessing promptStyle property
 
-## [1.6.0] - 2024-02-22
+## [1.6.0] - 2025-02-22
 
 ### Added
 - AI response style customization
@@ -948,7 +965,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added descriptive text explaining the purpose of each style option
   - Maintained consistent UI design with existing settings controls
 
-## [1.5.25] - 2024-02-22
+## [1.5.25] - 2025-02-22
 
 ### Changed
 - Renamed settings toggle option for better clarity
@@ -958,7 +975,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Maintained the same toggle functionality
   - Improved user understanding of the setting's purpose
 
-## [1.5.24] - 2024-02-22
+## [1.5.24] - 2025-02-22
 
 ### Added
 - Settings button in toolbar with dropdown menu 
@@ -976,7 +993,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - High contrast: blue-950 for user and gray-800 for assistant messages
   - Enhanced user control over visual appearance
 
-## [1.5.23] - 2024-02-22
+## [1.5.23] - 2025-02-22
 
 ### Changed
 - Updated message bubbles to use high contrast dark theme by default
@@ -986,7 +1003,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved readability with darker color scheme for better contrast
   - Enhanced visual distinction between message bubbles and container background
 
-## [1.5.22] - 2024-02-22
+## [1.5.22] - 2025-02-22
 
 ### Changed
 - Made response field border more subtle
@@ -996,7 +1013,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved visual harmony between the response container and page background
   - Enhanced overall focus on content by reducing visual distractions
 
-## [1.5.21] - 2024-02-22
+## [1.5.21] - 2025-02-22
 
 ### Changed
 - Re-implemented dark mode styling for response field
@@ -1006,7 +1023,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Changed message dividers to blue (border-blue-500/50) for better visibility
   - Enhanced visual distinction between messages and background
 
-## [1.5.20] - 2024-02-22
+## [1.5.20] - 2025-02-22
 
 ### Changed
 - Reverted response field styling back to original appearance
@@ -1016,7 +1033,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Restored original message divider styling
   - Returned to the original visual design while maintaining increased size
 
-## [1.5.19] - 2024-02-22
+## [1.5.19] - 2025-02-22
 
 ### Changed
 - Enhanced response field styling with dark mode
@@ -1027,7 +1044,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved visual distinction between the response area and page background
   - Enhanced overall readability with high-contrast color scheme
 
-## [1.5.18] - 2024-02-22
+## [1.5.18] - 2025-02-22
 
 ### Changed
 - Increased response field height by 25%
@@ -1037,7 +1054,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Reduces need for scrolling with longer conversations
   - Enhances overall reading experience
 
-## [1.5.17] - 2024-02-22
+## [1.5.17] - 2025-02-22
 
 ### Changed
 - Increased width of message fields by 50%
@@ -1047,7 +1064,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improves readability for longer messages
   - Enhances overall user experience with wider chat interface
 
-## [1.5.16] - 2024-02-22
+## [1.5.16] - 2025-02-22
 
 ### Changed
 - Modernized Submit button design
@@ -1057,7 +1074,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Maintained hover effects and disabled states
   - Enhanced visual appearance while preserving functionality
 
-## [1.5.15] - 2024-02-22
+## [1.5.15] - 2025-02-22
 
 ### Changed
 - Doubled the input text padding area
@@ -1066,7 +1083,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Further improved user experience with longer messages
   - Enhanced text visibility in the input field
 
-## [1.5.14] - 2024-02-22
+## [1.5.14] - 2025-02-22
 
 ### Fixed
 - Prevented text overlap with Submit button
@@ -1075,7 +1092,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Maintained all input field functionality
   - Improved user experience when typing longer messages
 
-## [1.5.13] - 2024-02-22
+## [1.5.13] - 2025-02-22
 
 ### Added
 - New Chat button for easy conversation reset
@@ -1085,7 +1102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Text vertically aligned with the Submit button text
   - Added proper hover effects for better user interaction
 
-## [1.5.12] - 2024-02-22
+## [1.5.12] - 2025-02-22
 
 ### Changed
 - Improved layout consistency across components
@@ -1095,7 +1112,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added proper spacing between components
   - Enhanced overall UI symmetry and cohesion
 
-## [1.5.11] - 2024-02-22
+## [1.5.11] - 2025-02-22
 
 ### Changed
 - Updated input placeholder text
@@ -1104,7 +1121,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Maintained all existing input field functionality
   - Simplified user interface text
 
-## [1.5.10] - 2024-02-22
+## [1.5.10] - 2025-02-22
 
 ### Changed
 - Removed "Responses" label above message container
@@ -1113,7 +1130,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Maintained all existing functionality and accessibility features
   - Improved UI minimalism while keeping intuitive design
 
-## [1.5.9] - 2024-02-22
+## [1.5.9] - 2025-02-22
 
 ### Changed
 - Reversed chat interface layout order
@@ -1122,7 +1139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved user experience for reviewing conversation history
   - Maintained all existing functionality and styling
 
-## [1.5.8] - 2024-02-22
+## [1.5.8] - 2025-02-22
 
 ### Changed
 - Improved message container usability
@@ -1132,7 +1149,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced user experience with scrollable content area
   - Improved overall page layout stability
 
-## [1.5.7] - 2024-02-22
+## [1.5.7] - 2025-02-22
 
 ### Accessibility
 - Improved text contrast throughout the application
@@ -1149,7 +1166,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved overall text contrast across message cards
   - Maintained consistent styling while ensuring accessibility standards
 
-## [1.5.6] - 2024-02-22
+## [1.5.6] - 2025-02-22
 
 ### Security
 - Updated Next.js to version 14.2.24
@@ -1165,7 +1182,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Resolved npm audit warnings
   - Improved application security and stability
 
-## [1.5.5] - 2024-02-22
+## [1.5.5] - 2025-02-22
 
 ### Fixed
 - Resolved TypeScript build error in API client
@@ -1173,7 +1190,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Corrected imports by removing duplicate type references
   - Ensured proper type checking for API responses
 
-## [1.5.4] - 2024-02-22
+## [1.5.4] - 2025-02-22
 
 ### Fixed
 - Resolved incorrect offline detection
@@ -1198,7 +1215,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Increased button size slightly for better usability
   - Enhanced disabled state visibility
 
-## [1.5.3] - 2024-02-22
+## [1.5.3] - 2025-02-22
 
 ### Added
 - Comprehensive architectural documentation
@@ -1213,7 +1230,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Data flow between components
   - System dependencies and interactions
 
-## [1.5.2] - 2024-02-22
+## [1.5.2] - 2025-02-22
 
 ### Changed
 - Enhanced message spacing and visual separation
@@ -1223,7 +1240,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved visual hierarchy with consistent spacing
   - Removed last border and spacing from final message pair
 
-## [1.5.1] - 2024-02-22
+## [1.5.1] - 2025-02-22
 
 ### Fixed
 - Improved rate limiting implementation
@@ -1254,7 +1271,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better recovery from rate limit errors
   - More detailed logging
 
-## [1.5.0] - 2024-02-22
+## [1.5.0] - 2025-02-22
 
 ### Added
 - Comprehensive logging system
@@ -1299,7 +1316,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Better performance monitoring
 - Added development tools for debugging
 
-## [1.4.1] - 2024-02-22
+## [1.4.1] - 2025-02-22
 
 ### Fixed
 - Resolved ChatContext provider error
@@ -1315,7 +1332,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved message state management
 - Better integration with rate limiter
 
-## [1.4.0] - 2024-02-22
+## [1.4.0] - 2025-02-22
 
 ### Added
 - Environment configuration with Together AI API key
@@ -1343,7 +1360,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced code organization
 - Cleaner component structure
 
-## [1.3.24] - 2024-02-21
+## [1.3.24] - 2025-02-21
 
 ### Changed
 - Increased input field width
@@ -1353,7 +1370,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better use of screen space
   - Maintained centered alignment 
 
-## [1.3.23] - 2024-02-21
+## [1.3.23] - 2025-02-21
 
 ### Changed
 - Increased input field height
@@ -1363,7 +1380,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removed overflow restriction
   - Enhanced text input experience 
 
-## [1.3.22] - 2024-02-21
+## [1.3.22] - 2025-02-21
 
 ### Changed
 - Reordered chat interface layout
@@ -1373,7 +1390,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced overall user experience
   - Maintained consistent styling 
 
-## [1.3.21] - 2024-02-21
+## [1.3.21] - 2025-02-21
 
 ### Changed
 - Enhanced response field visibility and appearance
@@ -1383,7 +1400,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved empty state appearance
   - Better spacing and padding for messages
 
-## [1.3.20] - 2024-02-21
+## [1.3.20] - 2025-02-21
 
 ### Changed
 - Improved text alignment consistency
@@ -1393,7 +1410,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved overall visual balance
   - Enhanced spacing and alignment
 
-## [1.3.19] - 2024-02-21
+## [1.3.19] - 2025-02-21
 
 ### Changed
 - Updated package name
@@ -1403,7 +1420,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved project identification
   - Better package naming convention
 
-## [1.3.18] - 2024-02-21
+## [1.3.18] - 2025-02-21
 
 ### Changed
 - Increased input field width
@@ -1413,7 +1430,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better use of screen space
   - Maintained centered alignment 
 
-## [1.3.17] - 2024-02-21
+## [1.3.17] - 2025-02-21
 
 ### Changed
 - Increased input field height
@@ -1423,7 +1440,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removed overflow restriction
   - Enhanced text input experience 
 
-## [1.3.16] - 2024-02-21
+## [1.3.16] - 2025-02-21
 
 ### Changed
 - Reordered chat interface layout
@@ -1433,7 +1450,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced overall user experience
   - Maintained consistent styling 
 
-## [1.3.15] - 2024-02-21
+## [1.3.15] - 2025-02-21
 
 ### Changed
 - Enhanced response field visibility and appearance
@@ -1443,7 +1460,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved empty state appearance
   - Better spacing and padding for messages
 
-## [1.3.14] - 2024-02-21
+## [1.3.14] - 2025-02-21
 
 ### Changed
 - Improved text alignment consistency
@@ -1453,13 +1470,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved overall visual balance
   - Enhanced spacing and alignment
 
-## [1.3.13] - 2024-02-21
+## [1.3.13] - 2025-02-21
 
 ### Changed
 - Reverted tagline back to "Intelligence at your fingertips"
 - Maintained centered layout and styling
 
-## [1.3.12] - 2024-02-21
+## [1.3.12] - 2025-02-21
 
 ### Changed
 - Updated layout to match Perplexity design
@@ -1470,7 +1487,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved overall visual alignment
   - Maintained 30% width with auto margins
 
-## [1.3.11] - 2024-02-21
+## [1.3.11] - 2025-02-21
 
 ### Changed
 - Improved overall layout spacing and proportions
@@ -1480,7 +1497,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Simplified container structure for better organization
 - Removed unnecessary padding and margins
 
-## [1.3.10] - 2024-02-21
+## [1.3.10] - 2025-02-21
 
 ### Changed
 - Updated message layout
@@ -1490,7 +1507,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Right-aligned loading indicator and error messages
   - Enhanced visual distinction between user and assistant messages
 
-## [1.3.9] - 2024-02-21
+## [1.3.9] - 2025-02-21
 
 ### Changed
 - Updated content alignment
@@ -1500,7 +1517,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced readability with consistent alignment
   - Maintained 30% width and left offset
 
-## [1.3.8] - 2024-02-21
+## [1.3.8] - 2025-02-21
 
 ### Changed
 - Updated landing page layout
@@ -1510,7 +1527,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Adjusted text alignment for better readability
   - Optimized spacing for new layout
 
-## [1.3.7] - 2024-02-21
+## [1.3.7] - 2025-02-21
 
 ### Fixed
 - Improved rate limiting handling
@@ -1527,7 +1544,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added rate limit window configuration
   - Improved error message clarity
 
-## [1.3.6] - 2024-02-21
+## [1.3.6] - 2025-02-21
 
 ### Fixed
 - Resolved React hydration errors
@@ -1547,7 +1564,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced type safety with proper interfaces
   - Better organization of side effects
 
-## [1.3.5] - 2024-02-21
+## [1.3.5] - 2025-02-21
 
 ### Fixed
 - Enhanced error handling and validation
@@ -1558,7 +1575,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added type guards for API responses
   - Improved retry mechanism error handling
 
-## [1.3.4] - 2024-02-21
+## [1.3.4] - 2025-02-21
 
 ### Fixed
 - Improved input field interactivity
@@ -1567,7 +1584,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed focus and interaction issues
   - Maintained single-line appearance with overflow control
 
-## [1.3.3] - 2024-02-21
+## [1.3.3] - 2025-02-21
 
 ### Changed
 - Improved landing page experience
@@ -1577,7 +1594,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added min-height and max-height constraints
   - Enhanced overall visual hierarchy
 
-## [1.3.2] - 2024-02-21
+## [1.3.2] - 2025-02-21
 
 ### Enhanced
 - Improved text input functionality
@@ -1586,12 +1603,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added proper button states (disabled when input is empty)
   - Improved form submission handling
 
-## [1.3.1] - 2024-02-21
+## [1.3.1] - 2025-02-21
 
 ### Changed
 - Updated application tagline to "Intelligence at your fingertips"
 
-## [1.3.0] - 2024-02-21
+## [1.3.0] - 2025-02-21
 
 ### Changed
 - Complete UI redesign inspired by Perplexity's interface
@@ -1610,7 +1627,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bottom toolbar functionality
 - Enhanced visual feedback on hover states
 
-## [1.2.1] - 2024-02-21
+## [1.2.1] - 2025-02-21
 
 ### Fixed
 - Added 'use client' directives to components using React hooks and browser APIs
@@ -1624,7 +1641,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Next.js configuration for better image optimization and strict mode
 - Added proper TypeScript type annotations in next.config.js
 
-## [1.2.0] - 2024-02-21
+## [1.2.0] - 2025-02-21
 
 ### Added
 - Local storage for messages and user preferences
@@ -1675,7 +1692,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added input sanitization
 - Added offline mode handling
 
-## [1.1.0] - 2024-02-21
+## [1.1.0] - 2025-02-21
 
 ### Added
 - Comprehensive test suite with Jest and React Testing Library
@@ -1721,7 +1738,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added smooth scrolling
 - Added optimized re-renders
 
-## [1.0.0] - 2024-02-21
+## [1.0.0] - 2025-02-21
 
 ### Added
 - Initial release of the chatbot application

@@ -11,6 +11,10 @@ const getEnvVar = (key: string): string => {
 };
 
 export const config = {
+  app: {
+    version: '1.15.8',
+    lastUpdated: '2025-03-23',
+  },
   together: {
     apiKey: getEnvVar('TOGETHER_API_KEY'),
     endpoint: 'https://api.together.xyz/v1/chat/completions',
